@@ -16,12 +16,12 @@ describe('check validators', function () {
                 name: 'Calvin'
             };
 
-            const validators = [
+            const validatorRules = [
                 {
                     name: 'required'
                 }
             ];
 
-        filterValidate(object, validators, null).should.equal(true);
+        filterValidate(object, validatorRules, null).should.equal(true);
     });
 });
