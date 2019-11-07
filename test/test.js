@@ -22,6 +22,7 @@ describe('check validators', function () {
                 }
             ];
 
-        filterValidate(object, validatorRules, null).should.equal(true);
+        let result = filterValidate(object, validatorRules, null);
+        Object.keys(result.validators.failed).length.should.equal(0);
     });
 });
