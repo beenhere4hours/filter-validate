@@ -24,13 +24,16 @@ exports.filterValidate = function(object, validators, filters ) {
         }
     };
 
-    for (let [property, rules] of Object.entries(validators)) {
-        console.log(`${property}: ${rules}`);
+    validators.forEach(validator => {
+        for (let [property, rules] of Object.entries(validator)) {
+            console.log(`${property}: ${rules}`);
 
-        rules.split('|').forEach(rule => {
-            validatorsMap[rule](property);
-        });
-    }
+            rules.split('|').forEach(rule => {
+                validatorsMap[rule](property);
+            });
+        }
+
+    });
 
     return result;
 };
