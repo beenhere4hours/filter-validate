@@ -1,28 +1,29 @@
-[![Build Status](https://travis-ci.org/beenhere4hours/valid-chain.svg?branch=master)](https://travis-ci.org/beenhere4hours/valid-chain)
+[![Build Status](https://travis-ci.org/beenhere4hours/filter-validate.svg?branch=master)](https://travis-ci.org/beenhere4hours/filter-validate)
 
-valid-chain
+filter-validate
 =====
 
-Verify deep nested property exists
+A way to transform and validate properties and values.
+
+This is a work in progress...
 
 ## Installation
-`npm i @beenhere4hours/valid-chain`
+`npm i @beenhere4hours/filter-validate`
 
 ## Usage
 
 ```
-const validChain = require("../index").validChain;
+const filterValidate = require("../index").filterValidate;
 
-// first param is the object to search
-// second param is a string dot notated list of params to be verified
-validChain({level1: {level2: {level3: {level4: true}}}}, 'level1.level2.level3.level4');
-// expect true
-
-validChain({level1: {level2: {level3: {level4: true}}}}, 'level1.level2.level3.level4.level5');
-// expect false
-
+// WIP
 ```
 
 ## Tests
 
   `npm test`
+  
+## Validators
+
+|rule            |description                                               |
+|----------------|----------------------------------------------------------|
+|required        |Ensures the specified key value exists and is not empty   |
