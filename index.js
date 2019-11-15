@@ -14,7 +14,7 @@ exports.filterValidate = function(object, validators, filters ) {
 
     let validatorsMap = {
         required: property => {
-            if (!object.hasOwnProperty(property)) {
+            if (!object.hasOwnProperty(property) || ['', null, undefined].includes(object[property])) {
                 if (!result.validators.failed.hasOwnProperty(property)) {
                     result.validators.failed[property] = [];
                 }
