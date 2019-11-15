@@ -1,17 +1,8 @@
 const should = require('chai').should();
 const filterValidate = require("../index").filterValidate;
 
-// describe('deep property check', function () {
-//     it('should check all properties exist', function () {
-//         validChain({level1: {level2: {level3: {level4: true}}}}, 'level1.level2.level3.level4').should.equal(true);
-//     });
-//
-//     it('should check a property does not exist', function () {
-//         validChain({level1: {level2: {level3: {level4: true}}}}, 'level1.level2.level3.level4.level5').should.equal(false);
-//     });
-// });
 describe('check validators', function () {
-    it('should check a property exists', function () {
+    it('should check a property exists and is not empty', function () {
             const object = {
                 name: 'Calvin'
             };
@@ -24,5 +15,63 @@ describe('check validators', function () {
 
         let result = filterValidate(object, validatorRules, null);
         Object.keys(result.validators.failed).length.should.equal(0);
+    });
+
+    it('should check a property exists and fails for empty string', function () {
+        const object = {
+            name: ''
+        };
+
+        const validatorRules = [
+            {
+                name: 'required'
+            }
+        ];
+
+        let result = filterValidate(object, validatorRules, null);
+        Object.keys(result.validators.failed).length.should.equal(1);
+    });
+
+    it('should check a property exists and fails for null value', function () {
+        const object = {
+            name: null
+        };
+
+        const validatorRules = [
+            {
+                name: 'required'
+            }
+        ];
+
+        let result = filterValidate(object, validatorRules, null);
+        Object.keys(result.validators.failed).length.should.equal(1);
+    });
+
+    it('should check a property exists and fails for undefined value', function () {
+        const object = {
+            name: undefined
+        };
+
+        const validatorRules = [
+            {
+                name: 'required'
+            }
+        ];
+
+        let result = filterValidate(object, validatorRules, null);
+        Object.keys(result.validators.failed).length.should.equal(1);
+    });
+
+    it('should check a property fails for not existing ', function () {
+        const object = {};
+
+        const validatorRules = [
+            {
+                name: 'required'
+            }
+        ];
+
+        let result = filterValidate(object, validatorRules, null);
+        Object.keys(result.validators.failed).length.should.equal(1);
     });
 });
