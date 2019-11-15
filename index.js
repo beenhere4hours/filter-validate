@@ -26,7 +26,7 @@ exports.filterValidate = function(object, validators, filters ) {
 
     validators.forEach(validator => {
         for (let [property, rules] of Object.entries(validator)) {
-            console.log(`${property}: ${rules}`);
+            // console.log(`${property}: ${rules}`);
 
             rules.split('|').forEach(rule => {
                 validatorsMap[rule](property);
