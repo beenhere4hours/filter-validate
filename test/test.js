@@ -78,4 +78,36 @@ describe('check validators', function () {
         });
 
     });
+
+    describe('validEmail', function () {
+        it('should check the email is valid', function () {
+            const object = {
+                email: 'test@gmail.com'
+            };
+
+            const validatorRules = [
+                {
+                    email: 'validEmail'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check the email is invalid', function () {
+            const object = {
+                email: 'testgmail.com'
+            };
+
+            const validatorRules = [
+                {
+                    email: 'validEmail'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+    });
 });
