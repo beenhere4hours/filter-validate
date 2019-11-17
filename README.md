@@ -27,3 +27,4 @@ const filterValidate = require("../index").filterValidate;
 |rule            |description                                               |
 |----------------|----------------------------------------------------------|
 |required        |Ensures the specified key value exists and is not empty   |
+|validEmail      |Checks for a valid email address                          |
