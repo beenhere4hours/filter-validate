@@ -110,4 +110,36 @@ describe('check validators', function () {
             Object.keys(result.validators.failed).length.should.equal(1);
         });
     });
+
+    describe('maxLen', function () {
+        it('should check the string does not exceed max length', function () {
+            const object = {
+                theMax: '12345'
+            };
+
+            const validatorRules = [
+                {
+                    theMax: 'maxLen,7'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check the string exceeds the given max length', function () {
+            const object = {
+                theMax: '1234567890'
+            };
+
+            const validatorRules = [
+                {
+                    theMax: 'maxLen,7'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+    });
 });
