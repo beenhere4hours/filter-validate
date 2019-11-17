@@ -34,6 +34,13 @@ exports.filterValidate = function(object, validators, filters ) {
                 initProperty(property);
                 result.validators.failed[property].push('validEmail');
             }
+        },
+
+        maxLen: (property, len) => {
+            if (property.length > len) {
+                initProperty(property);
+                result.validators.failed[property].push('maxLen');
+            }
         }
     };
 
@@ -41,8 +48,9 @@ exports.filterValidate = function(object, validators, filters ) {
         for (let [property, rules] of Object.entries(validator)) {
             // console.log(`${property}: ${rules}`);
 
-            rules.split('|').forEach(rule => {
-                validatorsMap[rule](property);
+            rules.split('|').forEach(segment => {
+                let [rule, len] = segment.split(',');
+                validatorsMap[rule](property, len);
             });
         }
 
