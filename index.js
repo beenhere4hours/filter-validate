@@ -37,7 +37,7 @@ exports.filterValidate = function(object, validators, filters ) {
         },
 
         maxLen: (property, len) => {
-            if (property.length > len) {
+            if (object[property].length > len) {
                 initProperty(property);
                 result.validators.failed[property].push('maxLen');
             }
@@ -49,7 +49,12 @@ exports.filterValidate = function(object, validators, filters ) {
             // console.log(`${property}: ${rules}`);
 
             rules.split('|').forEach(segment => {
-                let [rule, len] = segment.split(',');
+                let [rule, len] = segment.split(',').map(segment => segment.trim());
+
+                if (typeof len === 'string') {
+                    len = parseInt(len, 10);
+                }
+
                 validatorsMap[rule](property, len);
             });
         }
