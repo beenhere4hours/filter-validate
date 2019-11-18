@@ -142,4 +142,36 @@ describe('check validators', function () {
             Object.keys(result.validators.failed).length.should.equal(1);
         });
     });
+
+    describe('minLen', function () {
+        it('should check the string is not shorter than the minimum length', function () {
+            const object = {
+                theMin: '1234567890'
+            };
+
+            const validatorRules = [
+                {
+                    theMin: 'minLen,7'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check the string is shorter than the minimum length', function () {
+            const object = {
+                theMin: '12345'
+            };
+
+            const validatorRules = [
+                {
+                    theMin: 'minLen,7'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+    });
 });
