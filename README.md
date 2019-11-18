@@ -28,4 +28,5 @@ const filterValidate = require("../index").filterValidate;
 |----------------|----------------------------------------------------------|
 |required        |Ensures the specified key value exists and is not empty   |
 |validEmail      |Checks for a valid email address                          |
-|maxLen, n       |Checks key value length, makes sure it's not longer than the specified length. n = length parameter.|
+|maxLen,n        |Checks key value length, makes sure it's not longer than the specified length. n = length parameter.|
+|minLen,n        |Checks key value length, makes sure it's not shorter than the specified length. n = length parameter.|
