@@ -1,7 +1,7 @@
 {
   "author": "Daniel Masi",
-  "name": "@beenhere4hours/filtering-validation",
-  "version": "1.0.0",
+  "name": "@beenhere4hours/filter-validate",
+  "version": "0.0.1",
   "description": "Data filtering and validation",
   "homepage": "https://github.com/beenhere4hours/filter-validate#README.md",
   "url": "https://github.com/beenhere4hours/filter-validate/issues",
