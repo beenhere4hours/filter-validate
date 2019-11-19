@@ -48,6 +48,13 @@ exports.filterValidate = function(object, validators, filters ) {
                 initProperty(property);
                 result.validators.failed[property].push('minLen');
             }
+        },
+
+        exactLen: (property, len) => {
+            if (object[property].length !== len) {
+                initProperty(property);
+                result.validators.failed[property].push('exactLen');
+            }
         }
     };
 

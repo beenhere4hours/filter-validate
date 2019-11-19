@@ -174,4 +174,36 @@ describe('check validators', function () {
             Object.keys(result.validators.failed).length.should.equal(1);
         });
     });
+
+    describe('exactLen', function () {
+        it('should check the string length is the given length', function () {
+            const object = {
+                theExactLen: '1234567890'
+            };
+
+            const validatorRules = [
+                {
+                    theExactLen: 'exactLen,10'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check the string length does not match the given length', function () {
+            const object = {
+                theExactLen: '12345'
+            };
+
+            const validatorRules = [
+                {
+                    theExactLen: 'exactLen,7'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+    });
 });
