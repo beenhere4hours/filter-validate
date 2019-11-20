@@ -55,7 +55,18 @@ exports.filterValidate = function(object, validators, filters ) {
                 initProperty(property);
                 result.validators.failed[property].push('exactLen');
             }
-        }
+        },
+
+        alpha: property => {
+            const alphaRegex = /^[a-zA-Z]*$/;
+            const regex = new RegExp(alphaRegex);
+
+            if (regex.test(object[property]) === false) {
+                initProperty(property);
+                result.validators.failed[property].push('alpha');
+            }
+        },
+
     };
 
     validators.forEach(validator => {
