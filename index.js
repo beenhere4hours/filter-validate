@@ -67,6 +67,16 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
+        alphaNumeric: property => {
+            const alphaNumericRegex = /^[a-zA-Z0-9]*$/;
+            const regex = new RegExp(alphaNumericRegex);
+
+            if (regex.test(object[property]) === false) {
+                initProperty(property);
+                result.validators.failed[property].push('alphaNumeric');
+            }
+        },
+
     };
 
     validators.forEach(validator => {
