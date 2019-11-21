@@ -238,4 +238,36 @@ describe('check validators', function () {
             Object.keys(result.validators.failed).length.should.equal(1);
         });
     });
+
+    describe('alphaNumeric', function () {
+        it('should check the string contains only a-z, A-Z, 0-9', function () {
+            const object = {
+                isAlphaNumeric: 'abcABC123'
+            };
+
+            const validatorRules = [
+                {
+                    isAlphaNumeric: 'alphaNumeric'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check the string contains characters not in a-z, A-Z, 0-9', function () {
+            const object = {
+                isAlphaNumeric: '@#$%^&'
+            };
+
+            const validatorRules = [
+                {
+                    isAlphaNumeric: 'alphaNumeric'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+    });
 });
