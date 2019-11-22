@@ -87,6 +87,16 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
+        alphaSpace: property => {
+            const regex = /^[a-zA-Z0-9\s]*$/;
+            const regExp = new RegExp(regex);
+
+            if (regExp.test(object[property]) === false) {
+                initProperty(property);
+                result.validators.failed[property].push('alphaSpace');
+            }
+        },
+
     };
 
     validators.forEach(validator => {
