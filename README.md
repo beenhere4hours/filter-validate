@@ -33,3 +33,4 @@ const filterValidate = require("../index").filterValidate;
 |exactLen,n      |Ensures that the key value length precisely matches the specified length. n = length parameter.      |
 |alpha           |Ensure only alpha characters are present in the key value (a-z, A-Z)                                 |
 |alphaNumeric    |Ensure only alpha-numeric characters are present in the key value (a-z, A-Z, 0-9)                    |
+|alphaDash       |Ensure only alpha-numeric characters + dashes and underscores are present in the key value (a-z, A-Z, 0-9, _-)|
