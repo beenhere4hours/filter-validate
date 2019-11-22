@@ -6,12 +6,12 @@ describe('check validators', function () {
     describe('required', function () {
         it('should check a property exists', function () {
             const object = {
-                name: 'Calvin'
+                test: 'Calvin'
             };
 
             const validatorRules = [
                 {
-                    name: 'required'
+                    test: 'required'
                 }
             ];
 
@@ -21,12 +21,12 @@ describe('check validators', function () {
 
         it('should check a property exists and fails for empty string', function () {
             const object = {
-                name: ''
+                test: ''
             };
 
             const validatorRules = [
                 {
-                    name: 'required'
+                    test: 'required'
                 }
             ];
 
@@ -36,12 +36,12 @@ describe('check validators', function () {
 
         it('should check a property exists and fails for null value', function () {
             const object = {
-                name: null
+                test: null
             };
 
             const validatorRules = [
                 {
-                    name: 'required'
+                    test: 'required'
                 }
             ];
 
@@ -51,12 +51,12 @@ describe('check validators', function () {
 
         it('should check a property exists and fails for undefined value', function () {
             const object = {
-                name: undefined
+                test: undefined
             };
 
             const validatorRules = [
                 {
-                    name: 'required'
+                    test: 'required'
                 }
             ];
 
@@ -69,7 +69,7 @@ describe('check validators', function () {
 
             const validatorRules = [
                 {
-                    name: 'required'
+                    test: 'required'
                 }
             ];
 
@@ -82,12 +82,12 @@ describe('check validators', function () {
     describe('validEmail', function () {
         it('should check the email is valid', function () {
             const object = {
-                email: 'test@gmail.com'
+                test: 'test@gmail.com'
             };
 
             const validatorRules = [
                 {
-                    email: 'validEmail'
+                    test: 'validEmail'
                 }
             ];
 
@@ -97,12 +97,12 @@ describe('check validators', function () {
 
         it('should check the email is invalid', function () {
             const object = {
-                email: 'testgmail.com'
+                test: 'testgmail.com'
             };
 
             const validatorRules = [
                 {
-                    email: 'validEmail'
+                    test: 'validEmail'
                 }
             ];
 
@@ -114,12 +114,12 @@ describe('check validators', function () {
     describe('maxLen', function () {
         it('should check the string does not exceed max length', function () {
             const object = {
-                theMax: '12345'
+                test: '12345'
             };
 
             const validatorRules = [
                 {
-                    theMax: 'maxLen,7'
+                    test: 'maxLen,7'
                 }
             ];
 
@@ -129,12 +129,12 @@ describe('check validators', function () {
 
         it('should check the string exceeds the given max length', function () {
             const object = {
-                theMax: '1234567890'
+                test: '1234567890'
             };
 
             const validatorRules = [
                 {
-                    theMax: 'maxLen,7'
+                    test: 'maxLen,7'
                 }
             ];
 
@@ -146,12 +146,12 @@ describe('check validators', function () {
     describe('minLen', function () {
         it('should check the string is not shorter than the minimum length', function () {
             const object = {
-                theMin: '1234567890'
+                test: '1234567890'
             };
 
             const validatorRules = [
                 {
-                    theMin: 'minLen,7'
+                    test: 'minLen,7'
                 }
             ];
 
@@ -161,12 +161,12 @@ describe('check validators', function () {
 
         it('should check the string is shorter than the minimum length', function () {
             const object = {
-                theMin: '12345'
+                test: '12345'
             };
 
             const validatorRules = [
                 {
-                    theMin: 'minLen,7'
+                    test: 'minLen,7'
                 }
             ];
 
@@ -178,12 +178,12 @@ describe('check validators', function () {
     describe('exactLen', function () {
         it('should check the string length is the given length', function () {
             const object = {
-                theExactLen: '1234567890'
+                test: '1234567890'
             };
 
             const validatorRules = [
                 {
-                    theExactLen: 'exactLen,10'
+                    test: 'exactLen,10'
                 }
             ];
 
@@ -193,12 +193,12 @@ describe('check validators', function () {
 
         it('should check the string length does not match the given length', function () {
             const object = {
-                theExactLen: '12345'
+                test: '12345'
             };
 
             const validatorRules = [
                 {
-                    theExactLen: 'exactLen,7'
+                    test: 'exactLen,7'
                 }
             ];
 
@@ -210,12 +210,12 @@ describe('check validators', function () {
     describe('alpha', function () {
         it('should check the string contains only a-z, A-Z', function () {
             const object = {
-                isAlpha: 'abcABC'
+                test: 'abcABC'
             };
 
             const validatorRules = [
                 {
-                    isAlpha: 'alpha'
+                    test: 'alpha'
                 }
             ];
 
@@ -225,12 +225,12 @@ describe('check validators', function () {
 
         it('should check the string contains characters not in a-z, A-Z', function () {
             const object = {
-                isAlpha: '12345'
+                test: '12345'
             };
 
             const validatorRules = [
                 {
-                    isAlpha: 'alpha'
+                    test: 'alpha'
                 }
             ];
 
@@ -242,12 +242,12 @@ describe('check validators', function () {
     describe('alphaNumeric', function () {
         it('should check the string contains only a-z, A-Z, 0-9', function () {
             const object = {
-                isAlphaNumeric: 'abcABC123'
+                test: 'abcABC123'
             };
 
             const validatorRules = [
                 {
-                    isAlphaNumeric: 'alphaNumeric'
+                    test: 'alphaNumeric'
                 }
             ];
 
@@ -257,12 +257,44 @@ describe('check validators', function () {
 
         it('should check the string contains characters not in a-z, A-Z, 0-9', function () {
             const object = {
-                isAlphaNumeric: '@#$%^&'
+                test: '@#$%^&'
             };
 
             const validatorRules = [
                 {
-                    isAlphaNumeric: 'alphaNumeric'
+                    test: 'alphaNumeric'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+    });
+
+    describe('alphaDash', function () {
+        it('should check the string contains only a-z, A-Z, 0-9, underscore, and dash', function () {
+            const object = {
+                test: 'abcABC123-_'
+            };
+
+            const validatorRules = [
+                {
+                    test: 'alphaDash'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check the string contains characters not in a-z, A-Z, 0-9, underscore, and dash', function () {
+            const object = {
+                test: '@#$%^&'
+            };
+
+            const validatorRules = [
+                {
+                    test: 'alphaDash'
                 }
             ];
 
