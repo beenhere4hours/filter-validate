@@ -97,6 +97,13 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
+        numeric: property => {
+            if (isNaN(object[property]) || !isFinite(object[property]) || object[property] == null || Array.isArray(object[property])) {
+                initProperty(property);
+                result.validators.failed[property].push('numeric');
+            }
+        },
+
     };
 
     validators.forEach(validator => {

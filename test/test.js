@@ -306,7 +306,7 @@ describe('check validators', function () {
     describe('alphaSpace', function () {
         it('should check the string contains only a-z, A-Z, 0-9, \s', function () {
             const object = {
-                test: 'abcABC123  '
+                test: 'abc ABC 123 '
             };
 
             const validatorRules = [
@@ -333,5 +333,129 @@ describe('check validators', function () {
             let result = filterValidate(object, validatorRules, null);
             Object.keys(result.validators.failed).length.should.equal(1);
         });
+    });
+
+    describe('numeric', function () {
+        it('should check "42" is numeric', function () {
+            const object = {
+                test: '42'
+            };
+
+            const validatorRules = [
+                {
+                    test: 'numeric'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 0x539 is numeric', function () {
+            const object = {
+                test: 0x539
+            };
+
+            const validatorRules = [
+                {
+                    test: 'numeric'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 0o2471 is numeric', function () {
+            const object = {
+                test: 0o2471
+            };
+
+            const validatorRules = [
+                {
+                    test: 'numeric'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 0b10100111001 is numeric', function () {
+            const object = {
+                test: 0b10100111001
+            };
+
+            const validatorRules = [
+                {
+                    test: 'numeric'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 9.1 is numeric', function () {
+            const object = {
+                test: 9.1
+            };
+
+            const validatorRules = [
+                {
+                    test: 'numeric'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "not numeric" is NOT numeric', function () {
+            const object = {
+                test: 'not numeric'
+            };
+
+            const validatorRules = [
+                {
+                    test: 'numeric'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check array() is NOT numeric', function () {
+            const object = {
+                test: []
+            };
+
+            const validatorRules = [
+                {
+                    test: 'numeric'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check null is NOT numeric', function () {
+            const object = {
+                test: null
+            };
+
+            const validatorRules = [
+                {
+                    test: 'numeric'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+
     });
 });
