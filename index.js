@@ -104,6 +104,13 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
+        integer: property => {
+            if (!Number.isInteger(object[property]) || object[property] == null || Array.isArray(object[property])) {
+                initProperty(property);
+                result.validators.failed[property].push('integer');
+            }
+        },
+
     };
 
     validators.forEach(validator => {
