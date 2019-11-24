@@ -458,4 +458,97 @@ describe('check validators', function () {
 
 
     });
+
+    describe('integer', function () {
+        it('should check 42 is integer', function () {
+            const object = {
+                test: 42
+            };
+
+            const validatorRules = [
+                {
+                    test: 'integer'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check -42 is integer', function () {
+            const object = {
+                test: -42
+            };
+
+            const validatorRules = [
+                {
+                    test: 'integer'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 42.2 is NOT an integer', function () {
+            const object = {
+                test: 42.2
+            };
+
+            const validatorRules = [
+                {
+                    test: 'integer'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check "42" is NOT an integer', function () {
+            const object = {
+                test: "42"
+            };
+
+            const validatorRules = [
+                {
+                    test: 'integer'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check array() is NOT an integer', function () {
+            const object = {
+                test: []
+            };
+
+            const validatorRules = [
+                {
+                    test: 'integer'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check null is NOT an integer', function () {
+            const object = {
+                test: null
+            };
+
+            const validatorRules = [
+                {
+                    test: 'integer'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+    });
+
 });
