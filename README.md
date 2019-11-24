@@ -36,4 +36,4 @@ const filterValidate = require("../index").filterValidate;
 |alphaDash       |Ensure only alpha-numeric characters + dashes and underscores are present in the key value (a-z, A-Z, 0-9, _-)|
 |alphaSpace      |Ensure only alpha-numeric characters + spaces are present in the key value (a-z, A-Z, 0-9, \s)|
 |numeric         |Ensure only numeric key values|
-
+|integer         |Ensure only integer key values|
