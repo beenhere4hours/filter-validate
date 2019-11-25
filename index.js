@@ -111,6 +111,24 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
+        float: property => {
+            const regex = /^-?\d+(?:[.,]\d*?)?$/;
+            const regExp = new RegExp(regex);
+
+            let tests = [
+                object[property] == null,
+                Array.isArray(object[property]),
+                !regExp.test(object[property]),
+                isNaN(parseFloat(object[property])),
+            ];
+
+            tests.some(test => {
+                if (test) {
+                    initProperty(property);
+                    result.validators.failed[property].push('float');
+                }
+            });
+        },
     };
 
     validators.forEach(validator => {

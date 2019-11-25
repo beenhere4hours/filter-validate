@@ -551,4 +551,95 @@ describe('check validators', function () {
         });
     });
 
+    describe('float', function () {
+        it('should check 42.2 is float', function () {
+            const object = {
+                test: 42.2
+            };
+
+            const validatorRules = [
+                {
+                    test: 'float'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check -42.2 is float', function () {
+            const object = {
+                test: -42.2
+            };
+
+            const validatorRules = [
+                {
+                    test: 'float'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 42 is a float', function () {
+            const object = {
+                test: 42
+            };
+
+            const validatorRules = [
+                {
+                    test: 'float'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "42.2" is a float', function () {
+            const object = {
+                test: "42.2"
+            };
+
+            const validatorRules = [
+                {
+                    test: 'float'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check array() is NOT a float', function () {
+            const object = {
+                test: []
+            };
+
+            const validatorRules = [
+                {
+                    test: 'float'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check null is NOT a float', function () {
+            const object = {
+                test: null
+            };
+
+            const validatorRules = [
+                {
+                    test: 'float'
+                }
+            ];
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+    });
 });
