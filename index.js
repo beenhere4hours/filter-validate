@@ -20,10 +20,17 @@ exports.filterValidate = function(object, validators, filters ) {
 
     let validatorsMap = {
         required: property => {
-            if (!object.hasOwnProperty(property) || ['', null, undefined].includes(object[property])) {
-                initProperty(property);
-                result.validators.failed[property].push('required');
-            }
+            let tests = [
+                !object.hasOwnProperty(property),
+                ['', null, undefined].includes(object[property]),
+            ];
+
+            tests.some(test => {
+                if (test) {
+                    initProperty(property);
+                    result.validators.failed[property].push('required');
+                }
+            });
         },
 
         validEmail: property => {
