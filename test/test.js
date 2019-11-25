@@ -4,7 +4,7 @@ const filterValidate = require("../index").filterValidate;
 describe('check validators', function () {
 
     describe('required', function () {
-        it('should check a property exists', function () {
+        it('should check the test property exists', function () {
             const object = {
                 test: 'Calvin'
             };
@@ -19,7 +19,7 @@ describe('check validators', function () {
             Object.keys(result.validators.failed).length.should.equal(0);
         });
 
-        it('should check a property exists and fails for empty string', function () {
+        it('should check a property exists and is NOT an empty string ""', function () {
             const object = {
                 test: ''
             };
@@ -34,7 +34,7 @@ describe('check validators', function () {
             Object.keys(result.validators.failed).length.should.equal(1);
         });
 
-        it('should check a property exists and fails for null value', function () {
+        it('should check a property exists and NOT a null value', function () {
             const object = {
                 test: null
             };
@@ -49,7 +49,7 @@ describe('check validators', function () {
             Object.keys(result.validators.failed).length.should.equal(1);
         });
 
-        it('should check a property exists and fails for undefined value', function () {
+        it('should check a property exists and NOT an undefined value', function () {
             const object = {
                 test: undefined
             };
@@ -64,7 +64,7 @@ describe('check validators', function () {
             Object.keys(result.validators.failed).length.should.equal(1);
         });
 
-        it('should check a property fails for not existing ', function () {
+        it('should check the property test does NOT exist', function () {
             const object = {};
 
             const validatorRules = [
@@ -80,7 +80,7 @@ describe('check validators', function () {
     });
 
     describe('validEmail', function () {
-        it('should check the email is valid', function () {
+        it('should check "test@gmail.com" is valid', function () {
             const object = {
                 test: 'test@gmail.com'
             };
@@ -95,7 +95,7 @@ describe('check validators', function () {
             Object.keys(result.validators.failed).length.should.equal(0);
         });
 
-        it('should check the email is invalid', function () {
+        it('should check "testgmail.com" is NOT valid', function () {
             const object = {
                 test: 'testgmail.com'
             };
@@ -208,7 +208,7 @@ describe('check validators', function () {
     });
 
     describe('alpha', function () {
-        it('should check the string contains only a-z, A-Z', function () {
+        it('should check "abcABC" contains only a-z, A-Z', function () {
             const object = {
                 test: 'abcABC'
             };
@@ -223,7 +223,7 @@ describe('check validators', function () {
             Object.keys(result.validators.failed).length.should.equal(0);
         });
 
-        it('should check the string contains characters not in a-z, A-Z', function () {
+        it('should check "12345" is NOT in a-z, A-Z', function () {
             const object = {
                 test: '12345'
             };
@@ -240,7 +240,7 @@ describe('check validators', function () {
     });
 
     describe('alphaNumeric', function () {
-        it('should check the string contains only a-z, A-Z, 0-9', function () {
+        it('should check "abcABC123" contains characters in the range of a-z, A-Z, 0-9', function () {
             const object = {
                 test: 'abcABC123'
             };
@@ -255,7 +255,7 @@ describe('check validators', function () {
             Object.keys(result.validators.failed).length.should.equal(0);
         });
 
-        it('should check the string contains characters not in a-z, A-Z, 0-9', function () {
+        it('should check "@#$%^&" contains characters NOT in the range of a-z, A-Z, 0-9', function () {
             const object = {
                 test: '@#$%^&'
             };
