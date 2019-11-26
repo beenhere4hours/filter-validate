@@ -136,6 +136,20 @@ exports.filterValidate = function(object, validators, filters ) {
                 }
             });
         },
+
+        containedInList: (needle, haystack) => {
+            let hasValue = false;
+
+            if (object[needle] != null && haystack != null) {
+                hasValue = haystack.map(item => item.trim().toLowerCase()).includes(object[needle].trim().toLowerCase());
+            }
+
+            if (!hasValue) {
+                initProperty(property);
+                result.validators.failed[property].push('containedInList');
+            }
+        },
+
     };
 
     validators.forEach(validator => {
