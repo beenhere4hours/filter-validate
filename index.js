@@ -44,6 +44,10 @@ exports.filterValidate = function(object, validators, filters ) {
         },
 
         maxLen: (property, len) => {
+            if (typeof len === 'string') {
+                len = parseInt(len, 10);
+            }
+
             if (object[property].length > len) {
                 initProperty(property);
                 result.validators.failed[property].push('maxLen');
@@ -51,6 +55,10 @@ exports.filterValidate = function(object, validators, filters ) {
         },
 
         minLen: (property, len) => {
+            if (typeof len === 'string') {
+                len = parseInt(len, 10);
+            }
+
             if (object[property].length < len) {
                 initProperty(property);
                 result.validators.failed[property].push('minLen');
@@ -58,6 +66,10 @@ exports.filterValidate = function(object, validators, filters ) {
         },
 
         exactLen: (property, len) => {
+            if (typeof len === 'string') {
+                len = parseInt(len, 10);
+            }
+
             if (object[property].length !== len) {
                 initProperty(property);
                 result.validators.failed[property].push('exactLen');
@@ -141,12 +153,12 @@ exports.filterValidate = function(object, validators, filters ) {
             let hasValue = false;
 
             if (object[needle] != null && haystack != null) {
-                hasValue = haystack.map(item => item.trim().toLowerCase()).includes(object[needle].trim().toLowerCase());
+                hasValue = haystack.split(';').map(item => item.trim().toLowerCase()).includes(object[needle].trim().toLowerCase());
             }
 
             if (!hasValue) {
-                initProperty(property);
-                result.validators.failed[property].push('containedInList');
+                initProperty(needle);
+                result.validators.failed[needle].push('containedInList');
             }
         },
 
@@ -157,13 +169,8 @@ exports.filterValidate = function(object, validators, filters ) {
             // console.log(`${property}: ${rules}`);
 
             rules.split('|').forEach(segment => {
-                let [rule, len] = segment.split(',').map(segment => segment.trim());
-
-                if (typeof len === 'string') {
-                    len = parseInt(len, 10);
-                }
-
-                validatorsMap[rule](property, len);
+                let [rule, val] = segment.split(',').map(segment => segment.trim());
+                validatorsMap[rule](property, val);
             });
         }
 
