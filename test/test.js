@@ -534,4 +534,23 @@ describe('check validators', function () {
         });
 
     });
+
+    describe('minNumeric', function () {
+
+        const validatorRules = [
+            {
+                test: 'minNumeric,7'
+            }
+        ];
+
+        it('should check 10 is higher or equal to 7', function () {
+            const object = {
+                test: 10
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+    });
 });
