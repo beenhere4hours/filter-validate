@@ -162,6 +162,19 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
+        notContainedInList: (needle, haystack) => {
+            let hasValue = false;
+
+            if (object[needle] != null && haystack != null) {
+                hasValue = haystack.split(';').map(item => item.trim().toLowerCase()).includes(object[needle].trim().toLowerCase());
+            }
+
+            if (hasValue) {
+                initProperty(needle);
+                result.validators.failed[needle].push('notContainedInList');
+            }
+        },
+
     };
 
     validators.forEach(validator => {
