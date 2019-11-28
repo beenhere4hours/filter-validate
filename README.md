@@ -38,4 +38,4 @@ const filterValidate = require("../index").filterValidate;
 |numeric         |Ensure only numeric key values|
 |integer         |Ensure only integer key values|
 |float           |Checks for float values|
-
+|containedInList |Verify that a value is contained within the pre-defined value set. The list of valid values must be provided in semicolon-separated list format (like so: value1;value2;value3;..;value).|
