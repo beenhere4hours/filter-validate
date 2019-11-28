@@ -506,4 +506,32 @@ describe('check validators', function () {
         });
 
     });
+
+    describe('notContainedInList', function () {
+
+        const validatorRules = [
+            {
+                test: 'notContainedInList, one; two; three; four; tell me more;'
+            }
+        ];
+
+        it('should check "five" is not in the list', function () {
+            const object = {
+                test: 'five'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "four" is IN the list', function () {
+            const object = {
+                test: 'four'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+    });
 });
