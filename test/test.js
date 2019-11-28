@@ -552,5 +552,23 @@ describe('check validators', function () {
             Object.keys(result.validators.failed).length.should.equal(0);
         });
 
+        it('should check 5 is NOT higher or equal to 7', function () {
+            const object = {
+                test: 5
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check null is NOT a valid value to get min from', function () {
+            const object = {
+                test: null
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
     });
 });
