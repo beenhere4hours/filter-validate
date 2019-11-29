@@ -534,4 +534,86 @@ describe('check validators', function () {
         });
 
     });
+
+    describe('minNumeric', function () {
+
+        const validatorRules = [
+            {
+                test: 'minNumeric,7'
+            }
+        ];
+
+        it('should check 10 is higher or equal to 7', function () {
+            const object = {
+                test: 10
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "10" is higher or equal to 7', function () {
+            const object = {
+                test: '10'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 0x539 is higher or equal to 7', function () {
+            const object = {
+                test: 0x539
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 0o2471 is higher or equal to 7', function () {
+            const object = {
+                test: 0o2471
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 0b10100111001 is higher or equal to 7', function () {
+            const object = {
+                test: 0b10100111001
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 5 is NOT higher or equal to 7', function () {
+            const object = {
+                test: 5
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check "5" is NOT higher or equal to 7', function () {
+            const object = {
+                test: 5
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check null is NOT a valid value to get min from', function () {
+            const object = {
+                test: null
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+    });
 });
