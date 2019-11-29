@@ -183,15 +183,12 @@ exports.filterValidate = function(object, validators, filters ) {
 
             let tests = [
                 object[property] == null,
-                val == null,
                 Array.isArray(object[property]),
-                Array.isArray(val),
                 !regExp.test(object[property]),
                 !regExp.test(val),
                 isNaN(parseFloat(object[property])),
                 isNaN(parseFloat(val)),
                 !isFinite(object[property]),
-                !isFinite(val),
                 parseFloat(val) > parseFloat(object[property])
             ];
 
