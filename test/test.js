@@ -616,4 +616,86 @@ describe('check validators', function () {
         });
 
     });
+
+    describe('maxNumeric', function () {
+
+        const validatorRules = [
+            {
+                test: 'maxNumeric,1500'
+            }
+        ];
+
+        it('should check 1000 is lower or equal to 1500', function () {
+            const object = {
+                test: 1000
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1000" is lower or equal to 1500', function () {
+            const object = {
+                test: '1000'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 0x539 is lower or equal to 1500', function () {
+            const object = {
+                test: 0x539
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 0o2471 is lower or equal to 1500', function () {
+            const object = {
+                test: 0o2471
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 0b10100111001 is lower or equal to 1500', function () {
+            const object = {
+                test: 0b10100111001
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 2000 is higher and NOT equal to 1500', function () {
+            const object = {
+                test: 2000
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check "2000" is higher and NOT equal to 1500', function () {
+            const object = {
+                test: 2000
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check null is NOT a valid value to get max from', function () {
+            const object = {
+                test: null
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+    });
 });
