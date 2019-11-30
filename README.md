@@ -41,4 +41,4 @@ const filterValidate = require("../index").filterValidate;
 |containedInList    |Verify that a value is contained within the pre-defined value set. The list of valid values must be provided in semicolon-separated list format (like so: value1;value2;value3;..;value).|
 |notContainedInList |Verify that a value is not contained within the pre-defined value set. Semicolon (;) separated list.|
 |minNumeric         |Determine if the provided numeric value is higher or equal to a specific value|
-
+|maxNumeric         |Determine if the provided numeric value is lower or equal to a specific value|
