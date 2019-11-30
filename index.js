@@ -200,6 +200,31 @@ exports.filterValidate = function(object, validators, filters ) {
             });
         },
 
+        maxNumeric: (property, val) => {
+            // console.log(`${object[property]} ${val}`);
+
+            const regex = /^-?\d+(?:[.,]\d*?)?$/;
+            const regExp = new RegExp(regex);
+
+            let tests = [
+                object[property] == null,
+                Array.isArray(object[property]),
+                !regExp.test(object[property]),
+                !regExp.test(val),
+                isNaN(parseFloat(object[property])),
+                isNaN(parseFloat(val)),
+                !isFinite(object[property]),
+                parseFloat(object[property]) > parseFloat(val),
+            ];
+
+            tests.some(test => {
+                if (test) {
+                    initProperty(property);
+                    result.validators.failed[property].push('minNumeric');
+                }
+            });
+        },
+
     };
 
     validators.forEach(validator => {
