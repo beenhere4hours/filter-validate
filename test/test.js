@@ -698,4 +698,176 @@ describe('check validators', function () {
         });
 
     });
+
+    describe('date', function () {
+
+        const validatorRules = [
+            {
+                test: 'date'
+            }
+        ];
+
+        it('should check "1997" is valid', function () {
+            const object = {
+                test: '1997'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-07" is valid', function () {
+            const object = {
+                test: '1997-07'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-07-16" is valid', function () {
+            const object = {
+                test: '1997-07-16'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-07-16T19:20+01:00" is valid', function () {
+            const object = {
+                test: '1997-07-16T19:20+01:00'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-07-16T19:20+01:00Z" is valid', function () {
+            const object = {
+                test: '1997-07-16T19:20+01:00Z'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-07-16T19:20-01:00" is valid', function () {
+            const object = {
+                test: '1997-07-16T19:20-01:00'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-07-16T19:20-01:00Z" is valid', function () {
+            const object = {
+                test: '1997-07-16T19:20-01:00Z'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-07-16T19:20:30+01:00" is valid', function () {
+            const object = {
+                test: '1997-07-16T19:20:30+01:00'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-07-16T19:20:30+01:00Z" is valid', function () {
+            const object = {
+                test: '1997-07-16T19:20:30+01:00Z'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-07-16T19:20:30.45+01:00" is valid', function () {
+            const object = {
+                test: '1997-07-16T19:20:30.45+01:00'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-07-16T19:20:30.45+01:00Z" is valid', function () {
+            const object = {
+                test: '1997-07-16T19:20:30.45+01:00Z'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-07-16T19:20:30.45-01:00" is valid', function () {
+            const object = {
+                test: '1997-07-16T19:20:30.45-01:00'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-07-16T19:20:30.45-01:00Z" is valid', function () {
+            const object = {
+                test: '1997-07-16T19:20:30.45-01:00Z'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1997-13-39T19:58:30.45-01:00Z" is valid', function () {
+            const object = {
+                test: '1997-13-39T19:58:30.45-01:00Z'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "-1997-13-39T19:58:30.45-01:00Z" is valid', function () {
+            const object = {
+                test: '-1997-13-39T19:58:30.45-01:00Z'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "" is NOT a valid date string', function () {
+            const object = {
+                test: ""
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check null is NOT a valid date string', function () {
+            const object = {
+                test: null
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check array() is NOT a valid date string', function () {
+            const object = {
+                test: []
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+    });
 });
