@@ -225,6 +225,32 @@ exports.filterValidate = function(object, validators, filters ) {
             });
         },
 
+        date: property => {
+            // regex from https://regexr.com/3e0lh
+            // should support the following formats
+            // 1997
+            // 1997-07
+            // 1997-07-16
+            // 1997-07-16T19:20+01:00
+            // 1997-07-16T19:20+01:00Z
+            // 1997-07-16T19:20-01:00
+            // 1997-07-16T19:20-01:00Z
+            // 1997-07-16T19:20:30+01:00
+            // 1997-07-16T19:20:30+01:00Z
+            // 1997-07-16T19:20:30.45+01:00
+            // 1997-07-16T19:20:30.45+01:00Z
+            // 1997-07-16T19:20:30.45-01:00
+            // 1997-07-16T19:20:30.45-01:00Z
+            // 1997-13-39T19:58:30.45-01:00Z
+            const regex = /[+-]?\d{4}(-[01]\d(-[0-3]\d(T[0-2]\d:[0-5]\d:?([0-5]\d(\.\d+)?)?[+-][0-2]\d:[0-5]\dZ?)?)?)?/;
+            const regExp = new RegExp(regex);
+
+            if (regExp.test(object[property]) === false) {
+                initProperty(property);
+                result.validators.failed[property].push('date');
+            }
+        },
+
     };
 
     validators.forEach(validator => {
