@@ -43,4 +43,5 @@ const filterValidate = require("../index").filterValidate;
 |minNumeric         |Determine if the provided numeric value is higher or equal to a specific value|
 |maxNumeric         |Determine if the provided numeric value is lower or equal to a specific value|
 |date               |Determine if the provided input is a valid date (ISO 8601)|
+|starts             |Ensures the value starts with a certain character / set of character starting at a given position.  Position defaults to 0 if not provided. n = starting position|
 
