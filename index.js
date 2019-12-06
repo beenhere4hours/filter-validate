@@ -43,7 +43,9 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
-        maxLen: (property, len) => {
+        maxLen: (property, args) => {
+            let [len] = args;
+
             if (typeof len === 'string') {
                 len = parseInt(len, 10);
             }
@@ -54,7 +56,9 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
-        minLen: (property, len) => {
+        minLen: (property, args) => {
+            let [len] = args;
+
             if (typeof len === 'string') {
                 len = parseInt(len, 10);
             }
@@ -65,7 +69,9 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
-        exactLen: (property, len) => {
+        exactLen: (property, args) => {
+            let [len] = args;
+
             if (typeof len === 'string') {
                 len = parseInt(len, 10);
             }
@@ -149,7 +155,9 @@ exports.filterValidate = function(object, validators, filters ) {
             });
         },
 
-        containedInList: (needle, haystack) => {
+        containedInList: (needle, args) => {
+            let [haystack] = args;
+
             let hasValue = false;
 
             if (object[needle] != null && haystack != null) {
@@ -162,7 +170,9 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
-        notContainedInList: (needle, haystack) => {
+        notContainedInList: (needle, args) => {
+            let [haystack] = args;
+
             let hasValue = false;
 
             if (object[needle] != null && haystack != null) {
@@ -175,8 +185,8 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
-        minNumeric: (property, val) => {
-            // console.log(`${object[property]} ${val}`);
+        minNumeric: (property, args) => {
+            let [val] = args;
 
             const regex = /^-?\d+(?:[.,]\d*?)?$/;
             const regExp = new RegExp(regex);
@@ -200,8 +210,8 @@ exports.filterValidate = function(object, validators, filters ) {
             });
         },
 
-        maxNumeric: (property, val) => {
-            // console.log(`${object[property]} ${val}`);
+        maxNumeric: (property, args) => {
+            let [val] = args;
 
             const regex = /^-?\d+(?:[.,]\d*?)?$/;
             const regExp = new RegExp(regex);
@@ -251,15 +261,39 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
+        starts: (property, args) => {
+            let [needle, val] = args;
+
+            if (typeof val === "string") {
+                val = parseInt(val, 10);
+            } else if (val == null) {
+                val = 0;
+            }
+
+            let tests = [
+                object[property] == null,
+                Array.isArray(object[property]),
+                isNaN(parseInt(val, 10)),
+                typeof object[property] === "string" && !object[property].startsWith(needle, val)
+            ];
+
+            tests.some(test => {
+                if (test) {
+                    initProperty(property);
+                    result.validators.failed[property].push('starts');
+                }
+            });
+        },
+
     };
 
     validators.forEach(validator => {
         for (let [property, rules] of Object.entries(validator)) {
-            // console.log(`${property}: ${rules}`);
+            // console.log(`validator ${property}: ${rules}`);
 
             rules.split('|').forEach(segment => {
-                let [rule, val] = segment.split(',').map(segment => segment.trim());
-                validatorsMap[rule](property, val);
+                let [rule, ...args] = segment.split(',').map(segment => segment.trim());
+                validatorsMap[rule](property, args);
             });
         }
 
