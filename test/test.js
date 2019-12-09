@@ -870,4 +870,84 @@ describe('check validators', function () {
         });
 
     });
+
+    describe('starts', function () {
+
+        // test: 'supercalifragilisticexpialidocious'
+        it('should check "supercalifragilisticexpialidocious" starts with "super" while defaulting to 0 starting position', function () {
+            const validatorRules = [
+                {
+                    test: 'starts, super'
+                }
+            ];
+
+            const object = {
+                test: 'supercalifragilisticexpialidocious'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "supercalifragilisticexpialidocious" starts with "fragilistic" when specifying starting position of 9', function () {
+            const validatorRules = [
+                {
+                    test: 'starts, fragilistic, 9'
+                }
+            ];
+
+            const object = {
+                test: 'supercalifragilisticexpialidocious'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "" is NOT a valid search string', function () {
+            const validatorRules = [
+                {
+                    test: 'starts, super'
+                }
+            ];
+
+            const object = {
+                test: ""
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check null is NOT a valid search string', function () {
+            const validatorRules = [
+                {
+                    test: 'starts, super'
+                }
+            ];
+
+            const object = {
+                test: null
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check array() is NOT a valid search string', function () {
+            const validatorRules = [
+                {
+                    test: 'starts, super'
+                }
+            ];
+
+            const object = {
+                test: []
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+    });
 });
