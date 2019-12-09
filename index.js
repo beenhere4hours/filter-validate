@@ -35,9 +35,8 @@ exports.filterValidate = function(object, validators, filters ) {
 
         validEmail: property => {
             const regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-            const regExp = new RegExp(regex);
 
-            if (regExp.test(object[property]) === false) {
+            if (regex.test(object[property]) === false) {
                 initProperty(property);
                 result.validators.failed[property].push('validEmail');
             }
@@ -84,9 +83,8 @@ exports.filterValidate = function(object, validators, filters ) {
 
         alpha: property => {
             const regex = /^[a-zA-Z]*$/;
-            const regExp = new RegExp(regex);
 
-            if (regExp.test(object[property]) === false) {
+            if (regex.test(object[property]) === false) {
                 initProperty(property);
                 result.validators.failed[property].push('alpha');
             }
@@ -94,9 +92,8 @@ exports.filterValidate = function(object, validators, filters ) {
 
         alphaNumeric: property => {
             const regex = /^[a-zA-Z0-9]*$/;
-            const regExp = new RegExp(regex);
 
-            if (regExp.test(object[property]) === false) {
+            if (regex.test(object[property]) === false) {
                 initProperty(property);
                 result.validators.failed[property].push('alphaNumeric');
             }
@@ -104,9 +101,8 @@ exports.filterValidate = function(object, validators, filters ) {
 
         alphaDash: property => {
             const regex = /^[a-zA-Z0-9-_]*$/;
-            const regExp = new RegExp(regex);
 
-            if (regExp.test(object[property]) === false) {
+            if (regex.test(object[property]) === false) {
                 initProperty(property);
                 result.validators.failed[property].push('alphaDash');
             }
@@ -114,9 +110,8 @@ exports.filterValidate = function(object, validators, filters ) {
 
         alphaSpace: property => {
             const regex = /^[a-zA-Z0-9\s]*$/;
-            const regExp = new RegExp(regex);
 
-            if (regExp.test(object[property]) === false) {
+            if (regex.test(object[property]) === false) {
                 initProperty(property);
                 result.validators.failed[property].push('alphaSpace');
             }
@@ -138,12 +133,11 @@ exports.filterValidate = function(object, validators, filters ) {
 
         float: property => {
             const regex = /^-?\d+(?:[.,]\d*?)?$/;
-            const regExp = new RegExp(regex);
 
             let tests = [
                 object[property] == null,
                 Array.isArray(object[property]),
-                !regExp.test(object[property]),
+                !regex.test(object[property]),
                 isNaN(parseFloat(object[property])),
             ];
 
@@ -189,13 +183,12 @@ exports.filterValidate = function(object, validators, filters ) {
             let [val] = args;
 
             const regex = /^-?\d+(?:[.,]\d*?)?$/;
-            const regExp = new RegExp(regex);
 
             let tests = [
                 object[property] == null,
                 Array.isArray(object[property]),
-                !regExp.test(object[property]),
-                !regExp.test(val),
+                !regex.test(object[property]),
+                !regex.test(val),
                 isNaN(parseFloat(object[property])),
                 isNaN(parseFloat(val)),
                 !isFinite(object[property]),
@@ -214,13 +207,12 @@ exports.filterValidate = function(object, validators, filters ) {
             let [val] = args;
 
             const regex = /^-?\d+(?:[.,]\d*?)?$/;
-            const regExp = new RegExp(regex);
 
             let tests = [
                 object[property] == null,
                 Array.isArray(object[property]),
-                !regExp.test(object[property]),
-                !regExp.test(val),
+                !regex.test(object[property]),
+                !regex.test(val),
                 isNaN(parseFloat(object[property])),
                 isNaN(parseFloat(val)),
                 !isFinite(object[property]),
@@ -253,9 +245,8 @@ exports.filterValidate = function(object, validators, filters ) {
             // 1997-07-16T19:20:30.45-01:00Z
             // 1997-13-39T19:58:30.45-01:00Z
             const regex = /[+-]?\d{4}(-[01]\d(-[0-3]\d(T[0-2]\d:[0-5]\d:?([0-5]\d(\.\d+)?)?[+-][0-2]\d:[0-5]\dZ?)?)?)?/;
-            const regExp = new RegExp(regex);
 
-            if (regExp.test(object[property]) === false) {
+            if (regex.test(object[property]) === false) {
                 initProperty(property);
                 result.validators.failed[property].push('date');
             }
