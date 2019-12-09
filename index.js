@@ -285,6 +285,19 @@ exports.filterValidate = function(object, validators, filters ) {
             });
         },
 
+        phone: property => {
+            // '1234567890'
+            // 1234567890
+            // '(078)789-8908'
+            // '123-345-3456'
+            const regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+
+            if (regex.test(object[property]) === false) {
+                initProperty(property);
+                result.validators.failed[property].push('phone');
+            }
+        },
+
     };
 
     validators.forEach(validator => {
