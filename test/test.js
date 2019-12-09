@@ -950,4 +950,77 @@ describe('check validators', function () {
         });
 
     });
+
+    describe('phone', function () {
+
+        const validatorRules = [
+            {
+                test: 'phone'
+            }
+        ];
+
+        it('should check "1234567890" is valid', function () {
+            const object = {
+                test: '1234567890'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check 1234567890 is valid', function () {
+            const object = {
+                test: 1234567890
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "(078)789-8908" is valid', function () {
+            const object = {
+                test: '(078)789-8908'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "123-345-3456" is valid', function () {
+            const object = {
+                test: '123-345-3456'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "" is NOT valid', function () {
+            const object = {
+                test: ""
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check null is NOT valid', function () {
+            const object = {
+                test: null
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check array() is NOT valid', function () {
+            const object = {
+                test: []
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+    });
 });
