@@ -289,6 +289,15 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
+        regex: (property, args) => {
+            let [regex] = args;
+
+            if (regex.test(object[property]) === false) {
+                initProperty(property);
+                result.validators.failed[property].push('regex');
+            }
+        },
+
     };
 
     validators.forEach(validator => {
