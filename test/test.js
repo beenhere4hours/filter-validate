@@ -1023,4 +1023,59 @@ describe('check validators', function () {
         });
 
     });
+
+    describe('regex', function () {
+
+        const validatorRules = [
+            {
+                test: 'regex, ^[a-zA-Z]*$'
+            }
+        ];
+
+        it('should check "abcdefgh" is valid with string regex pattern of "^[a-zA-Z]*$"', function () {
+            const object = {
+                test: 'abcdefgh'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(0);
+        });
+
+        it('should check "1234567890" is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
+            const object = {
+                test: '1234567890'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check "" is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
+            const object = {
+                test: ""
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check null is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
+            const object = {
+                test: null
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+        it('should check array() is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
+            const object = {
+                test: []
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            Object.keys(result.validators.failed).length.should.equal(1);
+        });
+
+    });
 });
