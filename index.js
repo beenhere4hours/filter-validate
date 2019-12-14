@@ -289,6 +289,25 @@ exports.filterValidate = function(object, validators, filters ) {
             }
         },
 
+        regex: (property, args) => {
+            let [regex] = args;
+            let regExp = new RegExp(regex);
+
+            let tests = [
+                object[property] === '',
+                object[property] == null,
+                Array.isArray(object[property]),
+                regExp.test(object[property]) === false
+            ];
+
+            tests.some(test => {
+                if (test) {
+                    initProperty(property);
+                    result.validators.failed[property].push('regex');
+                }
+            });
+        },
+
     };
 
     validators.forEach(validator => {
