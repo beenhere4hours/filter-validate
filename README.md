@@ -45,5 +45,5 @@ const filterValidate = require("../index").filterValidate;
 |date               |Determine if the provided input is a valid date (ISO 8601)|
 |starts             |Ensures the value starts with a certain character / set of character starting at a given position.  Position defaults to 0 if not provided. n = starting position|
 |phone              |Validate phone numbers that match the following examples: '1234567890', 1234567890, '(078)789-8908', '123-345-3456'|
-|regex              |Pass a custom regex using the following format: 'regex,/your-regex/'|
+|regex              |Pass a custom regex using the following format example for reference: 'regex, ^[a-zA-Z]*$'|
 
