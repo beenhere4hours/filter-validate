@@ -38,12 +38,12 @@ const filterValidate = require("../index").filterValidate;
 |numeric            |Ensure only numeric key values|
 |integer            |Ensure only integer key values|
 |float              |Checks for float values|
-|containedInList    |Verify that a value is contained within the pre-defined value set. The list of valid values must be provided in semicolon-separated list format (like so: value1;value2;value3;..;value).|
-|notContainedInList |Verify that a value is not contained within the pre-defined value set. Semicolon (;) separated list.|
-|minNumeric         |Determine if the provided numeric value is higher or equal to a specific value|
-|maxNumeric         |Determine if the provided numeric value is lower or equal to a specific value|
+|containedInList, needle, haystack |Verify that a value is contained within the pre-defined value set. The list of valid values must be provided in semicolon-separated list format (like so: value1;value2;value3;..;value). needle = value to find, haystack = semi colon separated list to search within|
+|notContainedInList, needle, haystack |Verify that a value is not contained within the pre-defined value set. Semicolon (;) separated list. needle = value to find, haystack = semi colon separated list to search within|
+|minNumeric,n       |Determine if the provided numeric value is higher or equal to a specific value. n = min parameter.|
+|maxNumeric,n       |Determine if the provided numeric value is lower or equal to a specific value. n = max parameter.|
 |date               |Determine if the provided input is a valid date (ISO 8601)|
-|starts             |Ensures the value starts with a certain character / set of character starting at a given position.  Position defaults to 0 if not provided. n = starting position|
+|starts,needle,n    |Ensures the value starts with a certain character / set of character starting at a given position.  Position defaults to 0 if not provided. needle = string to search for, n = starting position|
 |phone              |Validate phone numbers that match the following examples: '1234567890', 1234567890, '(078)789-8908', '123-345-3456'|
-|regex              |Pass a custom regex using the following format example for reference: 'regex, ^[a-zA-Z]*$'|
+|regex,pattern      |Pass a custom regex validation. pattern = regex string'|
 
