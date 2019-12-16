@@ -310,6 +310,12 @@ exports.filterValidate = function(object, validators, filters ) {
 
     };
 
+    let filtersMap = {
+
+        encodeURI: property => encodeURI(object[property])
+
+    };
+
     validators.forEach(validator => {
         for (let [property, rules] of Object.entries(validator)) {
             // console.log(`validator ${property}: ${rules}`);
@@ -317,6 +323,18 @@ exports.filterValidate = function(object, validators, filters ) {
             rules.split('|').forEach(segment => {
                 let [rule, ...args] = segment.split(',').map(segment => segment.trim());
                 validatorsMap[rule](property, args);
+            });
+        }
+
+    });
+
+    filters.forEach(filter => {
+        for (let [property, rules] of Object.entries(filter)) {
+            // console.log(`filter ${property}: ${rules}`);
+
+            rules.split('|').forEach(segment => {
+                let [rule, ...args] = segment.split(',').map(segment => segment.trim());
+                filtersMap[rule](property, args);
             });
         }
 
