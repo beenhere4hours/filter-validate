@@ -22,7 +22,7 @@ const filterValidate = require("../index").filterValidate;
 
   `npm test`
   
-## Validators
+## Available Validators
 
 |rule               |description                                               |
 |-------------------|----------------------------------------------------------|
@@ -46,4 +46,10 @@ const filterValidate = require("../index").filterValidate;
 |starts,needle,n    |Ensures the value starts with a certain character / set of character starting at a given position.  Position defaults to 0 if not provided. needle = string to search for, n = starting position|
 |phone              |Validate phone numbers that match the following examples: '1234567890', 1234567890, '(078)789-8908', '123-345-3456'|
 |regex,pattern      |Pass a custom regex validation. pattern = regex string'|
+
+## Available Filters
+
+|rule               |description                                               |
+|-------------------|----------------------------------------------------------|
+|encodeURI          |calls the encodeURI() function|
 
