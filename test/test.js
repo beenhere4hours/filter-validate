@@ -1079,3 +1079,26 @@ describe('check validators', function () {
 
     });
 });
+
+describe('check filters', function () {
+
+    describe('required', function () {
+
+        const validatorRules = [
+            {
+                test: 'sanitizeNumbers'
+            }
+        ];
+
+        it('should check the string "abc123" only contains numbers', function () {
+            const object = {
+                test: 'abc123'
+            };
+
+            let result = filterValidate(object, validatorRules, null);
+            result.filters.should.equal('123');
+        });
+
+    });
+
+});
