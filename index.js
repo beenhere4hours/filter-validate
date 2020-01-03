@@ -5,7 +5,7 @@
  * @param filters {array <object>} stuff
  * @returns {object}
  */
-exports.filterValidate = function(object, validators, filters ) {
+exports.filterValidate = function(object, validators = [], filters = []) {
     let result  = {
         validators: {
             failed: {}
@@ -326,20 +326,21 @@ exports.filterValidate = function(object, validators, filters ) {
     let filtersMap = {
 
         sanitizeNumbers: property => {
-            result.filters['sanitizeNumbers'] = property.replace(/\D/g, '');
+            result.filters.sanitizeNumbers = property.replace(/\D/g, '');
         },
 
     };
 
-    filters.forEach(filter => {
-        for (let [property, rules] of Object.entries(filter)) {
-            console.log(`filter ${property}: ${rules}`);
 
-            rules.split('|').forEach(segment => {
-                let [rule, ...args] = segment.split(',').map(segment => segment.trim());
-                filtersMap[rule](property, args);
-            });
-        }
+    filters.forEach(filter => {
+        // for (let [property, rules] of Object.entries(filter)) {
+        //     console.log(`filter ${property}: ${rules}`);
+
+            // rules.split('|').forEach(segment => {
+            //     let [rule, ...args] = segment.split(',').map(segment => segment.trim());
+            //     filtersMap[rule](property, args);
+            // });
+        // }
 
     });
 
