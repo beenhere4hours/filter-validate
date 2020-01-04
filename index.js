@@ -325,7 +325,11 @@ exports.filterValidate = function(object, validators = [], filters = []) {
     }
 
     let filtersMap = {
-        sanitizeNumbers: property => result.filters.sanitizeNumbers = object[property].replace(/\D/g, '')
+        // remove all characters except digits
+        sanitizeNumbers: property => result.filters.sanitizeNumbers = object[property].replace(/\D/g, ''),
+
+        // remove all characters except letters, digits, and !#$%&'*+-=?^_`{|}~@.[]
+        sanitizeEmail: property => result.filters.sanitizeEmail = object[property].replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, '')
     };
 
 
