@@ -1080,29 +1080,31 @@ describe('filter validate', function () {
 
         });
     });
-});
 
-describe('check filters', function () {
+    describe('check filters', function () {
 
-    describe('sanitizeNumbers', function () {
+        describe('sanitizeNumbers', function () {
 
-        const filterToTest = 'sanitizeNumbers';
+            const filterToTest = 'sanitizeNumbers';
 
-        const filters = [
-            {
-                test: filterToTest
-            }
-        ];
+            const filters = [
+                {
+                    test: filterToTest
+                }
+            ];
 
-        it('should check the string "abc123" only contains numbers as result', function () {
-            const object = {
-                test: 'abc123'
-            };
+            it('should check the string "abc123" only contains numbers as result', function () {
+                const object = {
+                    test: 'abc123'
+                };
 
-            let result = filterValidate(object, [], filters);
-            result.filters[filterToTest].should.equal('123');
+                let result = filterValidate(object, [], filters);
+                result.filters[filterToTest].should.equal('123');
+            });
+
         });
 
     });
 
 });
+
