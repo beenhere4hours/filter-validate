@@ -1081,26 +1081,28 @@ describe('filter validate', function () {
         });
     });
 });
-//
-// describe('check filters', function () {
-//
-//     describe('sanitizeNumbers', function () {
-//
-//         const filters = [
-//             {
-//                 test: 'sanitizeNumbers'
-//             }
-//         ];
-//
-//         it('should check the string "abc123" only contains numbers', function () {
-//             const object = {
-//                 test: 'abc123'
-//             };
-//
-//             let result = filterValidate(object, [], filters);
-//             result.filters.should.equal('123');
-//         });
-//
-//     });
-//
-// });
+
+describe('check filters', function () {
+
+    describe('sanitizeNumbers', function () {
+
+        const filterToTest = 'sanitizeNumbers';
+
+        const filters = [
+            {
+                test: filterToTest
+            }
+        ];
+
+        it('should check the string "abc123" only contains numbers as result', function () {
+            const object = {
+                test: 'abc123'
+            };
+
+            let result = filterValidate(object, [], filters);
+            result.filters[filterToTest].should.equal('123');
+        });
+
+    });
+
+});
