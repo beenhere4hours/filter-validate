@@ -59,74 +59,87 @@ describe('filter validate', function () {
 
         describe('validEmail', function () {
 
-            const validatorRules = [
-                {
-                    test: 'validEmail'
-                }
-            ];
+            describe('valid', function () {
+                const validatorRules = [
+                    {
+                        test: 'validEmail'
+                    }
+                ];
 
-            it('should check "test@gmail.com" is valid', function () {
-                const object = {
-                    test: 'test@gmail.com'
-                };
+                it('should check "test@gmail.com" is valid', function () {
+                    const object = {
+                        test: 'test@gmail.com'
+                    };
 
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check "test.test@gmail.com" is valid', function () {
+                    const object = {
+                        test: 'test.test@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check "test.with+symbol@gmail.com" is valid', function () {
+                    const object = {
+                        test: 'test.with+symbol@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check "test.with-symbol@gmail.com" is valid', function () {
+                    const object = {
+                        test: 'test.with-symbol@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check "x@gmail.com" one character local is valid', function () {
+                    const object = {
+                        test: 'x@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check \'"this.is.awkward@awkward.com"@gmail.com\' is valid', function () {
+                    const object = {
+                        test: '"this.is.awkward@awkward.com"@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
             });
 
-            it('should check "test.test@gmail.com" is valid', function () {
-                const object = {
-                    test: 'test.test@gmail.com'
-                };
+            describe('NOT valid', function () {
+                const validatorRules = [
+                    {
+                        test: 'validEmail'
+                    }
+                ];
 
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+
+                it('should check "testgmail.com" is NOT valid', function () {
+                    const object = {
+                        test: 'testgmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(1);
+                });
+
             });
 
-            it('should check "test.with+symbol@gmail.com" is valid', function () {
-                const object = {
-                    test: 'test.with+symbol@gmail.com'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
-            });
-
-            it('should check "test.with-symbol@gmail.com" is valid', function () {
-                const object = {
-                    test: 'test.with-symbol@gmail.com'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
-            });
-
-            it('should check "x@gmail.com" one character local is valid', function () {
-                const object = {
-                    test: 'x@gmail.com'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
-            });
-
-            it('should check \'"this.is.awkward@awkward.com"@gmail.com\' is valid', function () {
-                const object = {
-                    test: '"this.is.awkward@awkward.com"@gmail.com'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
-            });
-
-            it('should check "testgmail.com" is NOT valid', function () {
-                const object = {
-                    test: 'testgmail.com'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
-            });
         });
 
         describe('maxLen', function () {
