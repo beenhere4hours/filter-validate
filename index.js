@@ -5,11 +5,12 @@
  * @param filters {array <object>} stuff
  * @returns {object}
  */
-exports.filterValidate = function(object, validators, filters ) {
+exports.filterValidate = function(object, validators = [], filters = []) {
     let result  = {
         validators: {
             failed: {}
-        }
+        },
+        filters: {}
     };
 
     let initProperty = (property) => {
@@ -310,17 +311,36 @@ exports.filterValidate = function(object, validators, filters ) {
 
     };
 
-    validators.forEach(validator => {
-        for (let [property, rules] of Object.entries(validator)) {
-            // console.log(`validator ${property}: ${rules}`);
+    if (Array.isArray(validators)) {
+        validators.forEach(validator => {
+            for (let [property, rules] of Object.entries(validator)) {
+                // console.log(`validator ${property}: ${rules}`);
 
-            rules.split('|').forEach(segment => {
-                let [rule, ...args] = segment.split(',').map(segment => segment.trim());
-                validatorsMap[rule](property, args);
-            });
-        }
+                rules.split('|').forEach(segment => {
+                    let [rule, ...args] = segment.split(',').map(segment => segment.trim());
+                    validatorsMap[rule](property, args);
+                });
+            }
+        });
+    }
 
-    });
+    let filtersMap = {
+        sanitizeNumbers: property => result.filters.sanitizeNumbers = object[property].replace(/\D/g, '')
+    };
+
+
+    if (Array.isArray(filters)) {
+        filters.forEach(filter => {
+            for (let [property, rules] of Object.entries(filter)) {
+                // console.log(`filter ${property}: ${rules}`);
+
+                rules.split('|').forEach(segment => {
+                    let [rule, ...args] = segment.split(',').map(segment => segment.trim());
+                    filtersMap[rule](property, args);
+                });
+            }
+        });
+    }
 
     return result;
 };
