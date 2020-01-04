@@ -74,6 +74,15 @@ describe('filter validate', function () {
                 Object.keys(result.validators.failed).length.should.equal(0);
             });
 
+            it('should check "test.test@gmail.com" is valid', function () {
+                const object = {
+                    test: 'test.test@gmail.com'
+                };
+
+                let result = filterValidate(object, validatorRules);
+                Object.keys(result.validators.failed).length.should.equal(0);
+            });
+
             it('should check "testgmail.com" is NOT valid', function () {
                 const object = {
                     test: 'testgmail.com'
