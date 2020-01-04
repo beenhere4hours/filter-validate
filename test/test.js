@@ -66,7 +66,7 @@ describe('filter validate', function () {
                     }
                 ];
 
-                it('should check "test@gmail.com" is valid', function () {
+                it('should check "test@gmail.com"', function () {
                     const object = {
                         test: 'test@gmail.com'
                     };
@@ -75,7 +75,7 @@ describe('filter validate', function () {
                     Object.keys(result.validators.failed).length.should.equal(0);
                 });
 
-                it('should check "test.test@gmail.com" is valid', function () {
+                it('should check "test.test@gmail.com"', function () {
                     const object = {
                         test: 'test.test@gmail.com'
                     };
@@ -84,7 +84,7 @@ describe('filter validate', function () {
                     Object.keys(result.validators.failed).length.should.equal(0);
                 });
 
-                it('should check "test.with+symbol@gmail.com" is valid', function () {
+                it('should check "test.with+symbol@gmail.com"', function () {
                     const object = {
                         test: 'test.with+symbol@gmail.com'
                     };
@@ -93,7 +93,7 @@ describe('filter validate', function () {
                     Object.keys(result.validators.failed).length.should.equal(0);
                 });
 
-                it('should check "test.with-symbol@gmail.com" is valid', function () {
+                it('should check "test.with-symbol@gmail.com"', function () {
                     const object = {
                         test: 'test.with-symbol@gmail.com'
                     };
@@ -102,7 +102,7 @@ describe('filter validate', function () {
                     Object.keys(result.validators.failed).length.should.equal(0);
                 });
 
-                it('should check "x@gmail.com" one character local is valid', function () {
+                it('should check "x@gmail.com" one character local', function () {
                     const object = {
                         test: 'x@gmail.com'
                     };
@@ -111,7 +111,7 @@ describe('filter validate', function () {
                     Object.keys(result.validators.failed).length.should.equal(0);
                 });
 
-                it('should check \'"this.is.awkward@awkward.com"@gmail.com\' is valid', function () {
+                it('should check \'"this.is.awkward@awkward.com"@gmail.com\'', function () {
                     const object = {
                         test: '"this.is.awkward@awkward.com"@gmail.com'
                     };
@@ -119,6 +119,25 @@ describe('filter validate', function () {
                     let result = filterValidate(object, validatorRules);
                     Object.keys(result.validators.failed).length.should.equal(0);
                 });
+
+                it('should check \'"very.(),:;<>[]\\".VERY.\\"very@\\ \\"very\\".unusual@gmail.com\'', function () {
+                    const object = {
+                        test: '"very.(),:;<>[]\\".VERY.\\"very@\\ \\"very\\".unusual@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check "/#!$%&\'*+-/=?^_`{}|~@gmail.com"', function () {
+                    const object = {
+                        test: '/#!$%&\'*+-/=?^_`{}|~@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
             });
 
             describe('NOT valid', function () {
@@ -129,7 +148,7 @@ describe('filter validate', function () {
                 ];
 
 
-                it('should check "testgmail.com" is NOT valid', function () {
+                it('should check "testgmail.com"', function () {
                     const object = {
                         test: 'testgmail.com'
                     };
@@ -138,6 +157,14 @@ describe('filter validate', function () {
                     Object.keys(result.validators.failed).length.should.equal(1);
                 });
 
+                it('should check "admin@webserver1" local domain without top level domain', function () {
+                    const object = {
+                        test: 'admin@webserver1'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(1);
+                });
             });
 
         });
