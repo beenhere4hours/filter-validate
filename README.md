@@ -51,5 +51,5 @@ const filterValidate = require("../index").filterValidate;
 
 |rule               |description                                               |
 |-------------------|----------------------------------------------------------|
-|encodeURI          |calls the encodeURI() function|
+|sanitizeNumbers    |Remove any non-numeric numbers|
 
