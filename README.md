@@ -52,4 +52,5 @@ const filterValidate = require("../index").filterValidate;
 |rule               |description                                               |
 |-------------------|----------------------------------------------------------|
 |sanitizeNumbers    |Remove any non-numeric numbers|
+|sanitizeEmail      |Remove illegal characters from email addresses|
 
