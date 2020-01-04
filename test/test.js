@@ -1104,6 +1104,54 @@ describe('filter validate', function () {
 
         });
 
+        describe('sanitizeEmail', function () {
+
+            const filterToTest = 'sanitizeEmail';
+
+            const filters = [
+                {
+                    test: filterToTest
+                }
+            ];
+
+            it('should check the leading space is removed from " valid.email.address@gmail.com"', function () {
+                const object = {
+                    test: ' valid.email.address@gmail.com'
+                };
+
+                let result = filterValidate(object, [], filters);
+                result.filters[filterToTest].should.equal('valid.email.address@gmail.com');
+            });
+
+            it('should check the trailing space is removed from "valid.email.address@gmail.com "', function () {
+                const object = {
+                    test: 'valid.email.address@gmail.com '
+                };
+
+                let result = filterValidate(object, [], filters);
+                result.filters[filterToTest].should.equal('valid.email.address@gmail.com');
+            });
+
+            it('should check the space is removed from "valid.email .address@gmail.com "', function () {
+                const object = {
+                    test: 'valid.email .address@gmail.com '
+                };
+
+                let result = filterValidate(object, [], filters);
+                result.filters[filterToTest].should.equal('valid.email.address@gmail.com');
+            });
+
+            it('should check the special characters are removed from "a"b(c)d,e:f;gi[j\\k]l@gmail.com" leaving "abcdefgi[jk]l@gmail.com" as a result', function () {
+                const object = {
+                    test: 'a"b(c)d,e:f;gi[j\\k]l@gmail.com'
+                };
+
+                let result = filterValidate(object, [], filters);
+                result.filters[filterToTest].should.equal('abcdefgi[jk]l@gmail.com');
+            });
+
+        });
+
     });
 
 });
