@@ -138,6 +138,15 @@ describe('filter validate', function () {
                     Object.keys(result.validators.failed).length.should.equal(0);
                 });
 
+                it(`should check "()<>[]:,;@\\\\"!#$%&'-/=?^_\`{}|~.a"@example.org`, function () {
+                    const object = {
+                        test: `"()<>[]:,;@\\\\"!#$%&'-/=?^_\`{}|~.a"@example.org`
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
             });
 
             describe('NOT valid', function () {
@@ -165,6 +174,25 @@ describe('filter validate', function () {
                     let result = filterValidate(object, validatorRules);
                     Object.keys(result.validators.failed).length.should.equal(1);
                 });
+
+                it('should check \'" "@gmail.com\'', function () {
+                    const object = {
+                        test: `" "@gmail.com`
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(1);
+                });
+
+                it('should check "user@[IPv6:2001:DB8::1]"', function () {
+                    const object = {
+                        test: 'user@[IPv6:2001:DB8::1]'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(1);
+                });
+
             });
 
         });
