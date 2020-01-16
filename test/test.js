@@ -59,29 +59,142 @@ describe('filter validate', function () {
 
         describe('validEmail', function () {
 
-            const validatorRules = [
-                {
-                    test: 'validEmail'
-                }
-            ];
+            describe('valid', function () {
+                const validatorRules = [
+                    {
+                        test: 'validEmail'
+                    }
+                ];
 
-            it('should check "test@gmail.com" is valid', function () {
-                const object = {
-                    test: 'test@gmail.com'
-                };
+                it('should check "test@gmail.com"', function () {
+                    const object = {
+                        test: 'test@gmail.com'
+                    };
 
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check "test.test@gmail.com"', function () {
+                    const object = {
+                        test: 'test.test@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check "test.with+symbol@gmail.com"', function () {
+                    const object = {
+                        test: 'test.with+symbol@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check "test.with-symbol@gmail.com"', function () {
+                    const object = {
+                        test: 'test.with-symbol@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check "x@gmail.com" one character local', function () {
+                    const object = {
+                        test: 'x@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check \'"this.is.awkward@awkward.com"@gmail.com\'', function () {
+                    const object = {
+                        test: '"this.is.awkward@awkward.com"@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check \'"very.(),:;<>[]\\".VERY.\\"very@\\ \\"very\\".unusual@gmail.com\'', function () {
+                    const object = {
+                        test: '"very.(),:;<>[]\\".VERY.\\"very@\\ \\"very\\".unusual@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it('should check "/#!$%&\'*+-/=?^_`{}|~@gmail.com"', function () {
+                    const object = {
+                        test: '/#!$%&\'*+-/=?^_`{}|~@gmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
+                it(`should check "()<>[]:,;@\\\\"!#$%&'-/=?^_\`{}|~.a"@example.org`, function () {
+                    const object = {
+                        test: `"()<>[]:,;@\\\\"!#$%&'-/=?^_\`{}|~.a"@example.org`
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(0);
+                });
+
             });
 
-            it('should check "testgmail.com" is NOT valid', function () {
-                const object = {
-                    test: 'testgmail.com'
-                };
+            describe('NOT valid', function () {
+                const validatorRules = [
+                    {
+                        test: 'validEmail'
+                    }
+                ];
 
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+
+                it('should check "testgmail.com"', function () {
+                    const object = {
+                        test: 'testgmail.com'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(1);
+                });
+
+                it('should check "admin@webserver1" local domain without top level domain', function () {
+                    const object = {
+                        test: 'admin@webserver1'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(1);
+                });
+
+                it('should check \'" "@gmail.com\'', function () {
+                    const object = {
+                        test: `" "@gmail.com`
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(1);
+                });
+
+                it('should check "user@[IPv6:2001:DB8::1]"', function () {
+                    const object = {
+                        test: 'user@[IPv6:2001:DB8::1]'
+                    };
+
+                    let result = filterValidate(object, validatorRules);
+                    Object.keys(result.validators.failed).length.should.equal(1);
+                });
+
             });
+
         });
 
         describe('maxLen', function () {
@@ -1100,6 +1213,54 @@ describe('filter validate', function () {
 
                 let result = filterValidate(object, [], filters);
                 result.filters[filterToTest].should.equal('123');
+            });
+
+        });
+
+        describe('sanitizeEmail', function () {
+
+            const filterToTest = 'sanitizeEmail';
+
+            const filters = [
+                {
+                    test: filterToTest
+                }
+            ];
+
+            it('should check the leading space is removed from " valid.email.address@gmail.com"', function () {
+                const object = {
+                    test: ' valid.email.address@gmail.com'
+                };
+
+                let result = filterValidate(object, [], filters);
+                result.filters[filterToTest].should.equal('valid.email.address@gmail.com');
+            });
+
+            it('should check the trailing space is removed from "valid.email.address@gmail.com "', function () {
+                const object = {
+                    test: 'valid.email.address@gmail.com '
+                };
+
+                let result = filterValidate(object, [], filters);
+                result.filters[filterToTest].should.equal('valid.email.address@gmail.com');
+            });
+
+            it('should check the space is removed from "valid.email .address@gmail.com "', function () {
+                const object = {
+                    test: 'valid.email .address@gmail.com '
+                };
+
+                let result = filterValidate(object, [], filters);
+                result.filters[filterToTest].should.equal('valid.email.address@gmail.com');
+            });
+
+            it('should check the special characters are removed from "a"b(c)d,e:f;gi[j\\k]l@gmail.com" leaving "abcdefgi[jk]l@gmail.com" as a result', function () {
+                const object = {
+                    test: 'a"b(c)d,e:f;gi[j\\k]l@gmail.com'
+                };
+
+                let result = filterValidate(object, [], filters);
+                result.filters[filterToTest].should.equal('abcdefgi[jk]l@gmail.com');
             });
 
         });
