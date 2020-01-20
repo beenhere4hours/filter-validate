@@ -330,7 +330,16 @@ exports.filterValidate = function(object, validators = [], filters = []) {
         sanitizeNumbers: property => result.filters.sanitizeNumbers = object[property].replace(/\D/g, ''),
 
         // remove all characters except letters, digits, and !#$%&'*+-=?^_`{|}~@.[]
-        sanitizeEmail: property => result.filters.sanitizeEmail = object[property].replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, '')
+        sanitizeEmail: property => result.filters.sanitizeEmail = object[property].replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
+
+        // remove spaces from both sides of string
+        trim: property => result.filters.trim = typeof object[property] === 'string' ? object[property].trim() : object[property],
+
+        // remove spaces from left side of string
+        ltrim: property => result.filters.ltrim = typeof object[property] === 'string' ? object[property].trimStart() : object[property],
+
+        // remove spaces from right side of string
+        rtrim: property => result.filters.rtrim = typeof object[property] === 'string' ? object[property].trimEnd() : object[property],
     };
 
 
