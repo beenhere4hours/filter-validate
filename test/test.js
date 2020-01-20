@@ -1265,6 +1265,69 @@ describe('filter validate', function () {
 
         });
 
+        describe('trim', function () {
+
+            const filterToTest = 'trim';
+
+            const filters = [
+                {
+                    test: filterToTest
+                }
+            ];
+
+            it('should check the string "   abc   " only contains "abc" as result', function () {
+                const object = {
+                    test: '   abc   '
+                };
+
+                let result = filterValidate(object, [], filters);
+                result.filters[filterToTest].should.equal('abc');
+            });
+
+        });
+
+        describe('ltrim', function () {
+
+            const filterToTest = 'ltrim';
+
+            const filters = [
+                {
+                    test: filterToTest
+                }
+            ];
+
+            it('should check the string "   abc   " only contains "abc   " as result', function () {
+                const object = {
+                    test: '   abc   '
+                };
+
+                let result = filterValidate(object, [], filters);
+                result.filters[filterToTest].should.equal('abc   ');
+            });
+
+        });
+
+        describe('rtrim', function () {
+
+            const filterToTest = 'rtrim';
+
+            const filters = [
+                {
+                    test: filterToTest
+                }
+            ];
+
+            it('should check the string "   abc   " only contains "   abc" as result', function () {
+                const object = {
+                    test: '   abc   '
+                };
+
+                let result = filterValidate(object, [], filters);
+                result.filters[filterToTest].should.equal('   abc');
+            });
+
+        });
+
     });
 
 });
