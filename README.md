@@ -53,4 +53,7 @@ const filterValidate = require("../index").filterValidate;
 |-------------------|----------------------------------------------------------|
 |sanitizeNumbers    |Remove any non-numeric numbers|
 |sanitizeEmail      |Remove illegal characters from email addresses|
+|trim               |Remove spaces from both sides of a string|
+|ltrim              |Remove spaces from left side of a string|
+|rtrim              |Remove spaces from the right side of a string|
 
