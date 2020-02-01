@@ -333,13 +333,13 @@ exports.filterValidate = function(object, validators = [], filters = []) {
         sanitizeEmail: property => result.filters.sanitizeEmail = object[property].replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
 
         // remove spaces from both sides of string
-        trim: property => result.filters.trim = typeof object[property] === 'string' ? object[property].trim() : object[property],
+        trim: property => result.filters.trim = object[property].trim(),
 
         // remove spaces from left side of string
-        ltrim: property => result.filters.ltrim = typeof object[property] === 'string' ? object[property].trimStart() : object[property],
+        ltrim: property => result.filters.ltrim = object[property].trimStart(),
 
         // remove spaces from right side of string
-        rtrim: property => result.filters.rtrim = typeof object[property] === 'string' ? object[property].trimEnd() : object[property],
+        rtrim: property => result.filters.rtrim = object[property].trimEnd(),
     };
 
 
