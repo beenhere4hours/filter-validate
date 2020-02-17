@@ -497,8 +497,7 @@ describe('filter validate', function () {
                     test: 42.2
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check -42.2 is float', function () {
@@ -506,8 +505,7 @@ describe('filter validate', function () {
                     test: -42.2
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check 42 is a float', function () {
@@ -515,8 +513,7 @@ describe('filter validate', function () {
                     test: 42
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "42.2" is a float', function () {
@@ -524,8 +521,7 @@ describe('filter validate', function () {
                     test: "42.2"
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check array() is NOT a float', function () {
@@ -533,8 +529,7 @@ describe('filter validate', function () {
                     test: []
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a float', function () {
@@ -542,8 +537,7 @@ describe('filter validate', function () {
                     test: null
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
         });
 
@@ -560,8 +554,7 @@ describe('filter validate', function () {
                     test: 'four'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "five" is NOT in the list', function () {
@@ -569,8 +562,7 @@ describe('filter validate', function () {
                     test: 'five'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
         });
@@ -588,8 +580,7 @@ describe('filter validate', function () {
                     test: 'five'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "four" is IN the list', function () {
@@ -597,8 +588,7 @@ describe('filter validate', function () {
                     test: 'four'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
         });
@@ -616,8 +606,7 @@ describe('filter validate', function () {
                     test: 10
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "10" is higher or equal to 7', function () {
@@ -625,8 +614,7 @@ describe('filter validate', function () {
                     test: '10'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0x539 is higher or equal to 7', function () {
@@ -634,8 +622,7 @@ describe('filter validate', function () {
                     test: 0x539
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0o2471 is higher or equal to 7', function () {
@@ -643,8 +630,7 @@ describe('filter validate', function () {
                     test: 0o2471
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0b10100111001 is higher or equal to 7', function () {
@@ -652,8 +638,7 @@ describe('filter validate', function () {
                     test: 0b10100111001
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check 5 is NOT higher or equal to 7', function () {
@@ -661,8 +646,7 @@ describe('filter validate', function () {
                     test: 5
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check "5" is NOT higher or equal to 7', function () {
@@ -670,8 +654,7 @@ describe('filter validate', function () {
                     test: 5
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a valid value to get min from', function () {
@@ -679,8 +662,7 @@ describe('filter validate', function () {
                     test: null
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
         });
@@ -698,8 +680,7 @@ describe('filter validate', function () {
                     test: 1000
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1000" is lower or equal to 1500', function () {
@@ -707,8 +688,7 @@ describe('filter validate', function () {
                     test: '1000'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0x539 is lower or equal to 1500', function () {
@@ -716,8 +696,7 @@ describe('filter validate', function () {
                     test: 0x539
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0o2471 is lower or equal to 1500', function () {
@@ -725,8 +704,7 @@ describe('filter validate', function () {
                     test: 0o2471
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0b10100111001 is lower or equal to 1500', function () {
@@ -734,8 +712,7 @@ describe('filter validate', function () {
                     test: 0b10100111001
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check 2000 is higher and NOT equal to 1500', function () {
@@ -743,8 +720,7 @@ describe('filter validate', function () {
                     test: 2000
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check "2000" is higher and NOT equal to 1500', function () {
@@ -752,8 +728,7 @@ describe('filter validate', function () {
                     test: 2000
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a valid value to get max from', function () {
@@ -761,8 +736,7 @@ describe('filter validate', function () {
                     test: null
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
         });
@@ -780,8 +754,7 @@ describe('filter validate', function () {
                     test: '1997'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07" is valid', function () {
@@ -789,8 +762,7 @@ describe('filter validate', function () {
                     test: '1997-07'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16" is valid', function () {
@@ -798,8 +770,7 @@ describe('filter validate', function () {
                     test: '1997-07-16'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20+01:00" is valid', function () {
@@ -807,8 +778,7 @@ describe('filter validate', function () {
                     test: '1997-07-16T19:20+01:00'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20+01:00Z" is valid', function () {
@@ -816,8 +786,7 @@ describe('filter validate', function () {
                     test: '1997-07-16T19:20+01:00Z'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20-01:00" is valid', function () {
@@ -825,8 +794,7 @@ describe('filter validate', function () {
                     test: '1997-07-16T19:20-01:00'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20-01:00Z" is valid', function () {
@@ -834,8 +802,7 @@ describe('filter validate', function () {
                     test: '1997-07-16T19:20-01:00Z'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30+01:00" is valid', function () {
@@ -843,8 +810,7 @@ describe('filter validate', function () {
                     test: '1997-07-16T19:20:30+01:00'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30+01:00Z" is valid', function () {
@@ -852,8 +818,7 @@ describe('filter validate', function () {
                     test: '1997-07-16T19:20:30+01:00Z'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30.45+01:00" is valid', function () {
@@ -861,8 +826,7 @@ describe('filter validate', function () {
                     test: '1997-07-16T19:20:30.45+01:00'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30.45+01:00Z" is valid', function () {
@@ -870,8 +834,7 @@ describe('filter validate', function () {
                     test: '1997-07-16T19:20:30.45+01:00Z'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30.45-01:00" is valid', function () {
@@ -879,8 +842,7 @@ describe('filter validate', function () {
                     test: '1997-07-16T19:20:30.45-01:00'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30.45-01:00Z" is valid', function () {
@@ -888,8 +850,7 @@ describe('filter validate', function () {
                     test: '1997-07-16T19:20:30.45-01:00Z'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-13-39T19:58:30.45-01:00Z" is valid', function () {
@@ -897,8 +858,7 @@ describe('filter validate', function () {
                     test: '1997-13-39T19:58:30.45-01:00Z'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "-1997-13-39T19:58:30.45-01:00Z" is valid', function () {
@@ -906,8 +866,7 @@ describe('filter validate', function () {
                     test: '-1997-13-39T19:58:30.45-01:00Z'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "" is NOT a valid date string', function () {
@@ -915,8 +874,7 @@ describe('filter validate', function () {
                     test: ""
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a valid date string', function () {
@@ -924,8 +882,7 @@ describe('filter validate', function () {
                     test: null
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT a valid date string', function () {
@@ -933,8 +890,7 @@ describe('filter validate', function () {
                     test: []
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
         });
@@ -953,8 +909,7 @@ describe('filter validate', function () {
                     test: 'supercalifragilisticexpialidocious'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "supercalifragilisticexpialidocious" starts with "fragilistic" when specifying starting position of 9', function () {
@@ -968,8 +923,7 @@ describe('filter validate', function () {
                     test: 'supercalifragilisticexpialidocious'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "" is NOT a valid search string', function () {
@@ -983,8 +937,7 @@ describe('filter validate', function () {
                     test: ""
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a valid search string', function () {
@@ -998,8 +951,7 @@ describe('filter validate', function () {
                     test: null
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT a valid search string', function () {
@@ -1013,8 +965,7 @@ describe('filter validate', function () {
                     test: []
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
         });
@@ -1032,8 +983,7 @@ describe('filter validate', function () {
                     test: '1234567890'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check 1234567890 is valid', function () {
@@ -1041,8 +991,7 @@ describe('filter validate', function () {
                     test: 1234567890
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "(078)789-8908" is valid', function () {
@@ -1050,8 +999,7 @@ describe('filter validate', function () {
                     test: '(078)789-8908'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "123-345-3456" is valid', function () {
@@ -1059,8 +1007,7 @@ describe('filter validate', function () {
                     test: '123-345-3456'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "" is NOT valid', function () {
@@ -1068,8 +1015,7 @@ describe('filter validate', function () {
                     test: ""
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT valid', function () {
@@ -1077,8 +1023,7 @@ describe('filter validate', function () {
                     test: null
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT valid', function () {
@@ -1086,8 +1031,7 @@ describe('filter validate', function () {
                     test: []
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
         });
@@ -1105,8 +1049,7 @@ describe('filter validate', function () {
                     test: 'abcdefgh'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1234567890" is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
@@ -1114,8 +1057,7 @@ describe('filter validate', function () {
                     test: '1234567890'
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check "" is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
@@ -1123,8 +1065,7 @@ describe('filter validate', function () {
                     test: ""
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
@@ -1132,8 +1073,7 @@ describe('filter validate', function () {
                     test: null
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
@@ -1141,8 +1081,7 @@ describe('filter validate', function () {
                     test: []
                 };
 
-                let result = filterValidate.validate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
             });
 
         });
