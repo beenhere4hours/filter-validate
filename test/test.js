@@ -6,48 +6,26 @@ describe('filter validate', function () {
 
         describe('required', function () {
 
-            const validatorRules = [
-                {
-                    test: 'required'
-                }
-            ];
+            const validatorRules = [{test: 'required'}];
 
             it('should check the test property exists', function () {
-                const object = {
-                    test: 'Calvin'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 'Calvin' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check a property exists and is NOT an empty string ""', function () {
-                const object = {
-                    test: ''
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '' }, validatorRules)).length.should.equal(1);
             });
 
             it('should check a property exists and NOT a null value', function () {
-                const object = {
-                    test: null
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
             it('should check a property exists and NOT an undefined value', function () {
-                const object = {
-                    test: undefined
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: undefined }, validatorRules)).length.should.equal(1);
             });
 
             it('should check the property test does NOT exist', function () {
-                const object = {};
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({}, validatorRules)).length.should.equal(1);
             });
 
         });
@@ -55,82 +33,42 @@ describe('filter validate', function () {
         describe('validEmail', function () {
 
             describe('valid', function () {
-                const validatorRules = [
-                    {
-                        test: 'validEmail'
-                    }
-                ];
+                const validatorRules = [{test: 'validEmail'}];
 
                 it('should check "test@gmail.com"', function () {
-                    const object = {
-                        test: 'test@gmail.com'
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: 'test@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check "test.test@gmail.com"', function () {
-                    const object = {
-                        test: 'test.test@gmail.com'
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: 'test.test@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check "test.with+symbol@gmail.com"', function () {
-                    const object = {
-                        test: 'test.with+symbol@gmail.com'
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: 'test.with+symbol@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check "test.with-symbol@gmail.com"', function () {
-                    const object = {
-                        test: 'test.with-symbol@gmail.com'
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: 'test.with-symbol@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check "x@gmail.com" one character local', function () {
-                    const object = {
-                        test: 'x@gmail.com'
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: 'x@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check \'"this.is.awkward@awkward.com"@gmail.com\'', function () {
-                    const object = {
-                        test: '"this.is.awkward@awkward.com"@gmail.com'
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: '"this.is.awkward@awkward.com"@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check \'"very.(),:;<>[]\\".VERY.\\"very@\\ \\"very\\".unusual@gmail.com\'', function () {
-                    const object = {
-                        test: '"very.(),:;<>[]\\".VERY.\\"very@\\ \\"very\\".unusual@gmail.com'
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: '"very.(),:;<>[]\\".VERY.\\"very@\\ \\"very\\".unusual@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check "/#!$%&\'*+-/=?^_`{}|~@gmail.com"', function () {
-                    const object = {
-                        test: '/#!$%&\'*+-/=?^_`{}|~@gmail.com'
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                    Object.keys(filterValidate.validate({ test: '/#!$%&\'*+-/=?^_`{}|~@gmail.com' }, validatorRules)).length.should.equal(0);
                 });
 
                 it(`should check "()<>[]:,;@\\\\"!#$%&'-/=?^_\`{}|~.a"@example.org`, function () {
-                    const object = {
-                        test: `"()<>[]:,;@\\\\"!#$%&'-/=?^_\`{}|~.a"@example.org`
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                    Object.keys(filterValidate.validate({ test: `"()<>[]:,;@\\\\"!#$%&'-/=?^_\`{}|~.a"@example.org` }, validatorRules)).length.should.equal(0);
                 });
 
             });
@@ -142,21 +80,12 @@ describe('filter validate', function () {
                     }
                 ];
 
-
                 it('should check "testgmail.com"', function () {
-                    const object = {
-                        test: 'testgmail.com'
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                    Object.keys(filterValidate.validate({ test: 'testgmail.com' }, validatorRules)).length.should.equal(1);
                 });
 
                 it('should check "admin@webserver1" local domain without top level domain', function () {
-                    const object = {
-                        test: 'admin@webserver1'
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                    Object.keys(filterValidate.validate({ test: 'admin@webserver1' }, validatorRules)).length.should.equal(1);
                 });
 
                 it('should check \'" "@gmail.com\'', function () {
