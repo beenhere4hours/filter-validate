@@ -74,11 +74,7 @@ describe('filter validate', function () {
             });
 
             describe('NOT valid', function () {
-                const validatorRules = [
-                    {
-                        test: 'validEmail'
-                    }
-                ];
+                const validatorRules = [{ test: 'validEmail' }];
 
                 it('should check "testgmail.com"', function () {
                     Object.keys(filterValidate.validate({ test: 'testgmail.com' }, validatorRules)).length.should.equal(1);
@@ -89,19 +85,11 @@ describe('filter validate', function () {
                 });
 
                 it('should check \'" "@gmail.com\'', function () {
-                    const object = {
-                        test: `" "@gmail.com`
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                    Object.keys(filterValidate.validate({ test: `" "@gmail.com` }, validatorRules)).length.should.equal(1);
                 });
 
                 it('should check "user@[IPv6:2001:DB8::1]"', function () {
-                    const object = {
-                        test: 'user@[IPv6:2001:DB8::1]'
-                    };
-
-                    Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                    Object.keys(filterValidate.validate({ test: 'user@[IPv6:2001:DB8::1]' }, validatorRules)).length.should.equal(1);
                 });
 
             });
@@ -109,126 +97,66 @@ describe('filter validate', function () {
         });
 
         describe('maxLen', function () {
-            const validatorRules = [
-                {
-                    test: 'maxLen,7'
-                }
-            ];
+            const validatorRules = [ { test: 'maxLen,7' } ];
 
             it('should check the string does not exceed max length', function () {
-                const object = {
-                    test: '12345'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '12345' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check the string exceeds the given max length', function () {
-                const object = {
-                    test: '1234567890'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '1234567890' }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('minLen', function () {
 
-            const validatorRules = [
-                {
-                    test: 'minLen,7'
-                }
-            ];
+            const validatorRules = [ { test: 'minLen,7' } ];
 
             it('should check the string is not shorter than the minimum length', function () {
-                const object = {
-                    test: '1234567890'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1234567890' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check the string is shorter than the minimum length', function () {
-                const object = {
-                    test: '12345'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '12345' }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('exactLen', function () {
 
-            const validatorRules = [
-                {
-                    test: 'exactLen,10'
-                }
-            ];
+            const validatorRules = [ { test: 'exactLen,10' } ];
 
             it('should check the string length is the given length', function () {
-                const object = {
-                    test: '1234567890'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1234567890' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check the string length does not match the given length', function () {
-                const object = {
-                    test: '12345'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '12345' }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('alpha', function () {
 
-            const validatorRules = [
-                {
-                    test: 'alpha'
-                }
-            ];
+            const validatorRules = [ { test: 'alpha' } ];
 
             it('should check "abcABC" contains only a-z, A-Z', function () {
-                const object = {
-                    test: 'abcABC'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 'abcABC' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "12345" is NOT in a-z, A-Z', function () {
-                const object = {
-                    test: '12345'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '12345' }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('alphaNumeric', function () {
 
-            const validatorRules = [
-                {
-                    test: 'alphaNumeric'
-                }
-            ];
+            const validatorRules = [ { test: 'alphaNumeric' } ];
 
             it('should check "abcABC123" contains characters in the range of a-z, A-Z, 0-9', function () {
-                const object = {
-                    test: 'abcABC123'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 'abcABC123' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "@#$%^&" contains characters NOT in the range of a-z, A-Z, 0-9', function () {
-                const object = {
-                    test: '@#$%^&'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '@#$%^&' }, validatorRules)).length.should.equal(1);
             });
         });
 
