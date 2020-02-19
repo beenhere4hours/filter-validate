@@ -319,28 +319,23 @@ exports.filterValidate = {
     },
 
     filter: (object, filters = []) => {
-        let result  = {
-            validators: {
-                failed: {}
-            },
-            filters: {}
-        };
+        let result  = {};
 
         let filtersMap = {
             // remove all characters except digits
-            sanitizeNumbers: property => result.filters.sanitizeNumbers = object[property].replace(/\D/g, ''),
+            sanitizeNumbers: property => result.sanitizeNumbers = object[property].replace(/\D/g, ''),
 
             // remove all characters except letters, digits, and !#$%&'*+-=?^_`{|}~@.[]
-            sanitizeEmail: property => result.filters.sanitizeEmail = object[property].replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
+            sanitizeEmail: property => result.sanitizeEmail = object[property].replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
 
             // remove spaces from both sides of string
-            trim: property => result.filters.trim = object[property].trim(),
+            trim: property => result.trim = object[property].trim(),
 
             // remove spaces from left side of string
-            ltrim: property => result.filters.ltrim = object[property].trimStart(),
+            ltrim: property => result.ltrim = object[property].trimStart(),
 
             // remove spaces from right side of string
-            rtrim: property => result.filters.rtrim = object[property].trimEnd(),
+            rtrim: property => result.rtrim = object[property].trimEnd(),
         };
 
         if (Array.isArray(filters)) {
