@@ -249,11 +249,7 @@ describe('filter validate', function () {
             });
 
             it('should check null is NOT an integer', function () {
-                const object = {
-                    test: null
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
         });
 
@@ -354,228 +350,116 @@ describe('filter validate', function () {
 
         describe('maxNumeric', function () {
 
-            const validatorRules = [
-                {
-                    test: 'maxNumeric,1500'
-                }
-            ];
+            const validatorRules = [ { test: 'maxNumeric,1500' } ];
 
             it('should check 1000 is lower or equal to 1500', function () {
-                const object = {
-                    test: 1000
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 1000 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1000" is lower or equal to 1500', function () {
-                const object = {
-                    test: '1000'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1000' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0x539 is lower or equal to 1500', function () {
-                const object = {
-                    test: 0x539
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 0x539 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0o2471 is lower or equal to 1500', function () {
-                const object = {
-                    test: 0o2471
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 0o2471 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0b10100111001 is lower or equal to 1500', function () {
-                const object = {
-                    test: 0b10100111001
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 0b10100111001 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 2000 is higher and NOT equal to 1500', function () {
-                const object = {
-                    test: 2000
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: 2000 }, validatorRules)).length.should.equal(1);
             });
 
             it('should check "2000" is higher and NOT equal to 1500', function () {
-                const object = {
-                    test: 2000
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: 2000 }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a valid value to get max from', function () {
-                const object = {
-                    test: null
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
         });
 
         describe('date', function () {
 
-            const validatorRules = [
-                {
-                    test: 'date'
-                }
-            ];
+            const validatorRules = [ { test: 'date' } ];
 
             it('should check "1997" is valid', function () {
-                const object = {
-                    test: '1997'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07" is valid', function () {
-                const object = {
-                    test: '1997-07'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16" is valid', function () {
-                const object = {
-                    test: '1997-07-16'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20+01:00" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20+01:00'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20+01:00' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20+01:00Z" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20+01:00Z'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20+01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20-01:00" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20-01:00'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20-01:00' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20-01:00Z" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20-01:00Z'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20-01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30+01:00" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20:30+01:00'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20:30+01:00' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30+01:00Z" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20:30+01:00Z'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20:30+01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30.45+01:00" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20:30.45+01:00'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20:30.45+01:00' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30.45+01:00Z" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20:30.45+01:00Z'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20:30.45+01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30.45-01:00" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20:30.45-01:00'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20:30.45-01:00' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30.45-01:00Z" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20:30.45-01:00Z'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20:30.45-01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-13-39T19:58:30.45-01:00Z" is valid', function () {
-                const object = {
-                    test: '1997-13-39T19:58:30.45-01:00Z'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-13-39T19:58:30.45-01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "-1997-13-39T19:58:30.45-01:00Z" is valid', function () {
-                const object = {
-                    test: '-1997-13-39T19:58:30.45-01:00Z'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '-1997-13-39T19:58:30.45-01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "" is NOT a valid date string', function () {
-                const object = {
-                    test: ""
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: "" }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a valid date string', function () {
-                const object = {
-                    test: null
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT a valid date string', function () {
-                const object = {
-                    test: []
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: [] }, validatorRules)).length.should.equal(1);
             });
 
         });
@@ -584,189 +468,88 @@ describe('filter validate', function () {
 
             // test: 'supercalifragilisticexpialidocious'
             it('should check "supercalifragilisticexpialidocious" starts with "super" while defaulting to 0 starting position', function () {
-                const validatorRules = [
-                    {
-                        test: 'starts, super'
-                    }
-                ];
-
-                const object = {
-                    test: 'supercalifragilisticexpialidocious'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                const validatorRules = [ { test: 'starts, super' } ];
+                Object.keys(filterValidate.validate({ test: 'supercalifragilisticexpialidocious' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "supercalifragilisticexpialidocious" starts with "fragilistic" when specifying starting position of 9', function () {
-                const validatorRules = [
-                    {
-                        test: 'starts, fragilistic, 9'
-                    }
-                ];
-
-                const object = {
-                    test: 'supercalifragilisticexpialidocious'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                const validatorRules = [ { test: 'starts, fragilistic, 9' } ];
+                Object.keys(filterValidate.validate({ test: 'supercalifragilisticexpialidocious' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "" is NOT a valid search string', function () {
-                const validatorRules = [
-                    {
-                        test: 'starts, super'
-                    }
-                ];
-
-                const object = {
-                    test: ""
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                const validatorRules = [ { test: 'starts, super' } ];
+                Object.keys(filterValidate.validate({ test: "" }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a valid search string', function () {
-                const validatorRules = [
-                    {
-                        test: 'starts, super'
-                    }
-                ];
-
-                const object = {
-                    test: null
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                const validatorRules = [ { test: 'starts, super' } ];
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT a valid search string', function () {
-                const validatorRules = [
-                    {
-                        test: 'starts, super'
-                    }
-                ];
-
-                const object = {
-                    test: []
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                const validatorRules = [ { test: 'starts, super' } ];
+                Object.keys(filterValidate.validate({ test: [] }, validatorRules)).length.should.equal(1);
             });
 
         });
 
         describe('phone', function () {
 
-            const validatorRules = [
-                {
-                    test: 'phone'
-                }
-            ];
+            const validatorRules = [ { test: 'phone' } ];
 
             it('should check "1234567890" is valid', function () {
-                const object = {
-                    test: '1234567890'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1234567890' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 1234567890 is valid', function () {
-                const object = {
-                    test: 1234567890
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 1234567890 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "(078)789-8908" is valid', function () {
-                const object = {
-                    test: '(078)789-8908'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '(078)789-8908' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "123-345-3456" is valid', function () {
-                const object = {
-                    test: '123-345-3456'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '123-345-3456' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "" is NOT valid', function () {
-                const object = {
-                    test: ""
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: "" }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT valid', function () {
-                const object = {
-                    test: null
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT valid', function () {
-                const object = {
-                    test: []
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: [] }, validatorRules)).length.should.equal(1);
             });
 
         });
 
         describe('regex', function () {
 
-            const validatorRules = [
-                {
-                    test: 'regex, ^[a-zA-Z]*$'
-                }
-            ];
+            const validatorRules = [ { test: 'regex, ^[a-zA-Z]*$' } ];
 
             it('should check "abcdefgh" is valid with string regex pattern of "^[a-zA-Z]*$"', function () {
-                const object = {
-                    test: 'abcdefgh'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 'abcdefgh' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1234567890" is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
-                const object = {
-                    test: '1234567890'
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '1234567890' }, validatorRules)).length.should.equal(1);
             });
 
             it('should check "" is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
-                const object = {
-                    test: ""
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: "" }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
-                const object = {
-                    test: null
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
-                const object = {
-                    test: []
-                };
-
-                Object.keys(filterValidate.validate(object, validatorRules)).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: [] }, validatorRules)).length.should.equal(1);
             });
 
         });
