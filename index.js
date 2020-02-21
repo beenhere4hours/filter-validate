@@ -1,3 +1,32 @@
+let result = {};
+
+let input = {};
+
+let setup = object => {
+    result = {};
+    input = {};
+    // make a shallow copy of the input
+    input = {...object};
+};
+
+let filtersMap = {
+    // remove all characters except digits
+    sanitizeNumbers: property => result.sanitizeNumbers = input[property].replace(/\D/g, ''),
+
+    // remove all characters except letters, digits, and !#$%&'*+-=?^_`{|}~@.[]
+    sanitizeEmail: property => result.sanitizeEmail = input[property].replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
+
+    // remove spaces from both sides of string
+    trim: property => result.trim = input[property].trim(),
+
+    // remove spaces from left side of string
+    ltrim: property => result.ltrim = input[property].trimStart(),
+
+    // remove spaces from right side of string
+    rtrim: property => result.rtrim = input[property].trimEnd(),
+};
+
+
 exports.filterValidate = {
 
     validate: (object, validators = []) => {
@@ -318,37 +347,29 @@ exports.filterValidate = {
         return result;
     },
 
-    filter: (object, filters = []) => {
-        let result  = {};
+    filter: (object = {}, filters = []) => {
+        setup(object);
 
-        let filtersMap = {
-            // remove all characters except digits
-            sanitizeNumbers: property => result.sanitizeNumbers = object[property].replace(/\D/g, ''),
+        if (Object.prototype.toString.call(object) === '[object Object]') {
 
-            // remove all characters except letters, digits, and !#$%&'*+-=?^_`{|}~@.[]
-            sanitizeEmail: property => result.sanitizeEmail = object[property].replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
+            if (Array.isArray(filters)) {
+                filters.forEach(filter => {
+                    // property must be the same name in the filter as it is in the object we're testing
+                    // rules is a pipe delimited string like 'trim|sanitizeEmail'
 
-            // remove spaces from both sides of string
-            trim: property => result.trim = object[property].trim(),
+                    for (let [property, rules] of Object.entries(filter)) {
+                        // console.log(`property: ${property} rules: ${rules}`);
 
-            // remove spaces from left side of string
-            ltrim: property => result.ltrim = object[property].trimStart(),
-
-            // remove spaces from right side of string
-            rtrim: property => result.rtrim = object[property].trimEnd(),
-        };
-
-        if (Array.isArray(filters)) {
-            filters.forEach(filter => {
-                for (let [property, rules] of Object.entries(filter)) {
-                    // console.log(`filter ${property}: ${rules}`);
-
-                    rules.split('|').forEach(segment => {
-                        let [rule, ...args] = segment.split(',').map(segment => segment.trim());
-                        filtersMap[rule](property, args);
-                    });
-                }
-            });
+                        if (typeof rules === 'string') {
+                            rules.split('|').forEach(segment => {
+                                let [rule, ...args] = segment.split(',').map(segment => segment.trim());
+                                // call the corresponding function on the filter map
+                                filtersMap[rule](property, args);
+                            });
+                        }
+                    }
+                });
+            }
         }
 
         return result;
