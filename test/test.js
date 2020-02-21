@@ -559,13 +559,8 @@ describe('filter validate', function () {
 
         describe('sanitizeNumbers', function () {
 
-            const filterToTest = 'sanitizeNumbers';
-
-            const filters = [ { test: filterToTest } ];
-
             it('should check the string "abc123" only contains numbers as result', function () {
-                let result = filterValidate.filter({ test: 'abc123' }, filters);
-                result[filterToTest].should.equal('123');
+                filterValidate.filter({ test: 'abc123' }, [ { test: 'sanitizeNumbers'} ]).sanitizeNumbers.should.equal('123');
             });
 
         });
