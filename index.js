@@ -2,13 +2,6 @@ let result = {};
 
 let input = {};
 
-let setup = object => {
-    result = {};
-    input = {};
-    // make a shallow copy of the input
-    input = {...object};
-};
-
 const initProperty = property => {
     if (!result.hasOwnProperty(property)) {
         result[property] = [];
@@ -325,52 +318,37 @@ let validatorsMap = {
 
 };
 
+const test = (map, object = {}, items = []) => {
+    result = {};
+    input = {};
+    // make a shallow copy of the input
+    input = {...object};
+
+    if (Object.prototype.toString.call(object) === '[object Object]' && Array.isArray(items)) {
+        items.forEach(item => {
+            for (let [property, rules] of Object.entries(item)) {
+                // console.log(`property: ${property} rules: ${rules}`);
+
+                if (typeof rules === 'string') {
+                    rules.split('|').forEach(segment => {
+                        let [rule, ...args] = segment.split(',').map(segment => segment.trim());
+                        map[rule](property, args);
+                    });
+                }
+            }
+        });
+    }
+};
+
 exports.filterValidate = {
 
     validate: (object, validators = []) => {
-        setup(object);
-
-        if (Array.isArray(validators)) {
-            validators.forEach(validator => {
-                for (let [property, rules] of Object.entries(validator)) {
-                    // console.log(`property: ${property} rules: ${rules}`);
-
-                    rules.split('|').forEach(segment => {
-                        let [rule, ...args] = segment.split(',').map(segment => segment.trim());
-                        validatorsMap[rule](property, args);
-                    });
-                }
-            });
-        }
-
+        test(validatorsMap, object, validators);
         return result;
     },
 
     filter: (object = {}, filters = []) => {
-        setup(object);
-
-        if (Object.prototype.toString.call(object) === '[object Object]') {
-
-            if (Array.isArray(filters)) {
-                filters.forEach(filter => {
-                    // property must be the same name in the filter as it is in the object we're testing
-                    // rules is a pipe delimited string like 'trim|sanitizeEmail'
-
-                    for (let [property, rules] of Object.entries(filter)) {
-                        // console.log(`property: ${property} rules: ${rules}`);
-
-                        if (typeof rules === 'string') {
-                            rules.split('|').forEach(segment => {
-                                let [rule, ...args] = segment.split(',').map(segment => segment.trim());
-                                // call the corresponding function on the filter map
-                                filtersMap[rule](property, args);
-                            });
-                        }
-                    }
-                });
-            }
-        }
-
+        test(filtersMap, object, filters);
         return result;
     }
 };
