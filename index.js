@@ -318,7 +318,7 @@ let validatorsMap = {
 
 };
 
-const test = (map, object = {}, items = []) => {
+const parse = (map, object = {}, items = []) => {
     result = {};
     input = {};
     // make a shallow copy of the input
@@ -343,12 +343,12 @@ const test = (map, object = {}, items = []) => {
 exports.filterValidate = {
 
     validate: (object, validators = []) => {
-        test(validatorsMap, object, validators);
+        parse(validatorsMap, object, validators);
         return result;
     },
 
     filter: (object = {}, filters = []) => {
-        test(filtersMap, object, filters);
+        parse(filtersMap, object, filters);
         return result;
     }
 };
