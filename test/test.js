@@ -1,6 +1,8 @@
 const should = require('chai').should();
-const filterValidate = require("../index").filterValidate;
+const FilterValidate = require("../index");
+
 describe('filter validate', function () {
+    const filterValidate = new FilterValidate();
 
     describe('check validators', function () {
 
