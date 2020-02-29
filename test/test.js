@@ -2,9 +2,9 @@ const should = require('chai').should();
 const FilterValidate = require("../index");
 
 describe('filter validate', function () {
-    const filterValidate = new FilterValidate();
 
     describe('check validators', function () {
+        const filterValidate = new FilterValidate();
 
         describe('required', function () {
 
@@ -558,6 +558,7 @@ describe('filter validate', function () {
     });
 
     describe('check filters', function () {
+        const filterValidate = new FilterValidate();
 
         describe('sanitizeNumbers', function () {
 
