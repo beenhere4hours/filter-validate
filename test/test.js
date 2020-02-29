@@ -1,58 +1,33 @@
 const should = require('chai').should();
-const filterValidate = require("../index").filterValidate;
+const FilterValidate = require("../index");
+
 describe('filter validate', function () {
 
     describe('check validators', function () {
+        const filterValidate = new FilterValidate();
 
         describe('required', function () {
 
-            const validatorRules = [
-                {
-                    test: 'required'
-                }
-            ];
+            const validatorRules = [{test: 'required'}];
 
             it('should check the test property exists', function () {
-                const object = {
-                    test: 'Calvin'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 'Calvin' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check a property exists and is NOT an empty string ""', function () {
-                const object = {
-                    test: ''
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '' }, validatorRules)).length.should.equal(1);
             });
 
             it('should check a property exists and NOT a null value', function () {
-                const object = {
-                    test: null
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
             it('should check a property exists and NOT an undefined value', function () {
-                const object = {
-                    test: undefined
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: undefined }, validatorRules)).length.should.equal(1);
             });
 
             it('should check the property test does NOT exist', function () {
-                const object = {};
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({}, validatorRules)).length.should.equal(1);
             });
 
         });
@@ -60,137 +35,63 @@ describe('filter validate', function () {
         describe('validEmail', function () {
 
             describe('valid', function () {
-                const validatorRules = [
-                    {
-                        test: 'validEmail'
-                    }
-                ];
+                const validatorRules = [{test: 'validEmail'}];
 
                 it('should check "test@gmail.com"', function () {
-                    const object = {
-                        test: 'test@gmail.com'
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: 'test@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check "test.test@gmail.com"', function () {
-                    const object = {
-                        test: 'test.test@gmail.com'
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: 'test.test@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check "test.with+symbol@gmail.com"', function () {
-                    const object = {
-                        test: 'test.with+symbol@gmail.com'
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: 'test.with+symbol@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check "test.with-symbol@gmail.com"', function () {
-                    const object = {
-                        test: 'test.with-symbol@gmail.com'
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: 'test.with-symbol@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check "x@gmail.com" one character local', function () {
-                    const object = {
-                        test: 'x@gmail.com'
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: 'x@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check \'"this.is.awkward@awkward.com"@gmail.com\'', function () {
-                    const object = {
-                        test: '"this.is.awkward@awkward.com"@gmail.com'
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: '"this.is.awkward@awkward.com"@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check \'"very.(),:;<>[]\\".VERY.\\"very@\\ \\"very\\".unusual@gmail.com\'', function () {
-                    const object = {
-                        test: '"very.(),:;<>[]\\".VERY.\\"very@\\ \\"very\\".unusual@gmail.com'
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(0);
+                    Object.keys(filterValidate.validate({test: '"very.(),:;<>[]\\".VERY.\\"very@\\ \\"very\\".unusual@gmail.com'}, validatorRules)).length.should.equal(0);
                 });
 
                 it('should check "/#!$%&\'*+-/=?^_`{}|~@gmail.com"', function () {
-                    const object = {
-                        test: '/#!$%&\'*+-/=?^_`{}|~@gmail.com'
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(0);
+                    Object.keys(filterValidate.validate({ test: '/#!$%&\'*+-/=?^_`{}|~@gmail.com' }, validatorRules)).length.should.equal(0);
                 });
 
                 it(`should check "()<>[]:,;@\\\\"!#$%&'-/=?^_\`{}|~.a"@example.org`, function () {
-                    const object = {
-                        test: `"()<>[]:,;@\\\\"!#$%&'-/=?^_\`{}|~.a"@example.org`
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(0);
+                    Object.keys(filterValidate.validate({ test: `"()<>[]:,;@\\\\"!#$%&'-/=?^_\`{}|~.a"@example.org` }, validatorRules)).length.should.equal(0);
                 });
 
             });
 
             describe('NOT valid', function () {
-                const validatorRules = [
-                    {
-                        test: 'validEmail'
-                    }
-                ];
-
+                const validatorRules = [{ test: 'validEmail' }];
 
                 it('should check "testgmail.com"', function () {
-                    const object = {
-                        test: 'testgmail.com'
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(1);
+                    Object.keys(filterValidate.validate({ test: 'testgmail.com' }, validatorRules)).length.should.equal(1);
                 });
 
                 it('should check "admin@webserver1" local domain without top level domain', function () {
-                    const object = {
-                        test: 'admin@webserver1'
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(1);
+                    Object.keys(filterValidate.validate({ test: 'admin@webserver1' }, validatorRules)).length.should.equal(1);
                 });
 
                 it('should check \'" "@gmail.com\'', function () {
-                    const object = {
-                        test: `" "@gmail.com`
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(1);
+                    Object.keys(filterValidate.validate({ test: `" "@gmail.com` }, validatorRules)).length.should.equal(1);
                 });
 
                 it('should check "user@[IPv6:2001:DB8::1]"', function () {
-                    const object = {
-                        test: 'user@[IPv6:2001:DB8::1]'
-                    };
-
-                    let result = filterValidate(object, validatorRules);
-                    Object.keys(result.validators.failed).length.should.equal(1);
+                    Object.keys(filterValidate.validate({ test: 'user@[IPv6:2001:DB8::1]' }, validatorRules)).length.should.equal(1);
                 });
 
             });
@@ -198,789 +99,369 @@ describe('filter validate', function () {
         });
 
         describe('maxLen', function () {
-            const validatorRules = [
-                {
-                    test: 'maxLen,7'
-                }
-            ];
+            const validatorRules = [ { test: 'maxLen,7' } ];
 
             it('should check the string does not exceed max length', function () {
-                const object = {
-                    test: '12345'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '12345' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check the string exceeds the given max length', function () {
-                const object = {
-                    test: '1234567890'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '1234567890' }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('minLen', function () {
 
-            const validatorRules = [
-                {
-                    test: 'minLen,7'
-                }
-            ];
+            const validatorRules = [ { test: 'minLen,7' } ];
 
             it('should check the string is not shorter than the minimum length', function () {
-                const object = {
-                    test: '1234567890'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1234567890' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check the string is shorter than the minimum length', function () {
-                const object = {
-                    test: '12345'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '12345' }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('exactLen', function () {
 
-            const validatorRules = [
-                {
-                    test: 'exactLen,10'
-                }
-            ];
+            const validatorRules = [ { test: 'exactLen,10' } ];
 
             it('should check the string length is the given length', function () {
-                const object = {
-                    test: '1234567890'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1234567890' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check the string length does not match the given length', function () {
-                const object = {
-                    test: '12345'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '12345' }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('alpha', function () {
 
-            const validatorRules = [
-                {
-                    test: 'alpha'
-                }
-            ];
+            const validatorRules = [ { test: 'alpha' } ];
 
             it('should check "abcABC" contains only a-z, A-Z', function () {
-                const object = {
-                    test: 'abcABC'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 'abcABC' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "12345" is NOT in a-z, A-Z', function () {
-                const object = {
-                    test: '12345'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '12345' }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('alphaNumeric', function () {
 
-            const validatorRules = [
-                {
-                    test: 'alphaNumeric'
-                }
-            ];
+            const validatorRules = [ { test: 'alphaNumeric' } ];
 
             it('should check "abcABC123" contains characters in the range of a-z, A-Z, 0-9', function () {
-                const object = {
-                    test: 'abcABC123'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 'abcABC123' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "@#$%^&" contains characters NOT in the range of a-z, A-Z, 0-9', function () {
-                const object = {
-                    test: '@#$%^&'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '@#$%^&' }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('alphaDash', function () {
 
-            const validatorRules = [
-                {
-                    test: 'alphaDash'
-                }
-            ];
+            const validatorRules = [ { test: 'alphaDash' } ];
 
             it('should check the string contains only a-z, A-Z, 0-9, underscore, and dash', function () {
-                const object = {
-                    test: 'abcABC123-_'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 'abcABC123-_' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check the string contains characters not in a-z, A-Z, 0-9, underscore, and dash', function () {
-                const object = {
-                    test: '@#$%^&'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '@#$%^&' }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('alphaSpace', function () {
 
-            const validatorRules = [
-                {
-                    test: 'alphaSpace'
-                }
-            ];
+            const validatorRules = [ { test: 'alphaSpace' } ];
 
             it('should check the string contains only a-z, A-Z, 0-9, \s', function () {
-                const object = {
-                    test: 'abc ABC 123 '
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 'abc ABC 123 ' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check the string contains characters not in a-z, A-Z, 0-9, \s', function () {
-                const object = {
-                    test: '@#$%^&'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '@#$%^&' }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('numeric', function () {
 
-            const validatorRules = [
-                {
-                    test: 'numeric'
-                }
-            ];
+            const validatorRules = [ { test: 'numeric' } ];
 
             it('should check "42" is numeric', function () {
-                const object = {
-                    test: '42'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '42' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0x539 is numeric', function () {
-                const object = {
-                    test: 0x539
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 0x539 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0o2471 is numeric', function () {
-                const object = {
-                    test: 0o2471
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 0o2471 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0b10100111001 is numeric', function () {
-                const object = {
-                    test: 0b10100111001
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 0b10100111001 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 9.1 is numeric', function () {
-                const object = {
-                    test: 9.1
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 9.1 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "not numeric" is NOT numeric', function () {
-                const object = {
-                    test: 'not numeric'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: 'not numeric' }, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT numeric', function () {
-                const object = {
-                    test: []
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: [] }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT numeric', function () {
-                const object = {
-                    test: null
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
         });
 
         describe('integer', function () {
 
-            const validatorRules = [
-                {
-                    test: 'integer'
-                }
-            ];
+            const validatorRules = [ { test: 'integer' } ];
 
             it('should check 42 is integer', function () {
-                const object = {
-                    test: 42
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 42 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check -42 is integer', function () {
-                const object = {
-                    test: -42
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: -42 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 42.2 is NOT an integer', function () {
-                const object = {
-                    test: 42.2
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: 42.2 }, validatorRules)).length.should.equal(1);
             });
 
             it('should check "42" is NOT an integer', function () {
-                const object = {
-                    test: "42"
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: "42" }, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT an integer', function () {
-                const object = {
-                    test: []
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: [] }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT an integer', function () {
-                const object = {
-                    test: null
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('float', function () {
 
-            const validatorRules = [
-                {
-                    test: 'float'
-                }
-            ];
+            const validatorRules = [ { test: 'float' } ];
 
             it('should check 42.2 is float', function () {
-                const object = {
-                    test: 42.2
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 42.2 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check -42.2 is float', function () {
-                const object = {
-                    test: -42.2
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: -42.2 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 42 is a float', function () {
-                const object = {
-                    test: 42
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 42 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "42.2" is a float', function () {
-                const object = {
-                    test: "42.2"
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: "42.2" }, validatorRules)).length.should.equal(0);
             });
 
             it('should check array() is NOT a float', function () {
-                const object = {
-                    test: []
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: [] }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a float', function () {
-                const object = {
-                    test: null
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
         });
 
         describe('containedInList', function () {
 
-            const validatorRules = [
-                {
-                    test: 'containedInList, one; two; three; four; tell me more;'
-                }
-            ];
+            const validatorRules = [ { test: 'containedInList, one; two; three; four; tell me more;' } ];
 
             it('should check "four" is in the list', function () {
-                const object = {
-                    test: 'four'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 'four' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "five" is NOT in the list', function () {
-                const object = {
-                    test: 'five'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: 'five' }, validatorRules)).length.should.equal(1);
             });
 
         });
 
         describe('notContainedInList', function () {
 
-            const validatorRules = [
-                {
-                    test: 'notContainedInList, one; two; three; four; tell me more;'
-                }
-            ];
+            const validatorRules = [ { test: 'notContainedInList, one; two; three; four; tell me more;' } ];
 
             it('should check "five" is not in the list', function () {
-                const object = {
-                    test: 'five'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 'five' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "four" is IN the list', function () {
-                const object = {
-                    test: 'four'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: 'four' }, validatorRules)).length.should.equal(1);
             });
 
         });
 
         describe('minNumeric', function () {
 
-            const validatorRules = [
-                {
-                    test: 'minNumeric,7'
-                }
-            ];
+            const validatorRules = [ { test: 'minNumeric,7' } ];
 
             it('should check 10 is higher or equal to 7', function () {
-                const object = {
-                    test: 10
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 10 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "10" is higher or equal to 7', function () {
-                const object = {
-                    test: '10'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '10' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0x539 is higher or equal to 7', function () {
-                const object = {
-                    test: 0x539
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 0x539 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0o2471 is higher or equal to 7', function () {
-                const object = {
-                    test: 0o2471
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 0o2471 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0b10100111001 is higher or equal to 7', function () {
-                const object = {
-                    test: 0b10100111001
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 0b10100111001 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 5 is NOT higher or equal to 7', function () {
-                const object = {
-                    test: 5
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: 5 }, validatorRules)).length.should.equal(1);
             });
 
             it('should check "5" is NOT higher or equal to 7', function () {
-                const object = {
-                    test: 5
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: 5 }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a valid value to get min from', function () {
-                const object = {
-                    test: null
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
         });
 
         describe('maxNumeric', function () {
 
-            const validatorRules = [
-                {
-                    test: 'maxNumeric,1500'
-                }
-            ];
+            const validatorRules = [ { test: 'maxNumeric,1500' } ];
 
             it('should check 1000 is lower or equal to 1500', function () {
-                const object = {
-                    test: 1000
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 1000 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1000" is lower or equal to 1500', function () {
-                const object = {
-                    test: '1000'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1000' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0x539 is lower or equal to 1500', function () {
-                const object = {
-                    test: 0x539
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 0x539 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0o2471 is lower or equal to 1500', function () {
-                const object = {
-                    test: 0o2471
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 0o2471 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 0b10100111001 is lower or equal to 1500', function () {
-                const object = {
-                    test: 0b10100111001
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 0b10100111001 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 2000 is higher and NOT equal to 1500', function () {
-                const object = {
-                    test: 2000
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: 2000 }, validatorRules)).length.should.equal(1);
             });
 
             it('should check "2000" is higher and NOT equal to 1500', function () {
-                const object = {
-                    test: 2000
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: 2000 }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a valid value to get max from', function () {
-                const object = {
-                    test: null
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
         });
 
         describe('date', function () {
 
-            const validatorRules = [
-                {
-                    test: 'date'
-                }
-            ];
+            const validatorRules = [ { test: 'date' } ];
 
             it('should check "1997" is valid', function () {
-                const object = {
-                    test: '1997'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07" is valid', function () {
-                const object = {
-                    test: '1997-07'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16" is valid', function () {
-                const object = {
-                    test: '1997-07-16'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20+01:00" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20+01:00'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20+01:00' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20+01:00Z" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20+01:00Z'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20+01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20-01:00" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20-01:00'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20-01:00' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20-01:00Z" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20-01:00Z'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20-01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30+01:00" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20:30+01:00'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20:30+01:00' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30+01:00Z" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20:30+01:00Z'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20:30+01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30.45+01:00" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20:30.45+01:00'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20:30.45+01:00' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30.45+01:00Z" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20:30.45+01:00Z'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20:30.45+01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30.45-01:00" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20:30.45-01:00'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20:30.45-01:00' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-07-16T19:20:30.45-01:00Z" is valid', function () {
-                const object = {
-                    test: '1997-07-16T19:20:30.45-01:00Z'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-07-16T19:20:30.45-01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1997-13-39T19:58:30.45-01:00Z" is valid', function () {
-                const object = {
-                    test: '1997-13-39T19:58:30.45-01:00Z'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1997-13-39T19:58:30.45-01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "-1997-13-39T19:58:30.45-01:00Z" is valid', function () {
-                const object = {
-                    test: '-1997-13-39T19:58:30.45-01:00Z'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '-1997-13-39T19:58:30.45-01:00Z' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "" is NOT a valid date string', function () {
-                const object = {
-                    test: ""
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: "" }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a valid date string', function () {
-                const object = {
-                    test: null
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT a valid date string', function () {
-                const object = {
-                    test: []
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: [] }, validatorRules)).length.should.equal(1);
             });
 
         });
@@ -989,230 +470,100 @@ describe('filter validate', function () {
 
             // test: 'supercalifragilisticexpialidocious'
             it('should check "supercalifragilisticexpialidocious" starts with "super" while defaulting to 0 starting position', function () {
-                const validatorRules = [
-                    {
-                        test: 'starts, super'
-                    }
-                ];
-
-                const object = {
-                    test: 'supercalifragilisticexpialidocious'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                const validatorRules = [ { test: 'starts, super' } ];
+                Object.keys(filterValidate.validate({ test: 'supercalifragilisticexpialidocious' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "supercalifragilisticexpialidocious" starts with "fragilistic" when specifying starting position of 9', function () {
-                const validatorRules = [
-                    {
-                        test: 'starts, fragilistic, 9'
-                    }
-                ];
-
-                const object = {
-                    test: 'supercalifragilisticexpialidocious'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                const validatorRules = [ { test: 'starts, fragilistic, 9' } ];
+                Object.keys(filterValidate.validate({ test: 'supercalifragilisticexpialidocious' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "" is NOT a valid search string', function () {
-                const validatorRules = [
-                    {
-                        test: 'starts, super'
-                    }
-                ];
-
-                const object = {
-                    test: ""
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                const validatorRules = [ { test: 'starts, super' } ];
+                Object.keys(filterValidate.validate({ test: "" }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT a valid search string', function () {
-                const validatorRules = [
-                    {
-                        test: 'starts, super'
-                    }
-                ];
-
-                const object = {
-                    test: null
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                const validatorRules = [ { test: 'starts, super' } ];
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT a valid search string', function () {
-                const validatorRules = [
-                    {
-                        test: 'starts, super'
-                    }
-                ];
-
-                const object = {
-                    test: []
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                const validatorRules = [ { test: 'starts, super' } ];
+                Object.keys(filterValidate.validate({ test: [] }, validatorRules)).length.should.equal(1);
             });
 
         });
 
         describe('phone', function () {
 
-            const validatorRules = [
-                {
-                    test: 'phone'
-                }
-            ];
+            const validatorRules = [ { test: 'phone' } ];
 
             it('should check "1234567890" is valid', function () {
-                const object = {
-                    test: '1234567890'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '1234567890' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check 1234567890 is valid', function () {
-                const object = {
-                    test: 1234567890
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 1234567890 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "(078)789-8908" is valid', function () {
-                const object = {
-                    test: '(078)789-8908'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '(078)789-8908' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "123-345-3456" is valid', function () {
-                const object = {
-                    test: '123-345-3456'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: '123-345-3456' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "" is NOT valid', function () {
-                const object = {
-                    test: ""
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: "" }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT valid', function () {
-                const object = {
-                    test: null
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT valid', function () {
-                const object = {
-                    test: []
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: [] }, validatorRules)).length.should.equal(1);
             });
 
         });
 
         describe('regex', function () {
 
-            const validatorRules = [
-                {
-                    test: 'regex, ^[a-zA-Z]*$'
-                }
-            ];
+            const validatorRules = [ { test: 'regex, ^[a-zA-Z]*$' } ];
 
             it('should check "abcdefgh" is valid with string regex pattern of "^[a-zA-Z]*$"', function () {
-                const object = {
-                    test: 'abcdefgh'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(0);
+                Object.keys(filterValidate.validate({ test: 'abcdefgh' }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "1234567890" is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
-                const object = {
-                    test: '1234567890'
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: '1234567890' }, validatorRules)).length.should.equal(1);
             });
 
             it('should check "" is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
-                const object = {
-                    test: ""
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: "" }, validatorRules)).length.should.equal(1);
             });
 
             it('should check null is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
-                const object = {
-                    test: null
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: null }, validatorRules)).length.should.equal(1);
             });
 
             it('should check array() is NOT valid with string regex pattern of "^[a-zA-Z]*$"', function () {
-                const object = {
-                    test: []
-                };
-
-                let result = filterValidate(object, validatorRules);
-                Object.keys(result.validators.failed).length.should.equal(1);
+                Object.keys(filterValidate.validate({ test: [] }, validatorRules)).length.should.equal(1);
             });
 
         });
     });
 
     describe('check filters', function () {
+        const filterValidate = new FilterValidate();
 
         describe('sanitizeNumbers', function () {
 
-            const filterToTest = 'sanitizeNumbers';
-
-            const filters = [
-                {
-                    test: filterToTest
-                }
-            ];
-
             it('should check the string "abc123" only contains numbers as result', function () {
-                const object = {
-                    test: 'abc123'
-                };
-
-                let result = filterValidate(object, [], filters);
-                result.filters[filterToTest].should.equal('123');
+                filterValidate.filter({ test: 'abc123' }, [ { test: 'sanitizeNumbers'} ]).sanitizeNumbers.should.equal('123');
             });
 
         });
@@ -1220,47 +571,26 @@ describe('filter validate', function () {
         describe('sanitizeEmail', function () {
 
             const filterToTest = 'sanitizeEmail';
-
-            const filters = [
-                {
-                    test: filterToTest
-                }
-            ];
+            const filters = [ { test: filterToTest } ];
 
             it('should check the leading space is removed from " valid.email.address@gmail.com"', function () {
-                const object = {
-                    test: ' valid.email.address@gmail.com'
-                };
-
-                let result = filterValidate(object, [], filters);
-                result.filters[filterToTest].should.equal('valid.email.address@gmail.com');
+                filterValidate.filter({ test: ' valid.email.address@gmail.com' }, filters)[filterToTest]
+                    .should.equal('valid.email.address@gmail.com');
             });
 
             it('should check the trailing space is removed from "valid.email.address@gmail.com "', function () {
-                const object = {
-                    test: 'valid.email.address@gmail.com '
-                };
-
-                let result = filterValidate(object, [], filters);
-                result.filters[filterToTest].should.equal('valid.email.address@gmail.com');
+                filterValidate.filter({ test: 'valid.email.address@gmail.com ' }, filters)[filterToTest]
+                    .should.equal('valid.email.address@gmail.com');
             });
 
             it('should check the space is removed from "valid.email .address@gmail.com "', function () {
-                const object = {
-                    test: 'valid.email .address@gmail.com '
-                };
-
-                let result = filterValidate(object, [], filters);
-                result.filters[filterToTest].should.equal('valid.email.address@gmail.com');
+                filterValidate.filter({ test: 'valid.email .address@gmail.com ' }, filters)[filterToTest]
+                    .should.equal('valid.email.address@gmail.com');
             });
 
             it('should check the special characters are removed from "a"b(c)d,e:f;gi[j\\k]l@gmail.com" leaving "abcdefgi[jk]l@gmail.com" as a result', function () {
-                const object = {
-                    test: 'a"b(c)d,e:f;gi[j\\k]l@gmail.com'
-                };
-
-                let result = filterValidate(object, [], filters);
-                result.filters[filterToTest].should.equal('abcdefgi[jk]l@gmail.com');
+                filterValidate.filter({ test: 'a"b(c)d,e:f;gi[j\\k]l@gmail.com' }, filters)[filterToTest]
+                    .should.equal('abcdefgi[jk]l@gmail.com');
             });
 
         });
@@ -1268,20 +598,10 @@ describe('filter validate', function () {
         describe('trim', function () {
 
             const filterToTest = 'trim';
-
-            const filters = [
-                {
-                    test: filterToTest
-                }
-            ];
+            const filters = [ { test: filterToTest } ];
 
             it('should check the string "   abc   " only contains "abc" as result', function () {
-                const object = {
-                    test: '   abc   '
-                };
-
-                let result = filterValidate(object, [], filters);
-                result.filters[filterToTest].should.equal('abc');
+                filterValidate.filter({ test: '   abc   ' }, filters)[filterToTest].should.equal('abc');
             });
 
         });
@@ -1289,20 +609,10 @@ describe('filter validate', function () {
         describe('ltrim', function () {
 
             const filterToTest = 'ltrim';
-
-            const filters = [
-                {
-                    test: filterToTest
-                }
-            ];
+            const filters = [ { test: filterToTest } ];
 
             it('should check the string "   abc   " only contains "abc   " as result', function () {
-                const object = {
-                    test: '   abc   '
-                };
-
-                let result = filterValidate(object, [], filters);
-                result.filters[filterToTest].should.equal('abc   ');
+                filterValidate.filter({ test: '   abc   ' }, filters)[filterToTest].should.equal('abc   ');
             });
 
         });
@@ -1310,20 +620,10 @@ describe('filter validate', function () {
         describe('rtrim', function () {
 
             const filterToTest = 'rtrim';
-
-            const filters = [
-                {
-                    test: filterToTest
-                }
-            ];
+            const filters = [ { test: filterToTest } ];
 
             it('should check the string "   abc   " only contains "   abc" as result', function () {
-                const object = {
-                    test: '   abc   '
-                };
-
-                let result = filterValidate(object, [], filters);
-                result.filters[filterToTest].should.equal('   abc');
+                filterValidate.filter({ test: '   abc   ' }, filters)[filterToTest].should.equal('   abc');
             });
 
         });
