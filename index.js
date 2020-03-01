@@ -334,10 +334,12 @@ class FilterValidate {
                     // console.log(`property: ${property} rules: ${rules}`);
 
                     if (typeof rules === 'string') {
-                        rules.split('|').forEach(segment => {
-                            let [rule, ...args] = segment.split(',').map(segment => segment.trim());
-                            map[rule](property, args);
-                        });
+                        rules.split('|')
+                            .filter(segment => segment !== '') // remove any rules that came across as empty
+                            .forEach(segment => {
+                                let [rule, ...args] = segment.split(',').map(segment => segment.trim());
+                                map[rule](property, args);
+                            });
                     }
                 }
             });
