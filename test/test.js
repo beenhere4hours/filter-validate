@@ -3,7 +3,7 @@ const FilterValidate = require("../index");
 
 describe('filter validate', function () {
 
-    describe('check validators', function () {
+    describe('check each validator', function () {
         const filterValidate = new FilterValidate();
 
         describe('required', function () {
@@ -557,7 +557,7 @@ describe('filter validate', function () {
         });
     });
 
-    describe('check filters', function () {
+    describe('check each filter', function () {
         const filterValidate = new FilterValidate();
 
         describe('sanitizeNumbers', function () {
@@ -626,6 +626,27 @@ describe('filter validate', function () {
                 filterValidate.filter({ test: '   abc   ' }, filters)[filterToTest].should.equal('   abc');
             });
 
+        });
+
+    });
+
+    describe('check multiple validators', function () {
+        const filterValidate = new FilterValidate();
+
+        describe('alpha minLen maxLen', function () {
+
+            const validatorRules = [ { test: 'alpha|minLen, 3|maxLen, 6' } ];
+
+            it('should check "abcABC" contains only a-z, A-Z, is at least 3 characters in length and no more than 6 characters in length', function () {
+                Object.keys(filterValidate.validate({ test: 'abcABC' }, validatorRules)).length.should.equal(0);
+            });
+
+            it('should check "abcABC" contains only a-z, A-Z, is at least 3 characters in length and no more than 6 characters in length and ends with an empty rule', function () {
+                Object.keys(filterValidate.validate({ test: 'abcABC' }, validatorRules)).length.should.equal(0);
+            });
+            // it('should check "12345" is NOT in a-z, A-Z', function () {
+            //     Object.keys(filterValidate.validate({ test: '12345' }, validatorRules)).length.should.equal(1);
+            // });
         });
 
     });
