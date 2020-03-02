@@ -323,7 +323,9 @@ class FilterValidate {
     }
 
     parse(map, object = {}, items = []) {
+        // reset the result
         this.result = {};
+        // reset the input
         this.input = {};
         // make a shallow copy of the input
         this.input = {...object};
@@ -334,10 +336,12 @@ class FilterValidate {
                     // console.log(`property: ${property} rules: ${rules}`);
 
                     if (typeof rules === 'string') {
-                        rules.split('|').forEach(segment => {
-                            let [rule, ...args] = segment.split(',').map(segment => segment.trim());
-                            map[rule](property, args);
-                        });
+                        rules.split('|')
+                            .filter(segment => segment !== '') // remove any rules that came across as empty
+                            .forEach(segment => {
+                                let [rule, ...args] = segment.split(',').map(segment => segment.trim());
+                                map[rule](property, args);
+                            });
                     }
                 }
             });
@@ -346,6 +350,7 @@ class FilterValidate {
 
     validate(object, validators = []) {
         this.parse(this.validatorsMap, object, validators);
+        // console.log(this.result);
         return this.result;
     }
 
