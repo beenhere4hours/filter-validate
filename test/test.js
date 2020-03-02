@@ -644,9 +644,13 @@ describe('filter validate', function () {
             it('should check "abcABC" contains only a-z, A-Z, is at least 3 characters in length and no more than 6 characters in length and ends with an empty rule', function () {
                 Object.keys(filterValidate.validate({ test: 'abcABC' }, validatorRules)).length.should.equal(0);
             });
-            // it('should check "12345" is NOT in a-z, A-Z', function () {
-            //     Object.keys(filterValidate.validate({ test: '12345' }, validatorRules)).length.should.equal(1);
-            // });
+
+            it('should check "123abcABC" is NOT valid as it exceeds the max length of 6 and contains characters not within A-Z or a-z', function () {
+                let result = filterValidate.validate({ test: '123abcABC' }, validatorRules);
+                result.hasOwnProperty('test').should.be.true;
+                result.test.includes('alpha').should.be.true;
+                result.test.includes('maxLen').should.be.true;
+            });
         });
 
     });
