@@ -323,7 +323,9 @@ class FilterValidate {
     }
 
     parse(map, object = {}, items = []) {
+        // reset the result
         this.result = {};
+        // reset the input
         this.input = {};
         // make a shallow copy of the input
         this.input = {...object};
@@ -348,6 +350,7 @@ class FilterValidate {
 
     validate(object, validators = []) {
         this.parse(this.validatorsMap, object, validators);
+        // console.log(this.result);
         return this.result;
     }
 
