@@ -655,5 +655,21 @@ describe('filter validate', function () {
 
     });
 
+    describe('check each filter', function () {
+
+        describe('pass in config', function () {
+
+            const filterToTest = 'trim';
+            const filters = [ { test: filterToTest } ];
+
+            it('should check the string "   abc   " only contains "abc" as result', function () {
+                new FilterValidate({ test: '   abc   ' }, { filters: filters })[filterToTest].should.equal('abc');
+            });
+
+        });
+
+    });
+
+
 });
 
