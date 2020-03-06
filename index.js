@@ -1,6 +1,6 @@
 class FilterValidate {
 
-    constructor() {
+    constructor(object, config) {
         this.result = {};
 
         this.input = {};
@@ -320,6 +320,15 @@ class FilterValidate {
             },
 
         };
+
+        if (config != undefined) {
+            console.log(config);
+            console.log(config.filters);
+            if (config.hasOwnProperty('filters')) {
+                this.filter(object, config.filters);
+                return this.result;
+            }
+        }
     }
 
     parse(map, object = {}, items = []) {
