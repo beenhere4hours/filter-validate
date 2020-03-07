@@ -13,19 +13,19 @@ class FilterValidate {
 
         this.filtersMap = {
             // remove all characters except digits
-            sanitizeNumbers: property => this.result.sanitizeNumbers = this.input[property].replace(/\D/g, ''),
+            sanitizeNumbers: property => this.result[property] = this.input[property].replace(/\D/g, ''),
 
             // remove all characters except letters, digits, and !#$%&'*+-=?^_`{|}~@.[]
-            sanitizeEmail: property => this.result.sanitizeEmail = this.input[property].replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
+            sanitizeEmail: property => this.result[property] = this.input[property].replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
 
             // remove spaces from both sides of string
-            trim: property => this.result.trim = this.input[property].trim(),
+            trim: property => this.result[property] = this.input[property].trim(),
 
             // remove spaces from left side of string
-            ltrim: property => this.result.ltrim = this.input[property].trimStart(),
+            ltrim: property => this.result[property] = this.input[property].trimStart(),
 
             // remove spaces from right side of string
-            rtrim: property => this.result.rtrim = this.input[property].trimEnd(),
+            rtrim: property => this.result[property] = this.input[property].trimEnd(),
         };
 
         this.validatorsMap = {
@@ -322,8 +322,6 @@ class FilterValidate {
         };
 
         if (config != undefined) {
-            console.log(config);
-            console.log(config.filters);
             if (config.hasOwnProperty('filters')) {
                 this.filter(object, config.filters);
                 return this.result;
