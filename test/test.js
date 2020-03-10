@@ -659,7 +659,7 @@ describe('filter validate', function () {
 
         describe('pass in config', function () {
 
-            const filterToTest = 'trim';
+            const filterToTest = 'ltrim|rtrim';
             const filters = [ { test: filterToTest } ];
 
             it('should check the string "   abc   " only contains "abc" as result', function () {
