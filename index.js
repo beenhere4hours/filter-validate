@@ -12,20 +12,37 @@ class FilterValidate {
         };
 
         this.filtersMap = {
+            // if we've initialized this property in the results then use it's value
+
             // remove all characters except digits
-            sanitizeNumbers: property => this.result[property] = this.input[property].replace(/\D/g, ''),
+            sanitizeNumbers: property => {
+                const value = this.result.hasOwnProperty(property) ? this.result[property] : this.input[property];
+                this.result[property] = value.replace(/\D/g, '');
+            },
 
             // remove all characters except letters, digits, and !#$%&'*+-=?^_`{|}~@.[]
-            sanitizeEmail: property => this.result[property] = this.input[property].replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
+            sanitizeEmail: property => {
+                const value = this.result.hasOwnProperty(property) ? this.result[property] : this.input[property];
+                this.result[property] = value.replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, '');
+            },
 
             // remove spaces from both sides of string
-            trim: property => this.result[property] = this.input[property].trim(),
+            trim: property => {
+                const value = this.result.hasOwnProperty(property) ? this.result[property] : this.input[property];
+                this.result[property] = value.trim();
+            },
 
             // remove spaces from left side of string
-            ltrim: property => this.result[property] = this.input[property].trimStart(),
+            ltrim: property => {
+                const value = this.result.hasOwnProperty(property) ? this.result[property] : this.input[property];
+                this.result[property] = value.trimStart();
+            },
 
             // remove spaces from right side of string
-            rtrim: property => this.result[property] = this.input[property].trimEnd(),
+            rtrim: property => {
+                const value = this.result.hasOwnProperty(property) ? this.result[property] : this.input[property];
+                this.result[property] = value.trimEnd();
+            },
         };
 
         this.validatorsMap = {
