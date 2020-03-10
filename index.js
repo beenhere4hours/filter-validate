@@ -43,6 +43,16 @@ class FilterValidate {
                 const value = this.result.hasOwnProperty(property) ? this.result[property] : this.input[property];
                 this.result[property] = value.trimEnd();
             },
+
+            lower: property => {
+                const value = this.result.hasOwnProperty(property) ? this.result[property] : this.input[property];
+                this.result[property] = value.toLowerCase();
+            },
+
+            upper: property => {
+                const value = this.result.hasOwnProperty(property) ? this.result[property] : this.input[property];
+                this.result[property] = value.toUpperCase();
+            },
         };
 
         this.validatorsMap = {
