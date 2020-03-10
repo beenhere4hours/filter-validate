@@ -659,11 +659,11 @@ describe('filter validate', function () {
 
         describe('pass in config', function () {
 
-            const filterToTest = 'ltrim|rtrim';
+            const filterToTest = 'ltrim|rtrim|upper';
             const filters = [ { test: filterToTest } ];
 
             it('should check the string "   abc   " only contains "abc" as result', function () {
-                new FilterValidate({ test: '   abc   ' }, { filters: filters }).test.should.equal('abc');
+                new FilterValidate({ test: '   abc   ' }, { filters: filters }).test.should.equal('ABC');
             });
 
         });
