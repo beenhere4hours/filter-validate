@@ -359,9 +359,6 @@ class FilterValidate {
                 this.parse(this.validatorsMap, config.validators);
             }
 
-            console.log('test');
-            console.log(this.result);
-
             return this.result;
         }
     }
