@@ -5,7 +5,7 @@ class FilterValidate {
 
         this.input = {};
 
-        this.getFilterValue = property => this.result.filters.hasOwnProperty(property) ? this.result.filters[property] : this.input[property];
+        this.getValue = property => this.result.filters.hasOwnProperty(property) ? this.result.filters[property] : this.input[property];
 
         this.setFilterResult = (property, result) => this.result.filters[property] = result;
 
@@ -13,41 +13,41 @@ class FilterValidate {
 
             // remove all characters except digits
             sanitizeNumbers: property => {
-                const result = this.getFilterValue(property).replace(/\D/g, '');
+                const result = this.getValue(property).replace(/\D/g, '');
                 this.setFilterResult(property, result);
             },
 
             // remove all characters except letters, digits, and !#$%&'*+-=?^_`{|}~@.[]
             sanitizeEmail: property => {
-                const result = this.getFilterValue(property).replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, '');
+                const result = this.getValue(property).replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, '');
                 this.setFilterResult(property, result);
             },
 
             // remove spaces from both sides of string
             trim: property => {
-                const result = this.getFilterValue(property).trim();
+                const result = this.getValue(property).trim();
                 this.setFilterResult(property, result);
             },
 
             // remove spaces from left side of string
             ltrim: property => {
-                const result = this.getFilterValue(property).trimStart();
+                const result = this.getValue(property).trimStart();
                 this.setFilterResult(property, result);
             },
 
             // remove spaces from right side of string
             rtrim: property => {
-                const result = this.getFilterValue(property).trimEnd();
+                const result = this.getValue(property).trimEnd();
                 this.setFilterResult(property, result);
             },
 
             lower: property => {
-                const result = this.getFilterValue(property).toLowerCase();
+                const result = this.getValue(property).toLowerCase();
                 this.setFilterResult(property, result);
             },
 
             upper: property => {
-                const result = this.getFilterValue(property).toUpperCase();
+                const result = this.getValue(property).toUpperCase();
                 this.setFilterResult(property, result);
             },
         };
@@ -77,7 +77,7 @@ class FilterValidate {
                 // https://stackoverflow.com/a/14075810/1439955
                 const regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
-                if (regex.test(this.getFilterValue(property)) === false) {
+                if (regex.test(this.getValue(property)) === false) {
                     this.setValidatorResult(property, 'validEmail');
                 }
             },
@@ -89,7 +89,7 @@ class FilterValidate {
                     len = parseInt(len, 10);
                 }
 
-                if (this.getFilterValue(property).length > len) {
+                if (this.getValue(property).length > len) {
                     this.setValidatorResult(property, 'maxLen');
                 }
             },
@@ -101,7 +101,7 @@ class FilterValidate {
                     len = parseInt(len, 10);
                 }
 
-                if (this.getFilterValue(property).length < len) {
+                if (this.getValue(property).length < len) {
                     this.setValidatorResult(property, 'minLen');
                 }
             },
@@ -113,7 +113,7 @@ class FilterValidate {
                     len = parseInt(len, 10);
                 }
 
-                if (this.getFilterValue(property).length !== len) {
+                if (this.getValue(property).length !== len) {
                     this.setValidatorResult(property, 'exactLen');
                 }
             },
@@ -121,7 +121,7 @@ class FilterValidate {
             alpha: property => {
                 const regex = /^[a-zA-Z]*$/;
 
-                if (regex.test(this.getFilterValue(property)) === false) {
+                if (regex.test(this.getValue(property)) === false) {
                     this.setValidatorResult(property, 'alpha');
                 }
             },
@@ -129,7 +129,7 @@ class FilterValidate {
             alphaNumeric: property => {
                 const regex = /^[a-zA-Z0-9]*$/;
 
-                if (regex.test(this.getFilterValue(property)) === false) {
+                if (regex.test(this.getValue(property)) === false) {
                     this.setValidatorResult(property, 'alphaNumeric');
                 }
             },
@@ -137,7 +137,7 @@ class FilterValidate {
             alphaDash: property => {
                 const regex = /^[a-zA-Z0-9-_]*$/;
 
-                if (regex.test(this.getFilterValue(property)) === false) {
+                if (regex.test(this.getValue(property)) === false) {
                     this.setValidatorResult(property, 'alphaDash');
                 }
             },
@@ -145,13 +145,13 @@ class FilterValidate {
             alphaSpace: property => {
                 const regex = /^[a-zA-Z0-9\s]*$/;
 
-                if (regex.test(this.getFilterValue(property)) === false) {
+                if (regex.test(this.getValue(property)) === false) {
                     this.setValidatorResult(property, 'alphaSpace');
                 }
             },
 
             numeric: property => {
-                const input = this.getFilterValue(property);
+                const input = this.getValue(property);
 
                 if (isNaN(input) || !isFinite(input) || input == null || Array.isArray(input) || typeof Number(input) !== 'number') {
                     this.setValidatorResult(property, 'numeric');
@@ -159,7 +159,7 @@ class FilterValidate {
             },
 
             integer: property => {
-                const input = this.getFilterValue(property);
+                const input = this.getValue(property);
 
                 if (!Number.isInteger(input) || input == null || Array.isArray(input)) {
                     this.setValidatorResult(property, 'integer');
@@ -168,7 +168,7 @@ class FilterValidate {
 
             float: property => {
                 const regex = /^-?\d+(?:[.,]\d*?)?$/;
-                const input = this.getFilterValue(property);
+                const input = this.getValue(property);
 
                 let tests = [
                     input == null,
@@ -187,7 +187,7 @@ class FilterValidate {
             containedInList: (needle, args) => {
                 let [haystack] = args;
                 let hasValue = false;
-                const input = this.getFilterValue(needle);
+                const input = this.getValue(needle);
 
                 if (input != null && haystack != null) {
                     hasValue = haystack.split(';').map(item => item.trim().toLowerCase()).includes(input.trim().toLowerCase());
@@ -201,7 +201,7 @@ class FilterValidate {
             notContainedInList: (needle, args) => {
                 let [haystack] = args;
                 let hasValue = false;
-                const input = this.getFilterValue(needle);
+                const input = this.getValue(needle);
 
                 if (input != null && haystack != null) {
                     hasValue = haystack.split(';').map(item => item.trim().toLowerCase()).includes(input.trim().toLowerCase());
@@ -215,7 +215,7 @@ class FilterValidate {
             minNumeric: (property, args) => {
                 let [val] = args;
                 const regex = /^-?\d+(?:[.,]\d*?)?$/;
-                const input = this.getFilterValue(property);
+                const input = this.getValue(property);
 
                 let tests = [
                     input == null,
@@ -238,7 +238,7 @@ class FilterValidate {
             maxNumeric: (property, args) => {
                 let [val] = args;
                 const regex = /^-?\d+(?:[.,]\d*?)?$/;
-                const input = this.getFilterValue(property);
+                const input = this.getValue(property);
 
                 let tests = [
                     input == null,
@@ -277,14 +277,14 @@ class FilterValidate {
                 // 1997-13-39T19:58:30.45-01:00Z
                 const regex = /[+-]?\d{4}(-[01]\d(-[0-3]\d(T[0-2]\d:[0-5]\d:?([0-5]\d(\.\d+)?)?[+-][0-2]\d:[0-5]\dZ?)?)?)?/;
 
-                if (regex.test(this.getFilterValue(property)) === false) {
+                if (regex.test(this.getValue(property)) === false) {
                     this.setValidatorResult(property, 'date');
                 }
             },
 
             starts: (property, args) => {
                 let [needle, val] = args;
-                const input = this.getFilterValue(property);
+                const input = this.getValue(property);
 
                 if (typeof val === "string") {
                     val = parseInt(val, 10);
@@ -313,7 +313,7 @@ class FilterValidate {
                 // '123-345-3456'
                 const regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
-                if (regex.test(this.getFilterValue(property)) === false) {
+                if (regex.test(this.getValue(property)) === false) {
                     this.setValidatorResult(property, 'phone');
                 }
             },
@@ -321,7 +321,7 @@ class FilterValidate {
             regex: (property, args) => {
                 let [regex] = args;
                 let regExp = new RegExp(regex);
-                const input = this.getFilterValue(property);
+                const input = this.getValue(property);
 
                 let tests = [
                     input === '',
