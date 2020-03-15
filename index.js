@@ -184,7 +184,7 @@ class FilterValidate {
                 });
             },
 
-            containedInList: (needle, args) => {
+            inList: (needle, args) => {
                 let [haystack] = args;
                 let hasValue = false;
                 const input = this.getValue(needle);
@@ -194,11 +194,11 @@ class FilterValidate {
                 }
 
                 if (!hasValue) {
-                    this.setValidatorResult(needle, 'containedInList');
+                    this.setValidatorResult(needle, 'inList');
                 }
             },
 
-            notContainedInList: (needle, args) => {
+            notInList: (needle, args) => {
                 let [haystack] = args;
                 let hasValue = false;
                 const input = this.getValue(needle);
@@ -208,7 +208,7 @@ class FilterValidate {
                 }
 
                 if (hasValue) {
-                    this.setValidatorResult(needle, 'notContainedInList');
+                    this.setValidatorResult(needle, 'notInList');
                 }
             },
 
