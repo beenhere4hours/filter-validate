@@ -340,11 +340,8 @@ class FilterValidate {
         };
 
         this.setup = object => {
-            // reset the result
             this.result = {filters: {}, validators: {}};
-            // reset the input
             this.input = {};
-            // make a shallow copy of the input
             this.input = {...object};
         };
 
