@@ -284,9 +284,9 @@ describe('filter validate', function () {
             });
         });
 
-        describe('containedInList', function () {
+        describe('inList', function () {
 
-            const validatorRules = [ { test: 'containedInList, one; two; three; four; tell me more;' } ];
+            const validatorRules = [ { test: 'inList, one; two; three; four; tell me more;' } ];
 
             it('should check "four" is in the list', function () {
                 Object.keys(filterValidate.validate({ test: 'four' }, validatorRules)).length.should.equal(0);
@@ -298,9 +298,9 @@ describe('filter validate', function () {
 
         });
 
-        describe('notContainedInList', function () {
+        describe('notInList', function () {
 
-            const validatorRules = [ { test: 'notContainedInList, one; two; three; four; tell me more;' } ];
+            const validatorRules = [ { test: 'notInList, one; two; three; four; tell me more;' } ];
 
             it('should check "five" is not in the list', function () {
                 Object.keys(filterValidate.validate({ test: 'five' }, validatorRules)).length.should.equal(0);
