@@ -655,15 +655,17 @@ describe('filter validate', function () {
 
     });
 
-    describe('check each filter', function () {
+    describe('check passing in an object to the constructor', function () {
 
-        describe('pass in config', function () {
+        describe('multiple filters and validators', function () {
 
             const filters = [ { test: 'ltrim|rtrim|upper'} ];
             const validators = [ { test: 'alpha' } ];
 
             it('should check the string "   abc   " only contains "ABC" as result', function () {
-                new FilterValidate({ test: '   abc   ' }, { filters: filters, validators: validators }).validators.test.should.equal('ABC');
+                const result = new FilterValidate({ test: '   abc   ' }, { filters: filters, validators: validators });
+                result.filters.test.should.equal('ABC');
+                result.validators.hasOwnProperty('test').should.false;
             });
 
         });
