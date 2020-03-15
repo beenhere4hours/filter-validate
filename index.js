@@ -380,7 +380,7 @@ class FilterValidate {
         });
     }
 
-    validate(object, validators = []) {
+    validate(object = {}, validators = []) {
         if (Object.prototype.toString.call(object) === '[object Object]' && Array.isArray(validators)) {
             this.setup(object);
             this.parse(this.validatorsMap, validators);
