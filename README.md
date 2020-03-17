@@ -56,4 +56,6 @@ const filterValidate = require("../index").filterValidate;
 |trim               |Remove spaces from both sides of a string|
 |ltrim              |Remove spaces from left side of a string|
 |rtrim              |Remove spaces from the right side of a string|
+|lower              |Change all characters to lowercase|
+|upper              |Change all characters to uppercase|
 
