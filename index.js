@@ -5,51 +5,56 @@ class FilterValidate {
 
         this.input = {};
 
-        this.getValue = property => this.result.filters.hasOwnProperty(property) ? this.result.filters[property] : this.input[property];
+        this.getValue = property => {
+            console.log(`[getValue] property: ${property}`);
 
-        this.setFilterResult = (property, result) => this.result.filters[property] = result;
+            let result = null;
+
+            if (this.result.filters.hasOwnProperty(property)) {
+                result = this.result.filters[property];
+                console.log(`[getValue] pull from result.filters: ${result}`);
+            } else {
+                result = this.input[property];
+                console.log(`[getValue] pull from input: ${result}`);
+            }
+
+            return result;
+        };
+
+        /**
+         *
+         * @param input
+         */
+        this.setFilterResult = input => {
+            console.log(`[setFilterResult] value:`);
+            console.log(input);
+            this.result.filters[input.property] = input.result;
+        };
 
         this.filtersMap = {
 
             // remove all characters except digits
-            sanitizeNumbers: property => {
-                const result = this.getValue(property).replace(/\D/g, '');
-                this.setFilterResult(property, result);
+            sanitizeNumbers: value => {
+                console.log(`[filtersMap] value: ${value}`);
+                return value.replace(/\D/g, '');
             },
 
             // remove all characters except letters, digits, and !#$%&'*+-=?^_`{|}~@.[]
-            sanitizeEmail: property => {
-                const result = this.getValue(property).replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, '');
-                this.setFilterResult(property, result);
-            },
+            sanitizeEmail: value => value.replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
 
             // remove spaces from both sides of string
-            trim: property => {
-                const result = this.getValue(property).trim();
-                this.setFilterResult(property, result);
-            },
+            trim: value => value.trim(),
 
             // remove spaces from left side of string
-            ltrim: property => {
-                const result = this.getValue(property).trimStart();
-                this.setFilterResult(property, result);
-            },
+            ltrim: value => value.trimLeft(),
 
             // remove spaces from right side of string
-            rtrim: property => {
-                const result = this.getValue(property).trimEnd();
-                this.setFilterResult(property, result);
-            },
+            rtrim: value => value.trimRight(),
 
-            lower: property => {
-                const result = this.getValue(property).toLowerCase();
-                this.setFilterResult(property, result);
-            },
+            lower: value => value.toLowerCase(),
 
-            upper: property => {
-                const result = this.getValue(property).toUpperCase();
-                this.setFilterResult(property, result);
-            },
+            upper: value => value.toUpperCase(),
+
         };
 
         this.setValidatorResult = (property, rule) => {
@@ -60,18 +65,7 @@ class FilterValidate {
         };
 
         this.validatorsMap = {
-            required: property => {
-                let tests = [
-                    !this.input.hasOwnProperty(property),
-                    ['', null, undefined].includes(this.input[property]),
-                ];
-
-                tests.some(test => {
-                    if (test) {
-                        this.setValidatorResult(property, 'required');
-                    }
-                });
-            },
+            required: value => !this.input.hasOwnProperty(value) || ['', null, undefined].includes(this.input[value]),
 
             validEmail: property => {
                 // https://stackoverflow.com/a/14075810/1439955
@@ -360,17 +354,34 @@ class FilterValidate {
         }
     }
 
-    parse(map, items = []) {
+    /**
+     *
+     * @param setResult
+     * @param map
+     * @param items
+     */
+    parse(setResult, map, items = []) {
+
         items.forEach(item => {
             for (let [property, rules] of Object.entries(item)) {
-                // console.log(`property: ${property} rules: ${rules}`);
+                console.log(`[parse] property: ${property} rules: ${rules}`);
 
                 if (typeof rules === 'string') {
                     rules.split('|')
                         .filter(segment => segment !== '') // remove any rules that came across as empty
                         .forEach(segment => {
                             let [rule, ...args] = segment.split(',').map(segment => segment.trim());
-                            map[rule](property, args);
+                            console.log(`[parse] property: ${property} rule: ${rule}`);
+                            const result = map[rule](this.getValue(property), args);
+                            const test = {
+                                property: property,
+                                result: result,
+                                rule: rule,
+                            };
+
+                            console.log(`[parse] test:`);
+                            console.log(test);
+                            setResult(test);
                         });
                 }
             }
@@ -380,7 +391,10 @@ class FilterValidate {
     validate(object = {}, validators = []) {
         if (Object.prototype.toString.call(object) === '[object Object]' && Array.isArray(validators)) {
             this.setup(object);
-            this.parse(this.validatorsMap, validators);
+            const result = this.parse(this.validatorsMap, validators);
+            if (result.result) {
+                this.setValidatorResult(result.property, result.rule);
+            }
         }
         return this.result.validators;
     }
@@ -388,9 +402,18 @@ class FilterValidate {
     filter(object = {}, filters = []) {
         if (Object.prototype.toString.call(object) === '[object Object]' && Array.isArray(filters)) {
             this.setup(object);
-            this.parse(this.filtersMap, filters);
+            this.parse(this.setFilterResult, this.filtersMap, filters);
+            // console.log(`[filter] result`);
+            // console.log(result);
+            // this.setFilterResult(result.property, result.result);
         }
         return this.result.filters;
+    }
+
+    addFilter(name, filter = {}) {
+        if (Object.prototype.toString.call(filter) === '[object Object]' ) {
+            this.filtersMap[name] = filter;
+        }
     }
 
 }
