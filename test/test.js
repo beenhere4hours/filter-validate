@@ -2,7 +2,7 @@ const should = require('chai').should();
 const FilterValidate = require("../index");
 
 describe('filter validate', function () {
-
+/*
     describe('check each validator', function () {
         const filterValidate = new FilterValidate();
 
@@ -556,7 +556,7 @@ describe('filter validate', function () {
 
         });
     });
-
+*/
     describe('check each filter', function () {
         const filterValidate = new FilterValidate();
 
@@ -629,7 +629,7 @@ describe('filter validate', function () {
         });
 
     });
-
+/*
     describe('check multiple validators', function () {
         const filterValidate = new FilterValidate();
 
@@ -671,7 +671,7 @@ describe('filter validate', function () {
         });
 
     });
-
+*/
 
 });
 
