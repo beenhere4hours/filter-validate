@@ -57,176 +57,105 @@ class FilterValidate {
 
         };
 
-        this.setValidatorResult = (property, rule) => {
-            if (!this.result.validators.hasOwnProperty(property)) {
-                this.result.validators[property] = [];
+        this.setValidatorResult = input => {
+            if (!input.result) {
+                if (!this.result.validators.hasOwnProperty(input.property)) {
+                    this.result.validators[input.property] = [];
+                }
+                this.result.validators[input.property].push(input.rule);
             }
-            this.result.validators[property].push(rule);
         };
 
         this.validatorsMap = {
-            required: value => !this.input.hasOwnProperty(value) || ['', null, undefined].includes(this.input[value]),
+            required: (property, value) => (this.input.hasOwnProperty(property) && !['', null, undefined].includes(value)),
 
-            validEmail: property => {
+            validEmail: (property, value) => {
                 // https://stackoverflow.com/a/14075810/1439955
                 const regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-
-                if (regex.test(this.getValue(property)) === false) {
-                    this.setValidatorResult(property, 'validEmail');
-                }
+                return regex.test(value);
             },
 
-            maxLen: (property, args) => {
+            maxLen: (property, value, args) => {
                 let [len] = args;
 
                 if (typeof len === 'string') {
                     len = parseInt(len, 10);
                 }
 
-                if (this.getValue(property).length > len) {
-                    this.setValidatorResult(property, 'maxLen');
-                }
+                return (value.length <= len);
             },
 
-            minLen: (property, args) => {
+            minLen: (property, value, args) => {
                 let [len] = args;
 
                 if (typeof len === 'string') {
                     len = parseInt(len, 10);
                 }
 
-                if (this.getValue(property).length < len) {
-                    this.setValidatorResult(property, 'minLen');
-                }
+                return (value.length >= len);
             },
 
-            exactLen: (property, args) => {
+            exactLen: (property, value, args) => {
                 let [len] = args;
 
                 if (typeof len === 'string') {
                     len = parseInt(len, 10);
                 }
 
-                if (this.getValue(property).length !== len) {
-                    this.setValidatorResult(property, 'exactLen');
-                }
+                return (value.length === len);
             },
 
-            alpha: property => {
+            alpha: (property, value) => {
                 const regex = /^[a-zA-Z]*$/;
-
-                if (regex.test(this.getValue(property)) === false) {
-                    this.setValidatorResult(property, 'alpha');
-                }
+                return regex.test(value);
             },
 
-            alphaNumeric: property => {
+            alphaNumeric: (property, value) => {
                 const regex = /^[a-zA-Z0-9]*$/;
-
-                if (regex.test(this.getValue(property)) === false) {
-                    this.setValidatorResult(property, 'alphaNumeric');
-                }
+                return regex.test(value);
             },
 
-            alphaDash: property => {
+            alphaDash: (property, value) => {
                 const regex = /^[a-zA-Z0-9-_]*$/;
-
-                if (regex.test(this.getValue(property)) === false) {
-                    this.setValidatorResult(property, 'alphaDash');
-                }
+                return regex.test(value);
             },
 
-            alphaSpace: property => {
+            alphaSpace: (property, value) => {
                 const regex = /^[a-zA-Z0-9\s]*$/;
-
-                if (regex.test(this.getValue(property)) === false) {
-                    this.setValidatorResult(property, 'alphaSpace');
-                }
+                return regex.test(value);
             },
 
-            numeric: property => {
-                const input = this.getValue(property);
+            numeric: (property, value) => (!isNaN(value) && isFinite(value) && value != null && !Array.isArray(value) && typeof Number(value) === 'number'),
 
-                if (isNaN(input) || !isFinite(input) || input == null || Array.isArray(input) || typeof Number(input) !== 'number') {
-                    this.setValidatorResult(property, 'numeric');
-                }
-            },
+            integer: (property, value) => (value != null && !Array.isArray(value) && Number.isInteger(value)),
 
-            integer: property => {
-                const input = this.getValue(property);
-
-                if (!Number.isInteger(input) || input == null || Array.isArray(input)) {
-                    this.setValidatorResult(property, 'integer');
-                }
-            },
-
-            float: property => {
+            float: (property, value) => {
                 const regex = /^-?\d+(?:[.,]\d*?)?$/;
-                const input = this.getValue(property);
-
-                let tests = [
-                    input == null,
-                    Array.isArray(input),
-                    !regex.test(input),
-                    isNaN(parseFloat(input)),
-                ];
-
-                tests.some(test => {
-                    if (test) {
-                        this.setValidatorResult(property, 'float');
-                    }
-                });
+                return (value != null && !Array.isArray(value) && regex.test(value) && !isNaN(parseFloat(value)));
             },
 
-            inList: (needle, args) => {
+            inList: (property, needle, args) => {
                 let [haystack] = args;
-                let hasValue = false;
-                const input = this.getValue(needle);
-
-                if (input != null && haystack != null) {
-                    hasValue = haystack.split(';').map(item => item.trim().toLowerCase()).includes(input.trim().toLowerCase());
-                }
-
-                if (!hasValue) {
-                    this.setValidatorResult(needle, 'inList');
-                }
+                return (needle != null && haystack != null && haystack.split(';').map(item => item.trim().toLowerCase()).includes(needle.trim().toLowerCase()));
             },
 
-            notInList: (needle, args) => {
+            notInList: (property, needle, args) => {
                 let [haystack] = args;
-                let hasValue = false;
-                const input = this.getValue(needle);
-
-                if (input != null && haystack != null) {
-                    hasValue = haystack.split(';').map(item => item.trim().toLowerCase()).includes(input.trim().toLowerCase());
-                }
-
-                if (hasValue) {
-                    this.setValidatorResult(needle, 'notInList');
-                }
+                return (needle != null && haystack != null && !haystack.split(';').map(item => item.trim().toLowerCase()).includes(needle.trim().toLowerCase()));
             },
 
-            minNumeric: (property, args) => {
-                let [val] = args;
+            minNumeric: (property, value, args) => {
+                let [minVal] = args;
                 const regex = /^-?\d+(?:[.,]\d*?)?$/;
-                const input = this.getValue(property);
 
-                let tests = [
-                    input == null,
-                    Array.isArray(input),
-                    !regex.test(input),
-                    !regex.test(val),
-                    isNaN(parseFloat(input)),
-                    isNaN(parseFloat(val)),
-                    !isFinite(input),
-                    parseFloat(val) > parseFloat(input)
-                ];
-
-                tests.some(test => {
-                    if (test) {
-                        this.setValidatorResult(property, 'minNumeric');
-                    }
-                });
+                return value != null &&
+                    !Array.isArray(value) &&
+                    regex.test(value) &&
+                    regex.test(minVal) &&
+                    !isNaN(parseFloat(value)) &&
+                    !isNaN(parseFloat(minVal)) &&
+                    isFinite(value) &&
+                    parseFloat(value) >= parseFloat(minVal);
             },
 
             maxNumeric: (property, args) => {
@@ -372,7 +301,7 @@ class FilterValidate {
                         .forEach(segment => {
                             let [rule, ...args] = segment.split(',').map(segment => segment.trim());
                             console.log(`[parse] property: ${property} rule: ${rule}`);
-                            const result = map[rule](this.getValue(property), args);
+                            const result = map[rule](property, this.getValue(property), args);
                             const test = {
                                 property: property,
                                 result: result,
@@ -391,10 +320,7 @@ class FilterValidate {
     validate(object = {}, validators = []) {
         if (Object.prototype.toString.call(object) === '[object Object]' && Array.isArray(validators)) {
             this.setup(object);
-            const result = this.parse(this.validatorsMap, validators);
-            if (result.result) {
-                this.setValidatorResult(result.property, result.rule);
-            }
+            this.parse(this.setValidatorResult, this.validatorsMap, validators);
         }
         return this.result.validators;
     }
