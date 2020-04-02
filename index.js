@@ -172,7 +172,7 @@ class FilterValidate {
                     parseFloat(value) <= parseFloat(maxVal);
             },
 
-            date: property => {
+            date: (property, value) => {
                 // regex from https://regexr.com/3e0lh
                 // should support the following formats
                 // 1997
@@ -191,9 +191,7 @@ class FilterValidate {
                 // 1997-13-39T19:58:30.45-01:00Z
                 const regex = /[+-]?\d{4}(-[01]\d(-[0-3]\d(T[0-2]\d:[0-5]\d:?([0-5]\d(\.\d+)?)?[+-][0-2]\d:[0-5]\dZ?)?)?)?/;
 
-                if (regex.test(this.getValue(property)) === false) {
-                    this.setValidatorResult(property, 'date');
-                }
+                return regex.test(value);
             },
 
             starts: (property, args) => {
