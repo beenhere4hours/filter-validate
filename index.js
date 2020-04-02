@@ -158,27 +158,18 @@ class FilterValidate {
                     parseFloat(value) >= parseFloat(minVal);
             },
 
-            maxNumeric: (property, args) => {
-                let [val] = args;
+            maxNumeric: (property, value, args) => {
+                let [maxVal] = args;
                 const regex = /^-?\d+(?:[.,]\d*?)?$/;
-                const input = this.getValue(property);
 
-                let tests = [
-                    input == null,
-                    Array.isArray(input),
-                    !regex.test(input),
-                    !regex.test(val),
-                    isNaN(parseFloat(input)),
-                    isNaN(parseFloat(val)),
-                    !isFinite(input),
-                    parseFloat(input) > parseFloat(val),
-                ];
-
-                tests.some(test => {
-                    if (test) {
-                        this.setValidatorResult(property, 'maxNumeric');
-                    }
-                });
+                return value != null &&
+                    !Array.isArray(value) &&
+                    regex.test(value) &&
+                    regex.test(maxVal) &&
+                    !isNaN(parseFloat(value)) &&
+                    !isNaN(parseFloat(maxVal)) &&
+                    isFinite(value) &&
+                    parseFloat(value) <= parseFloat(maxVal);
             },
 
             date: property => {
