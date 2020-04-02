@@ -194,28 +194,20 @@ class FilterValidate {
                 return regex.test(value);
             },
 
-            starts: (property, args) => {
-                let [needle, val] = args;
-                const input = this.getValue(property);
+            starts: (property, value, args) => {
+                let [needle, startAt] = args;
 
-                if (typeof val === "string") {
-                    val = parseInt(val, 10);
-                } else if (val == null) {
-                    val = 0;
+                if (typeof startAt === "string") {
+                    startAt = parseInt(startAt, 10);
+                } else if (startAt == null) {
+                    startAt = 0;
                 }
 
-                let tests = [
-                    input == null,
-                    Array.isArray(input),
-                    isNaN(parseInt(val, 10)),
-                    typeof input === "string" && !input.startsWith(needle, val)
-                ];
-
-                tests.some(test => {
-                    if (test) {
-                        this.setValidatorResult(property, 'starts');
-                    }
-                });
+                return value != null &&
+                    !Array.isArray(value) &&
+                    !isNaN(parseInt(startAt, 10)) &&
+                    typeof value === "string" &&
+                    value.startsWith(needle, startAt);
             },
 
             phone: property => {
