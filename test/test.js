@@ -349,7 +349,7 @@ describe('filter validate', function () {
             });
 
         });
-/*
+
         describe('maxNumeric', function () {
 
             const validatorRules = [ { test: 'maxNumeric,1500' } ];
@@ -555,10 +555,10 @@ describe('filter validate', function () {
             });
 
         });
-        */
+
     });
 
-/*
+
     describe('check each filter', function () {
         const filterValidate = new FilterValidate();
 
@@ -656,7 +656,7 @@ describe('filter validate', function () {
         });
 
     });
-
+/*
     describe('check passing in an object to the constructor', function () {
 
         describe('multiple filters and validators', function () {
