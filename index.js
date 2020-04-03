@@ -269,15 +269,15 @@ class FilterValidate {
                             let [rule, ...args] = segment.split(',').map(segment => segment.trim());
                             console.log(`[parse] property: ${property} rule: ${rule}`);
                             const result = map[rule](property, this.getValue(property), args);
-                            const test = {
+                            const object = {
                                 property: property,
                                 result: result,
                                 rule: rule,
                             };
 
-                            console.log(`[parse] test:`);
-                            console.log(test);
-                            setResult(test);
+                            console.log(`[parse] object:`);
+                            console.log(object);
+                            setResult(object);
                         });
                 }
             }
@@ -296,9 +296,6 @@ class FilterValidate {
         if (Object.prototype.toString.call(object) === '[object Object]' && Array.isArray(filters)) {
             this.setup(object);
             this.parse(this.setFilterResult, this.filtersMap, filters);
-            // console.log(`[filter] result`);
-            // console.log(result);
-            // this.setFilterResult(result.property, result.result);
         }
         return this.result.filters;
     }
