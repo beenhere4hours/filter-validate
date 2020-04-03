@@ -268,16 +268,15 @@ class FilterValidate {
                         .forEach(segment => {
                             let [rule, ...args] = segment.split(',').map(segment => segment.trim());
                             console.log(`[parse] property: ${property} rule: ${rule}`);
-                            const result = map[rule](property, this.getValue(property), args);
-                            const object = {
+                            const result = {
                                 property: property,
-                                result: result,
+                                result: map[rule](property, this.getValue(property), args),
                                 rule: rule,
                             };
 
-                            console.log(`[parse] object:`);
-                            console.log(object);
-                            setResult(object);
+                            console.log(`[parse] result:`);
+                            console.log(result);
+                            setResult(result);
                         });
                 }
             }
