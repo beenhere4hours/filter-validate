@@ -34,26 +34,26 @@ class FilterValidate {
         this.filtersMap = {
 
             // remove all characters except digits
-            sanitizeNumbers: value => {
+            sanitizeNumbers: (property, value) => {
                 console.log(`[filtersMap] value: ${value}`);
                 return value.replace(/\D/g, '');
             },
 
             // remove all characters except letters, digits, and !#$%&'*+-=?^_`{|}~@.[]
-            sanitizeEmail: value => value.replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
+            sanitizeEmail: (property, value) => value.replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
 
             // remove spaces from both sides of string
-            trim: value => value.trim(),
+            trim: (property, value) => value.trim(),
 
             // remove spaces from left side of string
-            ltrim: value => value.trimLeft(),
+            ltrim: (property, value) => value.trimLeft(),
 
             // remove spaces from right side of string
-            rtrim: value => value.trimRight(),
+            rtrim: (property, value) => value.trimRight(),
 
-            lower: value => value.toLowerCase(),
+            lower: (property, value) => value.toLowerCase(),
 
-            upper: value => value.toUpperCase(),
+            upper: (property, value) => value.toUpperCase(),
 
         };
 
@@ -210,35 +210,19 @@ class FilterValidate {
                     value.startsWith(needle, startAt);
             },
 
-            phone: property => {
+            phone: (property, value) => {
                 // '1234567890'
                 // 1234567890
                 // '(078)789-8908'
                 // '123-345-3456'
                 const regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-
-                if (regex.test(this.getValue(property)) === false) {
-                    this.setValidatorResult(property, 'phone');
-                }
+                return regex.test(value);
             },
 
-            regex: (property, args) => {
+            regex: (property, value, args) => {
                 let [regex] = args;
                 let regExp = new RegExp(regex);
-                const input = this.getValue(property);
-
-                let tests = [
-                    input === '',
-                    input == null,
-                    Array.isArray(input),
-                    regExp.test(input) === false
-                ];
-
-                tests.some(test => {
-                    if (test) {
-                        this.setValidatorResult(property, 'regex');
-                    }
-                });
+                return !['', null].includes(value) && !Array.isArray(value) && regExp.test(value);
             },
 
         };
