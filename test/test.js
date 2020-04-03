@@ -656,7 +656,7 @@ describe('filter validate', function () {
         });
 
     });
-/*
+
     describe('check passing in an object to the constructor', function () {
 
         describe('multiple filters and validators', function () {
@@ -667,13 +667,13 @@ describe('filter validate', function () {
             it('should check the string "   abc   " only contains "ABC" as result', function () {
                 const result = new FilterValidate({ test: '   abc   ' }, { filters: filters, validators: validators });
                 result.filters.test.should.equal('ABC');
-                result.validators.hasOwnProperty('test').should.false;
+                result.validators.hasOwnProperty('test').should.be.false;
             });
 
         });
 
     });
-*/
+
 
 });
 
