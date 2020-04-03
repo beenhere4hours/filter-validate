@@ -228,20 +228,22 @@ class FilterValidate {
         };
 
         this.setup = object => {
+            console.log(`[setup] E/X`);
             this.result = {filters: {}, validators: {}};
             this.input = {};
             this.input = {...object};
         };
 
         if (config != undefined) {
+            console.log('config was set --');
             this.setup(object);
 
             if (config.hasOwnProperty('filters')) {
-                this.parse(this.filtersMap, config.filters);
+                this.parse(this.setFilterResult, this.filtersMap, config.filters);
             }
 
             if (config.hasOwnProperty('validators')) {
-                this.parse(this.validatorsMap, config.validators);
+                this.parse(this.setValidatorResult, this.validatorsMap, config.validators);
             }
 
             return this.result;
