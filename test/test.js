@@ -284,9 +284,9 @@ describe('filter validate', function () {
             });
         });
 
-        describe('containedInList', function () {
+        describe('inList', function () {
 
-            const validatorRules = [ { test: 'containedInList, one; two; three; four; tell me more;' } ];
+            const validatorRules = [ { test: 'inList, one; two; three; four; tell me more;' } ];
 
             it('should check "four" is in the list', function () {
                 Object.keys(filterValidate.validate({ test: 'four' }, validatorRules)).length.should.equal(0);
@@ -298,9 +298,9 @@ describe('filter validate', function () {
 
         });
 
-        describe('notContainedInList', function () {
+        describe('notInList', function () {
 
-            const validatorRules = [ { test: 'notContainedInList, one; two; three; four; tell me more;' } ];
+            const validatorRules = [ { test: 'notInList, one; two; three; four; tell me more;' } ];
 
             it('should check "five" is not in the list', function () {
                 Object.keys(filterValidate.validate({ test: 'five' }, validatorRules)).length.should.equal(0);
@@ -555,7 +555,9 @@ describe('filter validate', function () {
             });
 
         });
+
     });
+
 
     describe('check each filter', function () {
         const filterValidate = new FilterValidate();
@@ -563,7 +565,7 @@ describe('filter validate', function () {
         describe('sanitizeNumbers', function () {
 
             it('should check the string "abc123" only contains numbers as result', function () {
-                filterValidate.filter({ test: 'abc123' }, [ { test: 'sanitizeNumbers'} ]).sanitizeNumbers.should.equal('123');
+                filterValidate.filter({ test: 'abc123' }, [ { test: 'sanitizeNumbers'} ]).test.should.equal('123');
             });
 
         });
@@ -574,22 +576,22 @@ describe('filter validate', function () {
             const filters = [ { test: filterToTest } ];
 
             it('should check the leading space is removed from " valid.email.address@gmail.com"', function () {
-                filterValidate.filter({ test: ' valid.email.address@gmail.com' }, filters)[filterToTest]
+                filterValidate.filter({ test: ' valid.email.address@gmail.com' }, filters).test
                     .should.equal('valid.email.address@gmail.com');
             });
 
             it('should check the trailing space is removed from "valid.email.address@gmail.com "', function () {
-                filterValidate.filter({ test: 'valid.email.address@gmail.com ' }, filters)[filterToTest]
+                filterValidate.filter({ test: 'valid.email.address@gmail.com ' }, filters).test
                     .should.equal('valid.email.address@gmail.com');
             });
 
             it('should check the space is removed from "valid.email .address@gmail.com "', function () {
-                filterValidate.filter({ test: 'valid.email .address@gmail.com ' }, filters)[filterToTest]
+                filterValidate.filter({ test: 'valid.email .address@gmail.com ' }, filters).test
                     .should.equal('valid.email.address@gmail.com');
             });
 
             it('should check the special characters are removed from "a"b(c)d,e:f;gi[j\\k]l@gmail.com" leaving "abcdefgi[jk]l@gmail.com" as a result', function () {
-                filterValidate.filter({ test: 'a"b(c)d,e:f;gi[j\\k]l@gmail.com' }, filters)[filterToTest]
+                filterValidate.filter({ test: 'a"b(c)d,e:f;gi[j\\k]l@gmail.com' }, filters).test
                     .should.equal('abcdefgi[jk]l@gmail.com');
             });
 
@@ -601,7 +603,7 @@ describe('filter validate', function () {
             const filters = [ { test: filterToTest } ];
 
             it('should check the string "   abc   " only contains "abc" as result', function () {
-                filterValidate.filter({ test: '   abc   ' }, filters)[filterToTest].should.equal('abc');
+                filterValidate.filter({ test: '   abc   ' }, filters).test.should.equal('abc');
             });
 
         });
@@ -612,7 +614,7 @@ describe('filter validate', function () {
             const filters = [ { test: filterToTest } ];
 
             it('should check the string "   abc   " only contains "abc   " as result', function () {
-                filterValidate.filter({ test: '   abc   ' }, filters)[filterToTest].should.equal('abc   ');
+                filterValidate.filter({ test: '   abc   ' }, filters).test.should.equal('abc   ');
             });
 
         });
@@ -623,7 +625,7 @@ describe('filter validate', function () {
             const filters = [ { test: filterToTest } ];
 
             it('should check the string "   abc   " only contains "   abc" as result', function () {
-                filterValidate.filter({ test: '   abc   ' }, filters)[filterToTest].should.equal('   abc');
+                filterValidate.filter({ test: '   abc   ' }, filters).test.should.equal('   abc');
             });
 
         });
@@ -654,6 +656,24 @@ describe('filter validate', function () {
         });
 
     });
+
+    describe('check passing in an object to the constructor', function () {
+
+        describe('multiple filters and validators', function () {
+
+            const filters = [ { test: 'ltrim|rtrim|upper'} ];
+            const validators = [ { test: 'alpha' } ];
+
+            it('should check the string "   abc   " only contains "ABC" as result', function () {
+                const result = new FilterValidate({ test: '   abc   ' }, { filters: filters, validators: validators });
+                result.filters.test.should.equal('ABC');
+                result.validators.hasOwnProperty('test').should.be.false;
+            });
+
+        });
+
+    });
+
 
 });
 

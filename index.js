@@ -1,244 +1,178 @@
 class FilterValidate {
 
-    constructor() {
-        this.result = {};
+    constructor(object, config) {
+        this.result = {filters: {}, validators: {}};
 
         this.input = {};
 
-        this.initProperty = (property) => {
-            if (!this.result.hasOwnProperty(property)) {
-                this.result[property] = [];
+        this.getValue = property => {
+            console.log(`[getValue] property: ${property}`);
+
+            let result = null;
+
+            if (this.result.filters.hasOwnProperty(property)) {
+                result = this.result.filters[property];
+                console.log(`[getValue] pull from result.filters: ${result}`);
+            } else {
+                result = this.input[property];
+                console.log(`[getValue] pull from input: ${result}`);
             }
+
+            return result;
+        };
+
+        /**
+         *
+         * @param input
+         */
+        this.setFilterResult = input => {
+            console.log(`[setFilterResult] value:`);
+            console.log(input);
+            this.result.filters[input.property] = input.result;
         };
 
         this.filtersMap = {
+
             // remove all characters except digits
-            sanitizeNumbers: property => this.result.sanitizeNumbers = this.input[property].replace(/\D/g, ''),
+            sanitizeNumbers: (property, value) => {
+                console.log(`[filtersMap] value: ${value}`);
+                return value.replace(/\D/g, '');
+            },
 
             // remove all characters except letters, digits, and !#$%&'*+-=?^_`{|}~@.[]
-            sanitizeEmail: property => this.result.sanitizeEmail = this.input[property].replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
+            sanitizeEmail: (property, value) => value.replace(/([^A-Z0-9!#$%&'*+\-=?^_`{|}~@.\[\]])/gi, ''),
 
             // remove spaces from both sides of string
-            trim: property => this.result.trim = this.input[property].trim(),
+            trim: (property, value) => value.trim(),
 
             // remove spaces from left side of string
-            ltrim: property => this.result.ltrim = this.input[property].trimStart(),
+            ltrim: (property, value) => value.trimLeft(),
 
             // remove spaces from right side of string
-            rtrim: property => this.result.rtrim = this.input[property].trimEnd(),
+            rtrim: (property, value) => value.trimRight(),
+
+            lower: (property, value) => value.toLowerCase(),
+
+            upper: (property, value) => value.toUpperCase(),
+
+        };
+
+        this.setValidatorResult = input => {
+            if (!input.result) {
+                if (!this.result.validators.hasOwnProperty(input.property)) {
+                    this.result.validators[input.property] = [];
+                }
+                this.result.validators[input.property].push(input.rule);
+            }
         };
 
         this.validatorsMap = {
-            required: property => {
-                let tests = [
-                    !this.input.hasOwnProperty(property),
-                    ['', null, undefined].includes(this.input[property]),
-                ];
+            required: (property, value) => (this.input.hasOwnProperty(property) && !['', null, undefined].includes(value)),
 
-                tests.some(test => {
-                    if (test) {
-                        this.initProperty(property);
-                        this.result[property].push('required');
-                    }
-                });
-            },
-
-            validEmail: property => {
+            validEmail: (property, value) => {
                 // https://stackoverflow.com/a/14075810/1439955
                 const regex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-
-                if (regex.test(this.input[property]) === false) {
-                    this.initProperty(property);
-                    this.result[property].push('validEmail');
-                }
+                return regex.test(value);
             },
 
-            maxLen: (property, args) => {
+            maxLen: (property, value, args) => {
                 let [len] = args;
 
                 if (typeof len === 'string') {
                     len = parseInt(len, 10);
                 }
 
-                if (this.input[property].length > len) {
-                    this.initProperty(property);
-                    this.result[property].push('maxLen');
-                }
+                return (value.length <= len);
             },
 
-            minLen: (property, args) => {
+            minLen: (property, value, args) => {
                 let [len] = args;
 
                 if (typeof len === 'string') {
                     len = parseInt(len, 10);
                 }
 
-                if (this.input[property].length < len) {
-                    this.initProperty(property);
-                    this.result[property].push('minLen');
-                }
+                return (value.length >= len);
             },
 
-            exactLen: (property, args) => {
+            exactLen: (property, value, args) => {
                 let [len] = args;
 
                 if (typeof len === 'string') {
                     len = parseInt(len, 10);
                 }
 
-                if (this.input[property].length !== len) {
-                    this.initProperty(property);
-                    this.result[property].push('exactLen');
-                }
+                return (value.length === len);
             },
 
-            alpha: property => {
+            alpha: (property, value) => {
                 const regex = /^[a-zA-Z]*$/;
-
-                if (regex.test(this.input[property]) === false) {
-                    this.initProperty(property);
-                    this.result[property].push('alpha');
-                }
+                return regex.test(value);
             },
 
-            alphaNumeric: property => {
+            alphaNumeric: (property, value) => {
                 const regex = /^[a-zA-Z0-9]*$/;
-
-                if (regex.test(this.input[property]) === false) {
-                    this.initProperty(property);
-                    this.result[property].push('alphaNumeric');
-                }
+                return regex.test(value);
             },
 
-            alphaDash: property => {
+            alphaDash: (property, value) => {
                 const regex = /^[a-zA-Z0-9-_]*$/;
-
-                if (regex.test(this.input[property]) === false) {
-                    this.initProperty(property);
-                    this.result[property].push('alphaDash');
-                }
+                return regex.test(value);
             },
 
-            alphaSpace: property => {
+            alphaSpace: (property, value) => {
                 const regex = /^[a-zA-Z0-9\s]*$/;
-
-                if (regex.test(this.input[property]) === false) {
-                    this.initProperty(property);
-                    this.result[property].push('alphaSpace');
-                }
+                return regex.test(value);
             },
 
-            numeric: property => {
-                if (isNaN(this.input[property]) || !isFinite(this.input[property]) || this.input[property] == null || Array.isArray(this.input[property] || typeof this.input[property !== 'number'])) {
-                    this.initProperty(property);
-                    this.result[property].push('numeric');
-                }
-            },
+            numeric: (property, value) => (!isNaN(value) && isFinite(value) && value != null && !Array.isArray(value) && typeof Number(value) === 'number'),
 
-            integer: property => {
-                if (!Number.isInteger(this.input[property]) || this.input[property] == null || Array.isArray(this.input[property])) {
-                    this.initProperty(property);
-                    this.result[property].push('integer');
-                }
-            },
+            integer: (property, value) => (value != null && !Array.isArray(value) && Number.isInteger(value)),
 
-            float: property => {
+            float: (property, value) => {
                 const regex = /^-?\d+(?:[.,]\d*?)?$/;
-
-                let tests = [
-                    this.input[property] == null,
-                    Array.isArray(this.input[property]),
-                    !regex.test(this.input[property]),
-                    isNaN(parseFloat(this.input[property])),
-                ];
-
-                tests.some(test => {
-                    if (test) {
-                        this.initProperty(property);
-                        this.result[property].push('float');
-                    }
-                });
+                return (value != null && !Array.isArray(value) && regex.test(value) && !isNaN(parseFloat(value)));
             },
 
-            containedInList: (needle, args) => {
+            inList: (property, needle, args) => {
                 let [haystack] = args;
-
-                let hasValue = false;
-
-                if (this.input[needle] != null && haystack != null) {
-                    hasValue = haystack.split(';').map(item => item.trim().toLowerCase()).includes(this.input[needle].trim().toLowerCase());
-                }
-
-                if (!hasValue) {
-                    this.initProperty(needle);
-                    this.result[needle].push('containedInList');
-                }
+                return (needle != null && haystack != null && haystack.split(';').map(item => item.trim().toLowerCase()).includes(needle.trim().toLowerCase()));
             },
 
-            notContainedInList: (needle, args) => {
+            notInList: (property, needle, args) => {
                 let [haystack] = args;
-
-                let hasValue = false;
-
-                if (this.input[needle] != null && haystack != null) {
-                    hasValue = haystack.split(';').map(item => item.trim().toLowerCase()).includes(this.input[needle].trim().toLowerCase());
-                }
-
-                if (hasValue) {
-                    this.initProperty(needle);
-                    this.result[needle].push('notContainedInList');
-                }
+                return (needle != null && haystack != null && !haystack.split(';').map(item => item.trim().toLowerCase()).includes(needle.trim().toLowerCase()));
             },
 
-            minNumeric: (property, args) => {
-                let [val] = args;
-
+            minNumeric: (property, value, args) => {
+                let [minVal] = args;
                 const regex = /^-?\d+(?:[.,]\d*?)?$/;
 
-                let tests = [
-                    this.input[property] == null,
-                    Array.isArray(this.input[property]),
-                    !regex.test(this.input[property]),
-                    !regex.test(val),
-                    isNaN(parseFloat(this.input[property])),
-                    isNaN(parseFloat(val)),
-                    !isFinite(this.input[property]),
-                    parseFloat(val) > parseFloat(this.input[property])
-                ];
-
-                tests.some(test => {
-                    if (test) {
-                        this.initProperty(property);
-                        this.result[property].push('minNumeric');
-                    }
-                });
+                return value != null &&
+                    !Array.isArray(value) &&
+                    regex.test(value) &&
+                    regex.test(minVal) &&
+                    !isNaN(parseFloat(value)) &&
+                    !isNaN(parseFloat(minVal)) &&
+                    isFinite(value) &&
+                    parseFloat(value) >= parseFloat(minVal);
             },
 
-            maxNumeric: (property, args) => {
-                let [val] = args;
-
+            maxNumeric: (property, value, args) => {
+                let [maxVal] = args;
                 const regex = /^-?\d+(?:[.,]\d*?)?$/;
 
-                let tests = [
-                    this.input[property] == null,
-                    Array.isArray(this.input[property]),
-                    !regex.test(this.input[property]),
-                    !regex.test(val),
-                    isNaN(parseFloat(this.input[property])),
-                    isNaN(parseFloat(val)),
-                    !isFinite(this.input[property]),
-                    parseFloat(this.input[property]) > parseFloat(val),
-                ];
-
-                tests.some(test => {
-                    if (test) {
-                        this.initProperty(property);
-                        this.result[property].push('minNumeric');
-                    }
-                });
+                return value != null &&
+                    !Array.isArray(value) &&
+                    regex.test(value) &&
+                    regex.test(maxVal) &&
+                    !isNaN(parseFloat(value)) &&
+                    !isNaN(parseFloat(maxVal)) &&
+                    isFinite(value) &&
+                    parseFloat(value) <= parseFloat(maxVal);
             },
 
-            date: property => {
+            date: (property, value) => {
                 // regex from https://regexr.com/3e0lh
                 // should support the following formats
                 // 1997
@@ -257,106 +191,118 @@ class FilterValidate {
                 // 1997-13-39T19:58:30.45-01:00Z
                 const regex = /[+-]?\d{4}(-[01]\d(-[0-3]\d(T[0-2]\d:[0-5]\d:?([0-5]\d(\.\d+)?)?[+-][0-2]\d:[0-5]\dZ?)?)?)?/;
 
-                if (regex.test(this.input[property]) === false) {
-                    this.initProperty(property);
-                    this.result[property].push('date');
-                }
+                return regex.test(value);
             },
 
-            starts: (property, args) => {
-                let [needle, val] = args;
+            starts: (property, value, args) => {
+                let [needle, startAt] = args;
 
-                if (typeof val === "string") {
-                    val = parseInt(val, 10);
-                } else if (val == null) {
-                    val = 0;
+                if (typeof startAt === "string") {
+                    startAt = parseInt(startAt, 10);
+                } else if (startAt == null) {
+                    startAt = 0;
                 }
 
-                let tests = [
-                    this.input[property] == null,
-                    Array.isArray(this.input[property]),
-                    isNaN(parseInt(val, 10)),
-                    typeof this.input[property] === "string" && !this.input[property].startsWith(needle, val)
-                ];
-
-                tests.some(test => {
-                    if (test) {
-                        this.initProperty(property);
-                        this.result[property].push('starts');
-                    }
-                });
+                return value != null &&
+                    !Array.isArray(value) &&
+                    !isNaN(parseInt(startAt, 10)) &&
+                    typeof value === "string" &&
+                    value.startsWith(needle, startAt);
             },
 
-            phone: property => {
+            phone: (property, value) => {
                 // '1234567890'
                 // 1234567890
                 // '(078)789-8908'
                 // '123-345-3456'
                 const regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-
-                if (regex.test(this.input[property]) === false) {
-                    this.initProperty(property);
-                    this.result[property].push('phone');
-                }
+                return regex.test(value);
             },
 
-            regex: (property, args) => {
+            regex: (property, value, args) => {
                 let [regex] = args;
                 let regExp = new RegExp(regex);
-
-                let tests = [
-                    this.input[property] === '',
-                    this.input[property] == null,
-                    Array.isArray(this.input[property]),
-                    regExp.test(this.input[property]) === false
-                ];
-
-                tests.some(test => {
-                    if (test) {
-                        this.initProperty(property);
-                        this.result[property].push('regex');
-                    }
-                });
+                return !['', null].includes(value) && !Array.isArray(value) && regExp.test(value);
             },
 
         };
-    }
 
-    parse(map, object = {}, items = []) {
-        // reset the result
-        this.result = {};
-        // reset the input
-        this.input = {};
-        // make a shallow copy of the input
-        this.input = {...object};
+        this.setup = object => {
+            console.log(`[setup] E/X`);
+            this.result = {filters: {}, validators: {}};
+            this.input = {};
+            this.input = {...object};
+        };
 
-        if (Object.prototype.toString.call(object) === '[object Object]' && Array.isArray(items)) {
-            items.forEach(item => {
-                for (let [property, rules] of Object.entries(item)) {
-                    // console.log(`property: ${property} rules: ${rules}`);
+        if (config != undefined) {
+            console.log('config was set --');
+            this.setup(object);
 
-                    if (typeof rules === 'string') {
-                        rules.split('|')
-                            .filter(segment => segment !== '') // remove any rules that came across as empty
-                            .forEach(segment => {
-                                let [rule, ...args] = segment.split(',').map(segment => segment.trim());
-                                map[rule](property, args);
-                            });
-                    }
-                }
-            });
+            if (config.hasOwnProperty('filters')) {
+                this.parse(this.setFilterResult, this.filtersMap, config.filters);
+            }
+
+            if (config.hasOwnProperty('validators')) {
+                this.parse(this.setValidatorResult, this.validatorsMap, config.validators);
+            }
+
+            return this.result;
         }
     }
 
-    validate(object, validators = []) {
-        this.parse(this.validatorsMap, object, validators);
-        // console.log(this.result);
-        return this.result;
+    /**
+     *
+     * @param setResult
+     * @param map
+     * @param items
+     */
+    parse(setResult, map, items = []) {
+
+        items.forEach(item => {
+            for (let [property, rules] of Object.entries(item)) {
+                console.log(`[parse] property: ${property} rules: ${rules}`);
+
+                if (typeof rules === 'string') {
+                    rules.split('|')
+                        .filter(segment => segment !== '') // remove any rules that came across as empty
+                        .forEach(segment => {
+                            let [rule, ...args] = segment.split(',').map(segment => segment.trim());
+                            console.log(`[parse] property: ${property} rule: ${rule}`);
+                            const result = {
+                                property: property,
+                                result: map[rule](property, this.getValue(property), args),
+                                rule: rule,
+                            };
+
+                            console.log(`[parse] result:`);
+                            console.log(result);
+                            setResult(result);
+                        });
+                }
+            }
+        });
+    }
+
+    validate(object = {}, validators = []) {
+        if (Object.prototype.toString.call(object) === '[object Object]' && Array.isArray(validators)) {
+            this.setup(object);
+            this.parse(this.setValidatorResult, this.validatorsMap, validators);
+        }
+        return this.result.validators;
     }
 
     filter(object = {}, filters = []) {
-        this.parse(this.filtersMap, object, filters);
-        return this.result;
+        if (Object.prototype.toString.call(object) === '[object Object]' && Array.isArray(filters)) {
+            this.setup(object);
+            this.parse(this.setFilterResult, this.filtersMap, filters);
+        }
+        return this.result.filters;
+    }
+
+    addFilter(name, filter = {}) {
+        if (Object.prototype.toString.call(filter) === '[object Object]' ) {
+            this.filtersMap[name] = filter;
+        }
     }
 
 }
