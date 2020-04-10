@@ -305,6 +305,12 @@ class FilterValidate {
         }
     }
 
+    addValidator(name, validator) {
+        if (typeof validator === 'function') {
+            this.validatorsMap[name] = validator;
+        }
+    }
+
 }
 
 module.exports = FilterValidate;
