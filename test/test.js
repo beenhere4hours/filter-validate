@@ -688,5 +688,26 @@ describe('filter validate', function () {
     });
 
 
+    describe('check addValidator method implementation', function () {
+        const filterValidate = new FilterValidate();
+
+        const testMaxLen = function(property, value, args) {
+            let [len] = args;
+
+            if (typeof len === 'string') {
+                len = parseInt(len, 10);
+            }
+
+            return (value.length <= len);
+        };
+
+        filterValidate.addValidator('testMaxLen', testMaxLen);
+
+        it('should check the string does not exceed max length', function () {
+            Object.keys(filterValidate.validate({ test: '12345' }, [ { test: 'maxLen,7' } ])).length.should.equal(0);
+        });
+
+    });
+
 });
 
