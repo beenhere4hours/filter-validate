@@ -299,8 +299,8 @@ class FilterValidate {
         return this.result.filters;
     }
 
-    addFilter(name, filter = {}) {
-        if (Object.prototype.toString.call(filter) === '[object Object]' ) {
+    addFilter(name, filter) {
+        if (typeof filter === 'function') {
             this.filtersMap[name] = filter;
         }
     }

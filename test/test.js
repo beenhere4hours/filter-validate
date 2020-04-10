@@ -674,6 +674,19 @@ describe('filter validate', function () {
 
     });
 
+    describe('check addFilter method implementation', function () {
+        const filterValidate = new FilterValidate();
+
+        const testToUpperCase = function(property, value) {
+            return value.toUpperCase();
+        };
+
+        filterValidate.addFilter('testToUpperCase', testToUpperCase);
+        it('should check the string "abc" is "ABC" as result', function () {
+            filterValidate.filter({ test: 'abc' }, [{test: 'testToUpperCase'}]).test.should.equal('ABC');
+        });
+    });
+
 
 });
 
