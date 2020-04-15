@@ -6,4 +6,15 @@ node_js:
 branches:
   only:
   - master
-  - stable
+
+script:
+  - npm test
+
+deploy:
+  provider: npm
+  email: "$NPM_EMAIL"
+  api_key: "$NPM_API_TOKEN"
+  access: public
+  on:
+    branch: master
+
