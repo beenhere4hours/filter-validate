@@ -6,7 +6,6 @@ node_js:
 branches:
   only:
   - master
-  - gh-36109437_automate-builds
 
 script:
   - npm test
@@ -17,5 +16,5 @@ deploy:
   api_key: "$NPM_API_TOKEN"
   access: public
   on:
-    branch: gh-36109437_automate-builds
+    branch: master
 
