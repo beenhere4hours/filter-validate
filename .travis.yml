@@ -6,4 +6,16 @@ node_js:
 branches:
   only:
   - master
-  - stable
+  - gh-36109437_automate-builds
+
+script:
+  - npm test
+
+deploy:
+  provider: npm
+  email: "$NPM_EMAIL"
+  api_key: "$NPM_API_TOKEN"
+  access: public
+  on:
+    branch: gh-36109437_automate-builds
+
