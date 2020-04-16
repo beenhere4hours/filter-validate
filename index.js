@@ -6,16 +6,13 @@ class FilterValidate {
         this.input = {};
 
         this.getValue = property => {
-            console.log(`[getValue] property: ${property}`);
 
             let result = null;
 
             if (this.result.filters.hasOwnProperty(property)) {
                 result = this.result.filters[property];
-                console.log(`[getValue] pull from result.filters: ${result}`);
             } else {
                 result = this.input[property];
-                console.log(`[getValue] pull from input: ${result}`);
             }
 
             return result;
@@ -26,8 +23,6 @@ class FilterValidate {
          * @param input
          */
         this.setFilterResult = input => {
-            console.log(`[setFilterResult] value:`);
-            console.log(input);
             this.result.filters[input.property] = input.result;
         };
 
@@ -35,7 +30,6 @@ class FilterValidate {
 
             // remove all characters except digits
             sanitizeNumbers: (property, value) => {
-                console.log(`[filtersMap] value: ${value}`);
                 return value.replace(/\D/g, '');
             },
 
@@ -228,14 +222,12 @@ class FilterValidate {
         };
 
         this.setup = object => {
-            console.log(`[setup] E/X`);
             this.result = {filters: {}, validators: {}};
             this.input = {};
             this.input = {...object};
         };
 
         if (config != undefined) {
-            console.log('config was set --');
             this.setup(object);
 
             if (config.hasOwnProperty('filters')) {
@@ -260,22 +252,18 @@ class FilterValidate {
 
         items.forEach(item => {
             for (let [property, rules] of Object.entries(item)) {
-                console.log(`[parse] property: ${property} rules: ${rules}`);
 
                 if (typeof rules === 'string') {
                     rules.split('|')
                         .filter(segment => segment !== '') // remove any rules that came across as empty
                         .forEach(segment => {
                             let [rule, ...args] = segment.split(',').map(segment => segment.trim());
-                            console.log(`[parse] property: ${property} rule: ${rule}`);
                             const result = {
                                 property: property,
                                 result: map[rule](property, this.getValue(property), args),
                                 rule: rule,
                             };
 
-                            console.log(`[parse] result:`);
-                            console.log(result);
                             setResult(result);
                         });
                 }
