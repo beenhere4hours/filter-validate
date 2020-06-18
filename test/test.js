@@ -1,5 +1,5 @@
 const should = require('chai').should();
-const FilterValidate = require("../index");
+const FilterValidate = require("../src/filter-validate");
 
 describe('filter validate', function () {
 
@@ -191,25 +191,28 @@ describe('filter validate', function () {
         describe('numeric', function () {
 
             const validatorRules = [ { test: 'numeric' } ];
-
-            it('should check "42" is numeric', function () {
+            it('should check string "42" is numeric', function () {
                 Object.keys(filterValidate.validate({ test: '42' }, validatorRules)).length.should.equal(0);
             });
 
-            it('should check 0x539 is numeric', function () {
-                Object.keys(filterValidate.validate({ test: 0x539 }, validatorRules)).length.should.equal(0);
+            it('should check integer 42 is numeric', function () {
+                Object.keys(filterValidate.validate({ test: 42 }, validatorRules)).length.should.equal(0);
             });
 
-            it('should check 0o2471 is numeric', function () {
+            it('should check float 42.0 is numeric', function () {
+                Object.keys(filterValidate.validate({ test: 42.0 }, validatorRules)).length.should.equal(0);
+            });
+
+            it('should check hex/base 16 0x2A is numeric', function () {
+                Object.keys(filterValidate.validate({ test: 0x2A }, validatorRules)).length.should.equal(0);
+            });
+
+            it('should check octal 0o2471 is numeric', function () {
                 Object.keys(filterValidate.validate({ test: 0o2471 }, validatorRules)).length.should.equal(0);
             });
 
-            it('should check 0b10100111001 is numeric', function () {
-                Object.keys(filterValidate.validate({ test: 0b10100111001 }, validatorRules)).length.should.equal(0);
-            });
-
-            it('should check 9.1 is numeric', function () {
-                Object.keys(filterValidate.validate({ test: 9.1 }, validatorRules)).length.should.equal(0);
+            it('should check binary 0b101010 is numeric', function () {
+                Object.keys(filterValidate.validate({ test: 0b101010 }, validatorRules)).length.should.equal(0);
             });
 
             it('should check "not numeric" is NOT numeric', function () {
