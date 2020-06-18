@@ -13,7 +13,7 @@ Is an object validation utility that can be used in the browser and in NodeJS.
 ## Usage
 
 ```
-const filterValidate = require("../index").filterValidate;
+const filterValidate = require("../src/filter-validate");
 WIP - need to finish this section
 ```
 
