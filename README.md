@@ -10,8 +10,13 @@ Is an object validation utility that can be used in the browser and in NodeJS.
 ## Installation
 `npm i @beenhere4hours/filter-validate`
 
-## Usage
+## Install
 
+### From CDN
+WIP
+
+### From NPM
+WIP
 ```
 const filterValidate = require("../src/filter-validate");
 WIP - need to finish this section
