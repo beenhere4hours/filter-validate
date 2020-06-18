@@ -1,8 +1,9 @@
 {
   "author": "Daniel Masi",
   "name": "@beenhere4hours/filter-validate",
-  "version": "0.3.7",
-  "description": "Data filtering and validation",
+  "main": "./src/filter-validate.js",
+  "version": "0.3.8",
+  "description": "An object validation utility",
   "homepage": "https://github.com/beenhere4hours/filter-validate#README.md",
   "url": "https://github.com/beenhere4hours/filter-validate/issues",
   "license": "MIT",
