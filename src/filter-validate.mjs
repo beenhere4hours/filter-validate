@@ -1,4 +1,4 @@
-class FilterValidate {
+export class FilterValidate {
 
     constructor(object, config) {
         this.result = {filters: {}, validators: {}};
@@ -301,4 +301,4 @@ class FilterValidate {
 
 }
 
-module.exports = FilterValidate;
+// module.exports = FilterValidate;

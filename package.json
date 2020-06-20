@@ -1,7 +1,8 @@
 {
   "author": "Daniel Masi",
   "name": "@beenhere4hours/filter-validate",
-  "main": "./src/filter-validate.js",
+  "main": "src/filter-validate.mjs",
+  "type": "module",
   "version": "0.3.8",
   "description": "An object validation utility",
   "homepage": "https://github.com/beenhere4hours/filter-validate#README.md",
@@ -22,10 +23,19 @@
     "nyc": "^15.0.1"
   },
   "scripts": {
-    "lint": "jshint index.js",
+    "lint": "jshint ./src/filter-validate.mjs",
     "test": "nyc mocha"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "nyc": {
+    "all": true,
+    "extension": [
+      ".mjs"
+    ],
+    "include": [
+      "src/*.mjs"
+    ]
   }
 }

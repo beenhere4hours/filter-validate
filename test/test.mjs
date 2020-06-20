@@ -1,5 +1,9 @@
-const should = require('chai').should();
-const FilterValidate = require("../src/filter-validate");
+// https://www.npmjs.com/package/chai#native-modules-usage--registers-the-chai-testing-style-globally-
+import 'chai/register-assert.js';  // Using Assert style
+import 'chai/register-expect.js';  // Using Expect style
+import 'chai/register-should.js';  // Using Should style
+import { FilterValidate } from '../src/filter-validate.mjs';
+
 
 describe('filter validate', function () {
 
