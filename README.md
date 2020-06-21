@@ -10,7 +10,7 @@ An object validation utility.
 ## Install
 
 ### From CDN
-Comming soon...
+Coming soon...
 
 ### From NPM
 `npm i @beenhere4hours/filter-validate`
@@ -20,7 +20,7 @@ const filterValidate = require("../src/filter-validate");
 ```
 
 ## Usage
-Comming soon...
+Coming soon...
 
 ## Tests
 
