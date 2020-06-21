@@ -4,6 +4,11 @@
   "version": "0.3.11",
   "description": "An object validation utility",
   "homepage": "https://github.com/beenhere4hours/filter-validate.git#README.md",
+  "keywords": [
+    "ES6",
+    "object",
+    "validation"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/beenhere4hours/filter-validate.git"
