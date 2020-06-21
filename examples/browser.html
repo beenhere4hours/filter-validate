@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Example of how to use filter-validate in the browser</title>
-    <script src="https://cdn.jsdelivr.net/npm/@beenhere4hours/filter-validate@0.3.8/src/filter-validate.min.js" defer></script>
-    <script>
+    <script type="module">
+        import { FilterValidate } from "https://cdn.jsdelivr.net/npm/@beenhere4hours/filter-validate@0.3.11/src/filter-validate.min.js";
         const filterValidate = new FilterValidate();
         const validatorRules = [
             { test: 'maxLen, 7' }
