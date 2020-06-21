@@ -5,22 +5,22 @@
 
 filter-validate
 =====
-Is an object validation utility that can be used in the browser and in NodeJS.
-
-## Installation
-`npm i @beenhere4hours/filter-validate`
+An object validation utility.
 
 ## Install
 
 ### From CDN
-WIP
+Coming soon...
 
 ### From NPM
-WIP
+`npm i @beenhere4hours/filter-validate`
+
 ```
 const filterValidate = require("../src/filter-validate");
-WIP - need to finish this section
 ```
+
+## Usage
+Coming soon...
 
 ## Tests
 

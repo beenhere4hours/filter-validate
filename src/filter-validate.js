@@ -1,4 +1,4 @@
-class FilterValidate {
+export class FilterValidate {
 
     constructor(object, config) {
         this.result = {filters: {}, validators: {}};
@@ -251,13 +251,13 @@ class FilterValidate {
     parse(setResult, map, items = []) {
 
         items.forEach(item => {
-            for (let [property, rules] of Object.entries(item)) {
+            for (const [property, rules] of Object.entries(item)) {
 
                 if (typeof rules === 'string') {
                     rules.split('|')
                         .filter(segment => segment !== '') // remove any rules that came across as empty
                         .forEach(segment => {
-                            let [rule, ...args] = segment.split(',').map(segment => segment.trim());
+                            const [rule, ...args] = segment.split(',').map(segment => segment.trim());
                             const result = {
                                 property: property,
                                 result: map[rule](property, this.getValue(property), args),
@@ -301,4 +301,4 @@ class FilterValidate {
 
 }
 
-module.exports = FilterValidate;
+// module.exports = FilterValidate;
