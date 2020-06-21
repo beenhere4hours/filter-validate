@@ -36,15 +36,15 @@ Value is valid formatted email address
 referenced from [stackoverflow](https://stackoverflow.com/a/14075810/1439955) answer
 
 examples of accepted formats:
-* test@gmail.com
-* test.test@gmail.com
-* test.with+symbol@gmail.com
-* test.with-symbol@gmail.com
-* x@gmail.com
-* "this.is.awkward@awkward.com"@gmail.com
-* "very.(),:;<>[]\".VERY.\"very@\ \"very\".unusual@gmail.com
-* /#!$%&'*+-/=?^_`{}|~@gmail.com
-* "()<>[]:,;@\\"!#$%&'-/=?^_`{}|~.a"@example.org
+* test\@gmail.com
+* test.test\@gmail.com
+* test.with+symbol\@gmail.com
+* test.with-symbol\@gmail.com
+* x\@gmail.com
+* "this.is.awkward@awkward.com"\@gmail.com
+* "very.(),:;<>[]\".VERY.\"very@\ \"very\".unusual\@gmail.com
+* /#!$%&'*+-/=?^_`{}|~\@gmail.com
+* "()<>[]:,;@\\"!#$%&'-/=?^_`{}|~.a"\@example.org
 
 ##### maxLen, n
 Value length is not greater than length given as n
