@@ -143,3 +143,6 @@ Change all characters to lowercase
 
 ##### upper
 Change all characters to uppercase
+
+## Kudos
+Andre Torgal for his [esm nyc mocha boilerplate](https://github.com/andrezero/boilerplate-esm-nyc-mocha)
