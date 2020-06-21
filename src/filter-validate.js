@@ -251,7 +251,7 @@ export class FilterValidate {
     parse(setResult, map, items = []) {
 
         items.forEach(item => {
-            for (let [property, rules] of Object.entries(item)) {
+            for (const [property, rules] of Object.entries(item)) {
 
                 if (typeof rules === 'string') {
                     rules.split('|')
