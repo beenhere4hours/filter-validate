@@ -5,11 +5,12 @@
 
 filter-validate
 =====
-Is an object validation utility.
+An object validation utility.
 
 ## Install
 
 ### From CDN
+Comming soon...
 
 ### From NPM
 `npm i @beenhere4hours/filter-validate`
@@ -19,7 +20,7 @@ const filterValidate = require("../src/filter-validate");
 ```
 
 ## Usage
-
+Comming soon...
 
 ## Tests
 
