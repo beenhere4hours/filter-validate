@@ -257,7 +257,7 @@ export class FilterValidate {
                     rules.split('|')
                         .filter(segment => segment !== '') // remove any rules that came across as empty
                         .forEach(segment => {
-                            let [rule, ...args] = segment.split(',').map(segment => segment.trim());
+                            const [rule, ...args] = segment.split(',').map(segment => segment.trim());
                             const result = {
                                 property: property,
                                 result: map[rule](property, this.getValue(property), args),
