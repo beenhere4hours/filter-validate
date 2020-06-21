@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Example of how to use filter-validate in the browser</title>
     <script type="module">
-        import { FilterValidate } from "https://cdn.jsdelivr.net/npm/@beenhere4hours/filter-validate@0.3.11/src/filter-validate.min.js";
+        import {FilterValidate} from "https://cdn.jsdelivr.net/npm/@beenhere4hours/filter-validate@0.3.11/src/filter-validate.min.js";
+
         const filterValidate = new FilterValidate();
         const validatorRules = [
-            { test: 'maxLen, 7' }
+            {test: 'maxLen, 7'}
         ];
-        const result = filterValidate.validate({ test: '12345' }, validatorRules);
+        const result = filterValidate.validate({test: '12345'}, validatorRules);
+        console.log(`result will be {} as the test is passing`);
         console.log(result);
     </script>
 
