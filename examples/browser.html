@@ -7,12 +7,18 @@
         import {FilterValidate} from "https://cdn.jsdelivr.net/npm/@beenhere4hours/filter-validate@0.3.11/src/filter-validate.min.js";
 
         const filterValidate = new FilterValidate();
-        const validatorRules = [
-            {test: 'maxLen, 7'}
-        ];
-        const result = filterValidate.validate({test: '12345'}, validatorRules);
+
+        // example of a single validator
+        const validatorRules = {test: 'maxLen, 7'};
+        const validatorResult = filterValidate.validate({test: '12345'}, validatorRules);
         console.log(`result will be {} as the test is passing`);
-        console.log(result);
+        console.log(validatorResult);
+
+        // example of a single filter
+        const filterRules = {test: 'sanitizeNumbers'};
+        const filterExampleObject = {test: 'abc123'};
+        const filterResult = filterValidate.filter(filterExampleObject, filterRules);
+        console.log(filterResult);
     </script>
 
 </head>
