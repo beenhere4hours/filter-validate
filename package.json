@@ -4,6 +4,11 @@
   "version": "0.3.11",
   "description": "An object validation utility",
   "homepage": "https://github.com/beenhere4hours/filter-validate.git#README.md",
+  "keywords": [
+    "ES6",
+    "object",
+    "validation"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/beenhere4hours/filter-validate.git"
@@ -17,9 +22,6 @@
     "build": "eslint src/ test/ && npm run test"
   },
   "dependencies": {},
-  "esm": {
-    "cjs": true
-  },
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^7.3.0",
@@ -32,5 +34,8 @@
     "istanbul": "^0.4.5",
     "mocha": "^8.0.1",
     "nyc": "^15.1.0"
+  },
+  "esm": {
+    "cjs": true
   }
 }

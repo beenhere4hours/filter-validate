@@ -7,20 +7,20 @@ filter-validate
 =====
 An object validation utility.
 
-## Install
-
-### From CDN
-Coming soon...
+## Usage
 
 ### From NPM
 `npm i @beenhere4hours/filter-validate`
 
-```
+```javascript
 const filterValidate = require("../src/filter-validate");
+// coming soon...
 ```
 
-## Usage
-Coming soon...
+## Usage in browser
+```html
+coming soon...
+```
 
 ## Tests
 
@@ -31,20 +31,20 @@ Coming soon...
 Specified key/value pair exists and that the value is not an empty string '', null, or undefined
 
 ##### validEmail
-Value is valid formatted email address
+Value is valid formatted email address.
 
-referenced from [stackoverflow](https://stackoverflow.com/a/14075810/1439955) answer
+This should cover most of the **RFC 822** and **RFC 5322** specifications.
 
-examples of accepted formats:
-* test@gmail.com
-* test.test@gmail.com
-* test.with+symbol@gmail.com
-* test.with-symbol@gmail.com
-* x@gmail.com
-* "this.is.awkward@awkward.com"@gmail.com
-* "very.(),:;<>[]\".VERY.\"very@\ \"very\".unusual@gmail.com
-* /#!$%&'*+-/=?^_`{}|~@gmail.com
-* "()<>[]:,;@\\"!#$%&'-/=?^_`{}|~.a"@example.org
+Below are examples of accepted formats:
+* `test@gmail.com`
+* `test.test@gmail.com`
+* `test.with+symbol@gmail.com`
+* `test.with-symbol@gmail.com`
+* `x@gmail.com`
+* `"this.is.awkward@awkward.com"@gmail.com`
+* `"very.(),:;<>[]\".VERY.\"very@\ \"very\".unusual@gmail.com`
+* `/#!$%&'*+-/=?^_`{}|~@gmail.com`
+* ``` "()<>[]:,;@\\"!#$%&'-/=?^_`{}|~.a"@example.org ```
 
 ##### maxLen, n
 Value length is not greater than length given as n
@@ -143,3 +143,6 @@ Change all characters to lowercase
 
 ##### upper
 Change all characters to uppercase
+
+## Kudos
+Andre Torgal for his [esm nyc mocha boilerplate](https://github.com/andrezero/boilerplate-esm-nyc-mocha)

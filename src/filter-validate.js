@@ -246,41 +246,39 @@ export class FilterValidate {
      *
      * @param setResult
      * @param map
-     * @param items
+     * @param requestedRules
      */
-    parse(setResult, map, items = []) {
+    parse(setResult, map, requestedRules) {
 
-        items.forEach(item => {
-            for (const [property, rules] of Object.entries(item)) {
+        for (const [property, rules] of Object.entries(requestedRules)) {
 
-                if (typeof rules === 'string') {
-                    rules.split('|')
-                        .filter(segment => segment !== '') // remove any rules that came across as empty
-                        .forEach(segment => {
-                            const [rule, ...args] = segment.split(',').map(segment => segment.trim());
-                            const result = {
-                                property: property,
-                                result: map[rule](property, this.getValue(property), args),
-                                rule: rule,
-                            };
+            if (typeof rules === 'string') {
+                rules.split('|')
+                    .filter(segment => segment !== '') // remove any rules that came across as empty
+                    .forEach(segment => {
+                        const [rule, ...args] = segment.split(',').map(segment => segment.trim());
+                        const result = {
+                            property: property,
+                            result: map[rule](property, this.getValue(property), args),
+                            rule: rule,
+                        };
 
-                            setResult(result);
-                        });
-                }
+                        setResult(result);
+                    });
             }
-        });
+        }
     }
 
-    validate(object = {}, validators = []) {
-        if (Object.prototype.toString.call(object) === '[object Object]' && Array.isArray(validators)) {
+    validate(object = {}, validators = {}) {
+        if (Object.prototype.toString.call(object) === '[object Object]' && Object.prototype.toString.call(validators) === '[object Object]') {
             this.setup(object);
             this.parse(this.setValidatorResult, this.validatorsMap, validators);
         }
         return this.result.validators;
     }
 
-    filter(object = {}, filters = []) {
-        if (Object.prototype.toString.call(object) === '[object Object]' && Array.isArray(filters)) {
+    filter(object = {}, filters = {}) {
+        if (Object.prototype.toString.call(object) === '[object Object]' && Object.prototype.toString.call(filters) === '[object Object]') {
             this.setup(object);
             this.parse(this.setFilterResult, this.filtersMap, filters);
         }
