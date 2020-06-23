@@ -112,6 +112,18 @@ Only alpha-numeric characters and spaces, (a-z, A-Z, 0-9, \s), are present in th
 ##### numeric
 Value is numeric
 
+examples of valid numbers:
+
+|number|description|
+|------|-----------|
+|0b101010|binary|
+|42.0|float|
+|0x2A|hex / base 16|
+|42|integer|
+|0o2471|octal|
+|"42"|string without thousands or decimal separator|
+
+
 ##### integer
 Value is an integer
 
