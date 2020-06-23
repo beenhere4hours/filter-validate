@@ -2,7 +2,6 @@
 import 'chai/register-assert.js';  // Using Assert style
 import 'chai/register-expect.js';  // Using Expect style
 import 'chai/register-should.js';  // Using Should style
-// import { FilterValidate } from '../src/filter-validate.mjs';
 import { FilterValidate } from '../src/filter-validate';
 
 
