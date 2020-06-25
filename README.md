@@ -11,12 +11,14 @@ An object validation utility.
 
 #### Example for usage from NPM
 
-Below the [@std/esm](https://github.com/standard-things/esm) package lets us use ES modules in Node.js v4+.
+Below the [@std/esm](https://github.com/standard-things/esm) package lets us use ES modules in Node.js v6+.
 
 ```
 npm i @beenhere4hours/filter-validate
 npm i @std/esm
 ```
+
+In the package.json below we're loading the esm module for the local run and enabling cjs in the esm field.
 
 package.json
 ```
@@ -83,7 +85,7 @@ console.log(example5Result);
 
 ```
 
-#### Usage in browser
+#### Example for usage in browser
 ```html
 <script type="module">
     import {FilterValidate} from "https://cdn.jsdelivr.net/npm/@beenhere4hours/filter-validate@0.3.14/src/filter-validate.min.js";
