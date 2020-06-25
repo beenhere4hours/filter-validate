@@ -9,18 +9,84 @@ An object validation utility.
 
 ## Usage
 
-#### Usage from NPM
-`npm i @beenhere4hours/filter-validate`
+#### Example for usage from NPM
 
-```javascript
-const filterValidate = require("../src/filter-validate");
-// coming soon...
+Below the [@std/esm](https://github.com/standard-things/esm) package lets us use ES modules in Node.js v4+.
+
+```
+npm i @beenhere4hours/filter-validate
+npm i @std/esm
+```
+
+package.json
+```
+{
+  "name": "example",
+  "version": "0.0.0",
+  "description": "example of how to use filter-validate with esm",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node -r esm index.js",
+  },
+  "dependencies": {
+    "@beenhere4hours/filter-validate": "^0.3.14",
+    "esm": "^3.2.25"
+  },
+  "esm": {
+    "cjs": true
+  }
+}
+```
+
+index.js
+```
+import {FilterValidate} from "@beenhere4hours/filter-validate";
+
+const filterValidate = new FilterValidate();
+
+// Example 1 - a single validator
+const example1Rules = {test: 'maxLen, 7'};
+const example1Object = {test: '12345'};
+const example1Result = filterValidate.validate(example1Object, example1Rules);
+console.log(`result will be {} as the string length is valid`);
+console.log(example1Result);
+
+// Example 2 - a single filter
+const example2Rules = {test: 'sanitizeNumbers'};
+const example2Object = {test: 'abc123'};
+const example2Result = filterValidate.filter(example2Object, example2Rules);
+console.log(`result will be {test: "123"} as the returned input is transformed`);
+console.log(example2Result);
+
+// Example 3 - multiple validators
+const example3Rules = {test: 'alpha|minLen, 3|maxLen, 6'};
+const example3Object = {test: 'abcABC'};
+const example3Result = filterValidate.validate(example3Object, example3Rules);
+console.log(`result will be {} as the string length is between 3 and 6 and characters are alpha. a-z A-Z`);
+console.log(example3Result);
+
+// Example 4 - multiple filters
+const example4Rules = {test: 'ltrim|rtrim|upper'};
+const example4Object = {test: '   abcDEFghi   '};
+const example4Result = filterValidate.filter(example4Object, example4Rules);
+console.log(`result will be {test: "ABCDEFGHI"}`);
+console.log(example4Result);
+
+// Example 5 - passing an object to the constructor
+const example5Filters = {test: 'ltrim|rtrim|upper'};
+const example5Validators = {test: 'alpha|minLen, 3'};
+const example5Config = {filters: example5Filters, validators: example5Validators};
+const example5Object = {test: '   abc   '};
+const example5Result = new FilterValidate(example5Object, example5Config);
+console.log(`result will be {filters:{test: "ABC"}, validators: {} }`);
+console.log(example5Result);
+
 ```
 
 #### Usage in browser
 ```html
 <script type="module">
-    import {FilterValidate} from "https://cdn.jsdelivr.net/npm/@beenhere4hours/filter-validate@0.3.12/src/filter-validate.min.js";
+    import {FilterValidate} from "https://cdn.jsdelivr.net/npm/@beenhere4hours/filter-validate@0.3.14/src/filter-validate.min.js";
 
     const filterValidate = new FilterValidate();
 
