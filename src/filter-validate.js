@@ -269,6 +269,12 @@ export class FilterValidate {
         }
     }
 
+    /**
+     * Applies the validators to the input object
+     * @param {*} object the input to validate
+     * @param {*} validators the rules to apply as validation
+     * @returns {FilterValidate.result.validators|{}}
+     */
     validate(object = {}, validators = {}) {
         if (Object.prototype.toString.call(object) === '[object Object]' && Object.prototype.toString.call(validators) === '[object Object]') {
             this.setup(object);
@@ -277,6 +283,12 @@ export class FilterValidate {
         return this.result.validators;
     }
 
+    /**
+     * Transforms the values of object properties based on the passed filters
+     * @param {*} object the input to transform
+     * @param {*} filters the rules to apply as transformations
+     * @returns {FilterValidate.result.filters|{}} the transformed values
+     */
     filter(object = {}, filters = {}) {
         if (Object.prototype.toString.call(object) === '[object Object]' && Object.prototype.toString.call(filters) === '[object Object]') {
             this.setup(object);
@@ -285,12 +297,22 @@ export class FilterValidate {
         return this.result.filters;
     }
 
+    /**
+     * Adds a function to be mapped to by name
+     * @param {string} name of the filter
+     * @param {function} filter the function to be added
+     */
     addFilter(name, filter) {
         if (typeof filter === 'function') {
             this.filtersMap[name] = filter;
         }
     }
 
+    /**
+     * Adds a function to be mapped to by name
+     * @param {string} name of the validator
+     * @param {function} validator the function to be added
+     */
     addValidator(name, validator) {
         if (typeof validator === 'function') {
             this.validatorsMap[name] = validator;
