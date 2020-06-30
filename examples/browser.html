@@ -45,7 +45,30 @@
         console.log(`result will be {filters:{test: "ABC"}, validators: {} }`);
         console.log(example5Result);
 
+        // Example 6 - passing a custom validator
+        const testMaxLen = function(property, value, args) {
+            let [len] = args;
 
+            if (typeof len === 'string') {
+                len = parseInt(len, 10);
+            }
+
+            return (value.length <= len);
+        };
+
+        const example6Rules = {test: 'maxLen, 7'};
+        const example6Object = {test: '12345'};
+        filterValidate.addValidator('testMaxLen', testMaxLen);
+        const example6Result = filterValidate.validate(example6Object, example6Rules);
+        console.log(`result will be {} as the string length is valid`);
+        console.log(example6Result);
+
+        // Example 7 - passing a custom filter
+        const testToUpperCase = function(property, value) {
+            return value.toUpperCase();
+        };
+
+        filterValidate.addFilter('testToUpperCase', testToUpperCase);
     </script>
 
 </head>

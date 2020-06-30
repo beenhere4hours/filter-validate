@@ -11,14 +11,14 @@ An object validation utility.
 
 #### Example for usage from NPM
 
-Below the [@std/esm](https://github.com/standard-things/esm) package lets us use ES modules in Node.js v6+.
+Below, the [@std/esm](https://github.com/standard-things/esm) package lets us use ES modules in Node.js v6+.
 
 ```
 npm i @beenhere4hours/filter-validate
 npm i @std/esm
 ```
 
-In the package.json below we're loading the esm module for the local run and enabling cjs in the esm field.
+In the package.json we're loading the esm module for the local run and enabling cjs in the esm field.
 
 package.json
 ```
@@ -135,7 +135,7 @@ console.log(example5Result);
 ## Tests
 
   `npm test`
-  
+
 ## Available Validators
 ##### required
 Specified key/value pair exists and that the value is not an empty string '', null, or undefined
