@@ -57,67 +57,72 @@ const filterValidate = new FilterValidate();
 
 ## Usage
 ```
-    // Example 1 - a single validator
-     const example1Rules = {test: 'maxLen, 7'};
-     const example1Object = {test: '12345'};
-     const example1Result = filterValidate.validate(example1Object, example1Rules);
-     console.log(`result will be {} as the string length is valid`);
-     console.log(example1Result);
- 
-     // Example 2 - a single filter
-     const example2Rules = {test: 'sanitizeNumbers'};
-     const example2Object = {test: 'abc123'};
-     const example2Result = filterValidate.filter(example2Object, example2Rules);
-     console.log(`result will be {test: "123"} as the returned input is transformed`);
-     console.log(example2Result);
- 
-     // Example 3 - multiple validators
-     const example3Rules = {test: 'alpha|minLen, 3|maxLen, 6'};
-     const example3Object = {test: 'abcABC'};
-     const example3Result = filterValidate.validate(example3Object, example3Rules);
-     console.log(`result will be {} as the string length is between 3 and 6 and characters are alpha. a-z A-Z`);
-     console.log(example3Result);
- 
-     // Example 4 - multiple filters
-     const example4Rules = {test: 'ltrim|rtrim|upper'};
-     const example4Object = {test: '   abcDEFghi   '};
-     const example4Result = filterValidate.filter(example4Object, example4Rules);
-     console.log(`result will be {test: "ABCDEFGHI"}`);
-     console.log(example4Result);
- 
-     // Example 5 - passing an object to the constructor
-     const example5Filters = {test: 'ltrim|rtrim|upper'};
-     const example5Validators = {test: 'alpha|minLen, 3'};
-     const example5Config = {filters: example5Filters, validators: example5Validators};
-     const example5Object = {test: '   abc   '};
-     const example5Result = new FilterValidate(example5Object, example5Config);
-     console.log(`result will be {filters:{test: "ABC"}, validators: {} }`);
-     console.log(example5Result);
- 
-     // Example 6 - passing a custom validator
-     const testMaxLen = function(property, value, args) {
-         let [len] = args;
- 
-         if (typeof len === 'string') {
-             len = parseInt(len, 10);
-         }
- 
-         return (value.length <= len);
-     };
- 
-     const example6Rules = {test: 'maxLen, 7'};
-     const example6Object = {test: '12345'};
-     filterValidate.addValidator('testMaxLen', testMaxLen);
-     const example6Result = filterValidate.validate(example6Object, example6Rules);
-     console.log(`result will be {} as the string length is valid`);
-     console.log(example6Result);
- 
-     // Example 7 - passing a custom filter
-     const testToUpperCase = function(property, value) {
-         return value.toUpperCase();
-     };
- 
-     filterValidate.addFilter('testToUpperCase', testToUpperCase);``
+// Example 1 - a single validator
+const example1Rules = {test: 'maxLen, 7'};
+const example1Object = {test: '12345'};
+const example1Result = filterValidate.validate(example1Object, example1Rules);
+console.log(`result will be {} as the string length is valid`);
+console.log(example1Result);
+
+// Example 2 - a single filter
+const example2Rules = {test: 'sanitizeNumbers'};
+const example2Object = {test: 'abc123'};
+const example2Result = filterValidate.filter(example2Object, example2Rules);
+console.log(`result will be {test: "123"} as the returned input is transformed`);
+console.log(example2Result);
+
+// Example 3 - multiple validators
+const example3Rules = {test: 'alpha|minLen, 3|maxLen, 6'};
+const example3Object = {test: 'abcABC'};
+const example3Result = filterValidate.validate(example3Object, example3Rules);
+console.log(`result will be {} as the string length is between 3 and 6 and characters are alpha. a-z A-Z`);
+console.log(example3Result);
+
+// Example 4 - multiple filters
+const example4Rules = {test: 'ltrim|rtrim|upper'};
+const example4Object = {test: '   abcDEFghi   '};
+const example4Result = filterValidate.filter(example4Object, example4Rules);
+console.log(`result will be {test: "ABCDEFGHI"}`);
+console.log(example4Result);
+
+// Example 5 - passing an object to the constructor
+const example5Filters = {test: 'ltrim|rtrim|upper'};
+const example5Validators = {test: 'alpha|minLen, 3'};
+const example5Config = {filters: example5Filters, validators: example5Validators};
+const example5Object = {test: '   abc   '};
+const example5Result = new FilterValidate(example5Object, example5Config);
+console.log(`result will be {filters:{test: "ABC"}, validators: {} }`);
+console.log(example5Result);
+
+// Example 6 - passing a custom validator
+const testMaxLen = function(property, value, args) {
+ let [len] = args;
+
+ if (typeof len === 'string') {
+     len = parseInt(len, 10);
+ }
+
+ return (value.length <= len);
+};
+
+const example6Rules = {test: 'maxLen, 7'};
+const example6Object = {test: '12345'};
+filterValidate.addValidator('testMaxLen', testMaxLen);
+const example6Result = filterValidate.validate(example6Object, example6Rules);
+console.log(`result will be {} as the string length is valid`);
+console.log(example6Result);
+
+// Example 7 - passing a custom filter
+const testToUpperCase = function(property, value) {
+    return value.toUpperCase();
+};
+
+filterValidate.addFilter('testToUpperCase', testToUpperCase);
+const example7Rules = {test: 'testToUpperCase'};
+const example7Object = { test: 'abc' };
+const example7Result = filterValidate.filter(example7Object, example7Rules);
+console.log(`result will be {test: "ABC"}`);
+console.log(example7Result);
 ```
 
 ## Tests

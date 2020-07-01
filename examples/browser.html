@@ -69,6 +69,12 @@
         };
 
         filterValidate.addFilter('testToUpperCase', testToUpperCase);
+        const example7Rules = {test: 'testToUpperCase'};
+        const example7Object = { test: 'abc' };
+        const example7Result = filterValidate.filter(example7Object, example7Rules);
+        console.log(`result will be {test: "ABC"}`);
+        console.log(example7Result);
+
     </script>
 
 </head>
