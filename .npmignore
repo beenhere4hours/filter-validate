@@ -1,2 +1,4 @@
 .travis.yml
 .idea
+.nyc_output
+examples
