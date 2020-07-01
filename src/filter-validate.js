@@ -244,9 +244,9 @@ export class FilterValidate {
 
     /**
      *
-     * @param setResult
-     * @param map
-     * @param requestedRules
+     * @param {function} setResult
+     * @param {*} map
+     * @param {*} requestedRules
      */
     parse(setResult, map, requestedRules) {
 
