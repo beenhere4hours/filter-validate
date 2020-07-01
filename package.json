@@ -1,7 +1,7 @@
 {
   "author": "Daniel Masi <beenhere4hours@gmail.com>",
   "name": "@beenhere4hours/filter-validate",
-  "version": "0.3.16",
+  "version": "0.3.17",
   "description": "An object validation utility",
   "homepage": "https://github.com/beenhere4hours/filter-validate.git#README.md",
   "keywords": [
