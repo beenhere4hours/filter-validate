@@ -1,3 +1,4 @@
+![Node.js CI](https://github.com/beenhere4hours/filter-validate/workflows/Node.js%20CI/badge.svg?branch=master)
 ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/min/@beenhere4hours/filter-validate)
 ![npm (scoped)](https://img.shields.io/npm/v/@beenhere4hours/filter-validate)
 
