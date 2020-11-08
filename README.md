@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/beenhere4hours/filter-validate.svg?branch=master)](https://travis-ci.org/beenhere4hours/filter-validate)
 ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/min/@beenhere4hours/filter-validate)
 ![npm (scoped)](https://img.shields.io/npm/v/@beenhere4hours/filter-validate)
 
