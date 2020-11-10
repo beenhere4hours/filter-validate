@@ -31,7 +31,7 @@ package.json
     "dev": "node -r esm index.js",
   },
   "dependencies": {
-    "@beenhere4hours/filter-validate": "^0.3.14",
+    "@beenhere4hours/filter-validate": "^0.3.20",
     "esm": "^3.2.25"
   },
   "esm": {
@@ -50,7 +50,7 @@ const filterValidate = new FilterValidate();
 #### Example for install in browser
 ```
 <script type="module">
-    import {FilterValidate} from "https://cdn.jsdelivr.net/npm/@beenhere4hours/filter-validate@0.3.14/src/filter-validate.min.js";
+    import {FilterValidate} from "https://cdn.jsdelivr.net/npm/@beenhere4hours/filter-validate@0.3.20/src/filter-validate.min.js";
     const filterValidate = new FilterValidate();
 </script>
 ```
